@@ -1,0 +1,15 @@
+.carousel{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh;
+}
+.img{
+    width: 60%;
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
