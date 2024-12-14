@@ -7,7 +7,23 @@ import "./about_us.css"
 function AboutUs(){
   return(
       <div className="page-container">
-          
+
+        <div className="card1">
+            <p className="card1-text">&quot;Volunteering is the ultimate expression of compassion in action, making a difference one act at a time.&quot;</p>
+        </div>
+
+
+        <div className="card2">
+                <img className="card2-image" src={pictureOne} alt="About Us" />
+                <div className="card2-content">
+                    <h2 className="card2-title">About Us</h2>
+                    <p className="card2-text">LearnHeart is dedicated to bridging educational gaps in rural Sri Lanka by connecting passionate
+                         volunteers and organizations with schools in need. Our platform facilitates project matching and seamless collaboration
+                          to ensure every child has access to quality learning opportunities. We believe in the power of education to transform
+                           lives and build brighter futures. Join us in creating a lasting impact on education!</p>
+                </div>
+            </div>
+         
 
           <div className="card3">
               <img className="card3-image" src ={pictureTwo} alt ="Vision"></img>

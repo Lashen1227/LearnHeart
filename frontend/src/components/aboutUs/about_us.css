@@ -1,3 +1,83 @@
+.page-container{
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+  background-color: #f0f4fc;
+  box-sizing: border-box;
+}
+
+/* card1 */
+.card1{
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
+  padding: 5px;
+  margin: 30px;
+  display: flex;
+  align-items: center;
+  max-width: 3000px;
+  background-color: #EC8305;
+  gap: 20px;
+}
+
+.card1 .card1-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card1 .card1-text{
+  font-size: 30px;
+  line-height: 1.5;
+  text-align: center;
+  font-weight: bold;
+  color: #000000;
+}
+
+
+/* card2 */
+.card2{
+  display: flex;
+  flex-direction: row-reverse; 
+  align-items: center;
+  padding: 40px;
+  margin: 10px;
+  max-width: 900px;
+  background-color: #f0f4fc;
+  gap: 20px;
+}
+
+.card2 .card2-image{
+  max-width: 360px;
+  height: 270px;
+  border-radius: 10%;
+  margin-bottom: 10px;
+}
+
+.card2 .card2-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card2 .card2-title{
+  margin: 0 0 10px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #000000
+}
+
+.card2 .card2-text{
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #000000;
+}
+
+
 /* card3 */
 .card3{
   border: 2px solid #EC8305;
@@ -39,6 +119,7 @@
   text-align: center;
   color: #FFFFFF;
 }
+
 
 /* card4 */
 .card4 {
@@ -85,4 +166,11 @@
     font-size: 18px;
     color: #000000;
     margin-top: 10px;
+}
+
+.card1,
+.card2,
+.card3,
+.card4 {
+  margin: 30px 0; /* Increase the vertical space between cards */
 }
