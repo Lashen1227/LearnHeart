@@ -1,8 +1,8 @@
 import Navbar from "../components/Navbar.jsx"
 import Footer from "../components/Footer.jsx"
-import pictureOne from "../aboutUs/abtus1.jpg"
-import pictureTwo from "../aboutUs/abtus2.png"
-import "./about_us.css"
+import pictureOne from "../components/aboutUs/abtus1.jpg"
+import pictureTwo from "../components/aboutUs/abtus2.png"
+import "../components/aboutUs/about_us.css"
 
 function AboutUs(){
   return(
