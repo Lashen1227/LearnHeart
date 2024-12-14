@@ -1,4 +1,4 @@
-import Navbar from "../components/Header.jsx"
+import Navbar from "../components/Navbar.jsx"
 import Footer from "../components/Footer.jsx"
 import pictureOne from "../aboutUs/abtus1.jpg"
 import pictureTwo from "../aboutUs/abtus2.png"
