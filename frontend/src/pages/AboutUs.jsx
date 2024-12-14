@@ -1,4 +1,4 @@
-import Header from "../components/Header.jsx"
+import Navbar from "../components/Header.jsx"
 import Footer from "../components/Footer.jsx"
 import pictureOne from "../aboutUs/abtus1.jpg"
 import pictureTwo from "../aboutUs/abtus2.png"
@@ -6,6 +6,8 @@ import "./about_us.css"
 
 function AboutUs(){
   return(
+    <>
+      <Navbar />
       <div className="page-container">
 
         <div className="card1">
@@ -67,6 +69,8 @@ function AboutUs(){
           </div>
       </div>
       </div>
+      <Footer />
+    </>
   );
 }
 
