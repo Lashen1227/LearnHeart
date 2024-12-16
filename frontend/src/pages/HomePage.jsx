@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import School from "../assets/images/home-img/school.webp";
 import Volunteer from "../assets/images/home-img/volunteer.webp";
 import Organization from "../assets/images/home-img/organization.gif";
+import ChooseUSImage from "../assets/images/home-img/choose-us.png";
 
 export default function HomePage() {
   return (
@@ -22,8 +23,28 @@ export default function HomePage() {
         <img src={Organization} alt="Organization Icon" className="h-20 border-2 border-[#3657AD] p-2 rounded-lg" />
         
         </div>
-         <h1 className="p-8 text-2xl font-bold text-center">Past Events</h1>
-      </div>
+         <h1 className="p-8 text-5xl font-bold text-center">Past Events</h1>
+         <div className="flex flex-col items-center justify-center p-6" >
+         <h1 className="font-bold text-2xl mb-4 text-center">Why Choose Us?</h1>
+          <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="w-full md:w-1/2 flex justify-center">
+            <img
+              src={ChooseUSImage}
+              alt="Why Choose Us"
+              className="w-1/2 md:w-2/3 h-auto rounded-lg shadow-lg"
+            />
+          </div>
+          <div className="w-full md:w-1/2 text-gray-700 leading-relaxed">
+      <p className="text-lg mb-10 text-justify">
+        Our seminar volunteer program develops students leadership, collaboration, and communication abilities. Students get practical experience, boost their confidence, and develop their problem-solving skills in a nurturing setting by taking on significant responsibilities in event organisation. 
+        </p>
+        <p className="text-lg mb-10 text-justify">
+        Furthermore, by showcasing their dedication to extracurricular activities, this platform assists students in enhancing their academic and professional profiles. Additionally, it offers chances to network with classmates, instructors, and business leaders, opening doors for future achievement and personal development.
+        </p> 
+        </div>
+        </div>
+        </div>
+        </div>
       <Footer />
     </>
   )
