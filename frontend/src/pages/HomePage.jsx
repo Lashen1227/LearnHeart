@@ -9,12 +9,6 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-<<<<<<< HEAD
-      {/* <Carousel /> */}
-      <div>
-        <h1>Home Page Body content</h1>
-        
-=======
       <div className="bg-custom-page">
         <p className="p-4 italic text-center">
           We believe that we can play a major role in the journey of creating a better society. During the journey,
@@ -28,7 +22,6 @@ export default function HomePage() {
         
         </div>
          <h1 className="p-8 text-2xl font-bold text-center">Past Events</h1>
->>>>>>> acc5c431ee5ab3a38e76959daa260637da56bfc3
       </div>
       <Footer />
     </>
