@@ -9,6 +9,7 @@ export default function HomePage() {
       {/* <Carousel /> */}
       <div>
         <h1>Home Page Body content</h1>
+        
       </div>
       <Footer />
     </>

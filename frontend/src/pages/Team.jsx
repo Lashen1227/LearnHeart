@@ -1,10 +1,9 @@
-import React from 'react';
 import Lashen from "../assets/images/developers-img/lashen.jpeg";
-import Yoshani from "../assets/images/developers-img/user.jpeg";
-import Rehan from "../assets/images/developers-img/user.jpeg";
-import Amadi from "../assets/images/developers-img/user.jpeg";
-import Malindu from "../assets/images/developers-img/user.jpeg";
-import Thiseni from "../assets/images/developers-img/user.jpeg";
+import Yoshani from "../assets/images/developers-img/yoshani.jpg";
+import Rehan from "../assets/images/developers-img/rehan.jpg";
+import Amadi from "../assets/images/developers-img/amadi.jpg";
+import Malindu from "../assets/images/developers-img/malindu.jpg";
+import Thiseni from "../assets/images/developers-img/thiseni.jpg";
 import { TbWorld } from "react-icons/tb";
 import { FaGithub } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
@@ -34,7 +33,7 @@ const data = [
         desc: "Rehan played a crucial role in shaping LearnHeart's frontend, utilizing her expertise to breathe life into its user-friendly project interface.",
         image: Rehan,
         git: "https://github.com/rehangodakumbura",
-        linkdn: "",
+        linkdn: "https://www.linkedin.com/in/rehan-dewkalana-1b9915292/",
         web: "",
     },
     {
@@ -42,23 +41,23 @@ const data = [
         desc: "Amadi played a crucial role in shaping LearnHeart's frontend, utilizing her expertise to breathe life into its user-friendly project interface.",
         image: Amadi,
         git: "https://github.com/MalshaAmadi",
-        linkdn: "",
+        linkdn: "https://www.linkedin.com/in/malsha-amadi-349449299",
         web: "",
     },
     {
         name: "Malindu Kalhara",
-        desc: "Malindu was pivotal in the creation of Undergraduplift's frontend, applying his expertise to bring this application's user-friendly design to life.",
+        desc: "Malindu was pivotal in the creation of LearnHeart's frontend, applying his expertise to bring this application's user-friendly design to life.",
         image: Malindu,
         git: "https://github.com/malindu29",
-        linkdn: "",
+        linkdn: "http://www.linkedin.com/in/malindu-kalhara",
         web: "",
     },
     {
       name: "Thiseni Perera",
-      desc: "Thiseni was pivotal in the creation of Undergraduplift's frontend, applying her expertise to bring this application's user-friendly design to life.",
+      desc: "Thiseni was pivotal in the creation of LearHeart's frontend, applying her expertise to bring this application's user-friendly design to life.",
       image: Thiseni,
       git: "https://github.com/Thiseni-D",
-      linkdn: "",
+      linkdn: "https://www.linkedin.com/in/thiseni-perera-486530274",
       web: "",
   },
 ];
@@ -86,7 +85,7 @@ function Team() {
                 and volunteers driven by a shared vision of empowering communities through education. With diverse backgrounds and skills, 
                 we work together to create meaningful connections between volunteers and projects that make a lasting impact. 
                 United by our passion for learning and community upliftment, 
-                we strive to build a platform that transforms lives and bridges educational gaps across Sri Lanka
+                we strive to build a platform that transforms lives and bridges educational gaps across Sri Lanka.
               </p>
           </div>
           <div className="flex flex-col space-y-8 mt-8 lg:w-[75%]">
@@ -113,7 +112,7 @@ function Team() {
                 ))}
           </div>
           <br/><br/>
-          <div className="flex items-center justify-center w-48 h-12 font-bold text-black border-2 border-white rounded-lg cursor-pointer bg-custom-orange hover:bg-orange-600">
+          <div className="flex items-center justify-center w-48 h-12 font-bold text-black duration-300 border-2 border-white rounded-lg cursor-pointer bg-custom-orange hover:bg-orange-600 hover:scale-110">
             <Link to="/contact-us"> Contact Us </Link>
           </div>
         </div>
