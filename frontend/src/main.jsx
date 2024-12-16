@@ -6,7 +6,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import AboutUs from './pages/AboutUs.jsx';
-import OurTeam from './pages/OurTeam.jsx';
+import Team from './pages/Team.jsx';
+import ContactUs from './pages/ContactUs.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,8 +19,12 @@ const router = createBrowserRouter([
     element: <AboutUs />,
   },
   {
-    path: "/our-team",
-    element: <OurTeam />,
+    path: "/team",
+    element: <Team />,
+  },
+  {
+    path: "/contact-us",
+    element: <ContactUs />,
   },
 ]);
 
