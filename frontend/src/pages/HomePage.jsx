@@ -27,6 +27,12 @@ export default function HomePage() {
          <h1 className="p-8 text-2xl font-bold text-center">Past Events</h1>
       </div>
       <CardSlider />
+      <div className="flex items-center justify-center bg-custom-page pb-4 ">
+  <button className="bg-[#3657AD] text-white p-2 rounded-lg">
+    Explore More
+  </button>
+</div>
+      
       <Footer />
     </>
   )
