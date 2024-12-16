@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import School from "../assets/images/home-img/school.webp";
 import Volunteer from "../assets/images/home-img/volunteer.webp";
 import Organization from "../assets/images/home-img/organization.gif";
+import CardSlider from "../components/home/CardSlider";
+
 
 export default function HomePage() {
   return (
@@ -24,6 +26,7 @@ export default function HomePage() {
         </div>
          <h1 className="p-8 text-2xl font-bold text-center">Past Events</h1>
       </div>
+      <CardSlider />
       <Footer />
     </>
   )
