@@ -4,7 +4,12 @@ import Navbar from "../components/Navbar";
 import School from "../assets/images/home-img/school.webp";
 import Volunteer from "../assets/images/home-img/volunteer.webp";
 import Organization from "../assets/images/home-img/organization.gif";
+<<<<<<< HEAD
 import ChooseUSImage from "../assets/images/home-img/choose-us.png";
+=======
+import CardSlider from "../components/home/CardSlider";
+
+>>>>>>> cc31506eeb3bfd687ca0a0f9ce6b01367e473a97
 
 export default function HomePage() {
   return (
@@ -23,6 +28,7 @@ export default function HomePage() {
         <img src={Organization} alt="Organization Icon" className="h-20 border-2 border-[#3657AD] p-2 rounded-lg" />
         
         </div>
+<<<<<<< HEAD
          <h1 className="p-8 text-5xl font-bold text-center">Past Events</h1>
          <div className="flex flex-col items-center justify-center p-6" >
          <h1 className="font-bold text-2xl mb-4 text-center">Why Choose Us?</h1>
@@ -45,6 +51,17 @@ export default function HomePage() {
         </div>
         </div>
         </div>
+=======
+         <h1 className="p-8 text-2xl font-bold text-center">Past Events</h1>
+      </div>
+      <CardSlider />
+      <div className="flex items-center justify-center bg-custom-page pb-4 ">
+  <button className="bg-[#3657AD] text-white p-2 rounded-lg">
+    Explore More
+  </button>
+</div>
+      
+>>>>>>> cc31506eeb3bfd687ca0a0f9ce6b01367e473a97
       <Footer />
     </>
   )
