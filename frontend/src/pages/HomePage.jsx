@@ -1,14 +1,15 @@
 import Footer from "../components/Footer";
-// import Carousel from "../components/home/Carousel/Carousel";
+// import Carousel from "../components/home/Carousel";
 import Navbar from "../components/Navbar";
-import School from "../assets/homeImages/school.webp";
-import Volunteer from "../assets/homeImages/volunteer.webp";
-import Organization from "../assets/homeImages/organization.gif";
+import School from "../assets/images/home-img/school.webp";
+import Volunteer from "../assets/images/home-img/volunteer.webp";
+import Organization from "../assets/images/home-img/organization.gif";
 
 export default function HomePage() {
   return (
     <>
       <Navbar />
+      {/* <Carousel /> */}
       <div className="bg-custom-page">
         <p className="p-4 italic text-center">
           We believe that we can play a major role in the journey of creating a better society. During the journey,
