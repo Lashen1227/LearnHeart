@@ -30,7 +30,7 @@ const data = [
     },
     {
         name: "Rehan Godakumbura",
-        desc: "Rehan played a crucial role in shaping LearnHeart's frontend, utilizing her expertise to breathe life into its user-friendly project interface.",
+        desc: "Rehan played a crucial role in shaping LearnHeart's ML model utilizing his expertise to breathe life into its user-friendly project interface.",
         image: Rehan,
         git: "https://github.com/rehangodakumbura",
         linkdn: "https://www.linkedin.com/in/rehan-dewkalana-1b9915292/",
