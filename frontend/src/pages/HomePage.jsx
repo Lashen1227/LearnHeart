@@ -1,10 +1,9 @@
 import Footer from "../components/Footer";
-// import Carousel from "../components/home/Carousel";
 import Navbar from "../components/Navbar";
 import School from "../assets/images/home-img/school.webp";
 import Volunteer from "../assets/images/home-img/volunteer.webp";
 import Organization from "../assets/images/home-img/organization.gif";
-import ChooseUSImage from "../assets/images/home-img/carousel3.jpg";
+import ChooseUSImage from "../assets/images/home-img/carousel1.jpg";
 import CardSlider from "../components/home/CardSlider";
 import LandingSection from "../components/home/LandingSection";
 import { Link } from "react-router-dom";
@@ -14,7 +13,6 @@ export default function HomePage() {
     <>
       <Navbar />
       <LandingSection />
-      {/* <Carousel /> */}
       
       <div className="bg-custom-page">
         {/* <---  Start Content Section ---> */}
@@ -34,7 +32,7 @@ export default function HomePage() {
         <h1 className="p-8 text-2xl font-bold text-center">Past Events</h1>
         <CardSlider />
         <div className="flex items-center justify-center pb-4 bg-custom-page ">
-          <button className="bg-custom-blue text-white p-3 rounded-lg border-2 border-[#EC8305]">
+          <button className="p-3 text-white duration-300 rounded-lg bg-custom-blue hover:scale-110">
             <Link to={'/past-events'}>Explore More</Link>
           </button>
         </div> 
