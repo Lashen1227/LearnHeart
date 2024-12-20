@@ -21,7 +21,7 @@ export default function Navbar() {
       {/* change need to be: bg-fixed -> fixed w-screen */}
       <div className="container flex items-center justify-between mx-auto">
         <div className="flex items-center">
-          <img src={logo} alt="Logo" className="h-10 mr-4 w-15"/>
+          <img src={logo} alt="Logo" className="mr-4 h-7 w-9"/>
         </div>
 
         {/* Hamburger menu for mobile */}
