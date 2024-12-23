@@ -72,7 +72,7 @@ function AboutUs() {
             />
             <line
               x1="330"
-              y1="153"
+              y1="155"
               x2="459"
               y2="58"
               stroke="#3657AD"
