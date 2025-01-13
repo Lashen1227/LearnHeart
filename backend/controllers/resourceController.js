@@ -20,3 +20,36 @@ const addResource = async (req, res) => {
     res.status(400).json({ message: 'Error adding resource', error: err });
   }
 };
+
+// Update an existing resource
+const updateResource = async (req, res) => {
+  try {
+    const updatedResource = await Resource.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updatedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+    res.status(200).json(updatedResource);
+  } catch (err) {
+    res.status(400).json({ message: 'Error updating resource', error: err });
+  }
+};
+
+// Delete a resource
+const deleteResource = async (req, res) => {
+  try {
+    const deletedResource = await Resource.findByIdAndDelete(req.params.id);
+    if (!deletedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+    res.status(200).json({ message: 'Resource deleted' });
+  } catch (err) {
+    res.status(400).json({ message: 'Error deleting resource', error: err });
+  }
+};
+
+module.exports = {
+  getAllResources,
+  addResource,
+  updateResource,
+  deleteResource,
+};
