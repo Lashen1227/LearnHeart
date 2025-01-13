@@ -4,6 +4,10 @@ const dotenv = require('dotenv').config();
 const app = express();
 const PORT = 3001;
 
+const resourceRoutes = require('./routes/resourceRoutes');
+
+app.use(express.json());
+
 // Connecting database
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log('Database connected'))
@@ -13,3 +17,5 @@ mongoose.connect(process.env.MONGO_URL)
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
 });
+
+app.use('/api/resources', resourceRoutes);
