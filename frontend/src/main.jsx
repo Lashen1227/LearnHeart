@@ -8,6 +8,14 @@ import {
 import AboutUs from './pages/AboutUs.jsx';
 import Team from './pages/Team.jsx';
 import ContactUs from './pages/ContactUs.jsx';
+import { ClerkProvider } from '@clerk/clerk-react';
+
+const { VITE_CLERK_PUBLISHABLE_KEY } = import.meta.env;
+const PUBLISHABLE_KEY = VITE_CLERK_PUBLISHABLE_KEY;
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
 
 const router = createBrowserRouter([
   {
@@ -31,6 +39,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <RouterProvider router={router} />
+    </ClerkProvider>
+  </StrictMode>
 )
