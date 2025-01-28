@@ -69,11 +69,12 @@ function Team() {
     return (
       <>
         <Navbar />
-        <div id="aboutus" className="flex flex-col items-center justify-center min-h-screen px-10 py-10 text-center text-black bg-custom-page">
-          {/* <h1 className="text-5xl font-bold">Meet Our Team</h1> */}
-            
-          <div className="flex flex-col items-center justify-center mt-5 w-[65%] bg-custom-orange border-2 border-white p-10 rounded-lg">
-              <p className="mt-5 font-serif font-thin text-black opacity-100">
+        <div id="aboutus" className="flex flex-col items-center justify-center min-h-screen px-10 py-20 text-center text-black bg-custom-page">
+          <h1 className="block font-[Poppins] text-2xl font-semibold leading-snug tracking-wide text-center text-gray-800 sm:hidden">
+            Meet Our Team
+          </h1>
+          <div className="hidden sm:flex flex-col items-center justify-center mt-5 w-[90%] md:w-[75%] lg:w-[65%] bg-custom-orange border-2 border-white p-6 md:p-10 rounded-lg">
+              <p className="font-serif font-thin text-black opacity-100">
                 Meet the heart behind LearnHeart! We’re a dedicated team of educators, technologists, 
                 and volunteers driven by a shared vision of empowering communities through education. With diverse backgrounds and skills, 
                 we work together to create meaningful connections between volunteers and projects that make a lasting impact. 
@@ -82,30 +83,34 @@ function Team() {
               </p>
           </div>
           <div className="flex flex-col space-y-8 mt-8 lg:w-[75%]">
-                {rows.map((row, rowIndex) => (
-                    <div key={rowIndex} className="flex justify-around">
-                        {row.map((item, index) => (
-                            <div key={index} className="flex flex-col items-center justify-center transition-transform hover:scale-105">
-                                <img src={item.image} alt={item.name} className="w-[190px] h-[190px] bg-custom-page rounded-full border-gray-300 border-4" />
+            {rows.map((row, rowIndex) => (
+              <div  key={rowIndex} className="flex flex-wrap justify-center gap-8 lg:gap-10">
+                {row.map((item, index) => (
+                  <div key={index} className="flex flex-col items-center justify-center transition-transform hover:scale-105 w-[90%] sm:w-[45%] md:w-[30%]">
+                    <img src={item.image} alt={item.name} className="w-[150px] h-[150px] sm:w-[170px] sm:h-[170px] lg:w-[190px] lg:h-[190px] bg-custom-page rounded-full border-gray-300 border-4"/>
 
-                                <div className="w-[70%] text-center space-y-2 mt-4">
-                                  <p className="font-bold">{item.name}</p>
-                                    
-                                  <p className="text-[12px]">{item.desc}</p>
-                                    
-                                  <div className="flex items-center justify-center space-x-4">
-                                    <a href={item.git} className="text-xl text-gray-600 hover:text-black"><FaGithub /></a>
-                                    <a href={item.linkdn} className="text-xl text-gray-600 hover:text-blue-700"><FaLinkedin /></a>
-                                  </div>
-                                </div>
-                            </div>
-                        ))}
+                    <div className="w-full px-2 mt-4 space-y-2 text-center">
+                      <p className="text-sm font-bold sm:text-base lg:text-lg">{item.name}</p>
+                      <p className="text-[10px] sm:text-[12px] lg:text-sm">{item.desc}</p>
+
+                      <div className="flex items-center justify-center mt-2 space-x-4">
+                        <a href={item.git} className="text-lg text-gray-600 sm:text-xl hover:text-black">
+                          <FaGithub />
+                        </a>
+                        <a href={item.linkdn} className="text-lg text-gray-600 sm:text-xl hover:text-blue-700">
+                          <FaLinkedin />
+                        </a>
+                      </div>
                     </div>
+                  </div>
                 ))}
+              </div>
+            ))}
           </div>
-          <br/><br/>
-          <div className="flex items-center justify-center w-48 h-12 font-bold text-black duration-300 border-2 border-white rounded-lg cursor-pointer bg-custom-orange hover:bg-orange-600 hover:scale-110">
-            <Link to="/contact-us"> Contact Us </Link>
+          <div className="flex items-center justify-center mt-10">
+            <div className="flex items-center justify-center w-48 h-12 font-bold text-black duration-300 border-2 border-white rounded-lg cursor-pointer bg-custom-orange hover:bg-orange-600 hover:scale-110">
+              <Link to="/contact-us">Contact Us</Link>
+            </div>
           </div>
         </div>
         <Footer />
