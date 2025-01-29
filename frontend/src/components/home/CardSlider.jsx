@@ -39,7 +39,7 @@ function CardSlider() {
   <div className="flex items-center justify-center h-80 w-96 border-2 border-[#3657AD] bg-blue-50 rounded-lg shadow-lg">
     <img src={CardSliderImage3} alt="CardSliderImage3" />
   </div>
-  <div className="flex items-center justify-center h-80 w-96 border-2 border-blue-500 bg-blue-50 rounded-lg shadow-lg">
+  <div className="flex items-center justify-center border-2 border-blue-500 rounded-lg shadow-lg h-80 w-96 bg-blue-50">
     <img src={CardSliderImage3} alt="CardSliderImage3" />
   </div>
   
