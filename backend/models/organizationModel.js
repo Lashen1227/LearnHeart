@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
- const organizationSchema = new Schema({
-    OrgID:{
+const organizationSchema = new Schema({
+    orgID:{
         type: String,
         required: true
     },
@@ -19,15 +18,19 @@ const Schema = mongoose.Schema;
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+    },
     website: {
         type: String,
         required: false
     },
     userID: {
-          type: String,
-          required: true
+        type: String,
+        required: true
     },
-    ProfPic: {
+    profilePic: {
         type: String,
         required: true
     },
