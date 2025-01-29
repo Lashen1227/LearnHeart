@@ -7,7 +7,7 @@ function AboutUs() {
     return (
       <>
         <Navbar />
-        <div className="flex flex-col items-center justify-center h-full py-5 bg-custom-page">
+        <div className="flex flex-col items-center justify-center h-full py-20 bg-custom-page">
   
           {/* Card 1 */}
           <div className="flex items-center justify-center w-[1280px] m-6 rounded-2xl shadow-md bg-custom-orange p-4">
@@ -17,7 +17,7 @@ function AboutUs() {
           </div>
   
           {/* Card 2 */}
-          <div className="flex flex-row-reverse items-center h-auto max-w-7xl gap-5 p-10 m-4 bg-custom-page mt-16">
+          <div className="flex flex-row-reverse items-center h-auto gap-5 p-10 m-4 mt-16 max-w-7xl bg-custom-page">
             <img
               className="h-auto max-w-md mb-2 rounded-lg"
               src={pictureOne}
@@ -35,7 +35,7 @@ function AboutUs() {
           </div>
   
           {/* Card 3 */}
-          <div className="flex items-center max-w-7xl gap-5 p-10 m-4 border-2 shadow-md border-custom-orange bg-custom-blue rounded-2xl mt-16">
+          <div className="flex items-center gap-5 p-10 m-4 mt-16 border-2 shadow-md max-w-7xl border-custom-orange bg-custom-blue rounded-2xl">
             <img
               className="h-auto max-w-md mb-2 rounded-lg"
               src={pictureTwo}
@@ -52,7 +52,7 @@ function AboutUs() {
           </div>
 
           {/* Card 4 */}
-          <div className="p-5 text-center bg-custom-page mt-16 relative">
+          <div className="relative p-5 mt-16 text-center bg-custom-page">
             <h1 className="-mb-20 text-2xl font-bold text-black">Why<br></br>LearnHeart?</h1> 
           
           {/* SVG Lines */}
@@ -91,25 +91,25 @@ function AboutUs() {
             <div className="flex items-center justify-center p-10 gap-28">
               <div className="flex flex-col items-center">
                 <div className="flex items-center justify-center w-32 h-32 text-3xl rounded-full text-custom-orange bg-custom-blue">
-                  <i className="fas fa-chalkboard items-center text-4xl"></i>
+                  <i className="items-center text-4xl fas fa-chalkboard"></i>
                 </div>
                 <p className="mt-2 text-[16px] text-custom-black">Request School<br></br>Seminars</p>
               </div>
               <div className="flex flex-col items-center mt-72">
                 <div className="flex items-center justify-center w-40 h-40 text-3xl rounded-full text-custom-orange bg-custom-blue">
-                  <i className="fas fa-user-friends items-center text-6xl"></i>
+                  <i className="items-center text-6xl fas fa-user-friends"></i>
                 </div>
                 <p className="mt-2 text-[16px] text-custom-black">Help Students</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="flex items-center justify-center w-32 h-32 text-3xl rounded-full text-custom-orange bg-custom-blue">
-                  <i className="fas fa-network-wired text-4xl"></i>
+                  <i className="text-4xl fas fa-network-wired"></i>
                 </div>
                 <p className="mt-2 text-[16px] text-custom-black">Connect with<br></br>Volunteers</p>
               </div>
               <div className="flex flex-col items-center mt-72">
                 <div className="flex items-center justify-center w-40 h-40 text-3xl rounded-full text-custom-orange bg-custom-blue">
-                  <i className="fas fa-book text-6xl"></i>
+                  <i className="text-6xl fas fa-book"></i>
                 </div>
                 <p className="mt-2 text-[16px] text-custom-black">Access to<br></br>Resources</p>
               </div>
