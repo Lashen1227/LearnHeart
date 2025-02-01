@@ -4,7 +4,7 @@ const {
   addResource,
   updateResource,
   deleteResource,
-} = require('../controllers/ResourceController'); // Fixed the case of the filename
+} = require('../controllers/resourceController'); // Fixed the case of the filename
 
 const router = express.Router();
 
