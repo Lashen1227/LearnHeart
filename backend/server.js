@@ -30,5 +30,5 @@ app.listen(PORT, () => {
 // Routes
 app.use('/api/organizations', organizationRoutes);
 app.use('/api/volunteers', volunteerRoutes);
-app.use('/api/seminars', seminarRoutes)
+app.use('/api/seminars', seminarRoutes);
 app.use('/api/resources', resourceRoutes);
