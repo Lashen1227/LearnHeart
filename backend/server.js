@@ -8,7 +8,6 @@ const PORT = 3001;
 const organizationRoutes = require('./routes/organizationRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
 const seminarRoutes = require('./routes/seminarRoutes');
-const resourceRoutes = require('./routes/resourceRoutes');
 
 // Middlewares
 app.use(express.json());
@@ -30,5 +29,4 @@ app.listen(PORT, () => {
 // Routes
 app.use('/api/organizations', organizationRoutes);
 app.use('/api/volunteers', volunteerRoutes);
-app.use('/api/seminars', seminarRoutes);
-app.use('/api/resources', resourceRoutes);
+app.use('/api/seminars', seminarRoutes)
