@@ -35,17 +35,17 @@ function CardSlider() {
         className="mt-4"
       >
         {/* Carousel Items */}
-        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-52">
-          <img src={CardSliderImage1} alt="Feature 1" className="h-40 w-52" />
+        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
+          <img src={CardSliderImage1} alt="Feature 1" className="w-full h-64" />
         </div>
-        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-52">
-          <img src={CardSliderImage2} alt="Feature 2" className="w-auto h-40" />
+        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
+          <img src={CardSliderImage2} alt="Feature 2" className="w-full h-64" />
         </div>
-        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-52">
-          <img src={CardSliderImage3} alt="Feature 3" className="w-auto h-40" />
+        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
+          <img src={CardSliderImage3} alt="Feature 3" className="w-full h-64" />
         </div>
-        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-52">
-          <img src={CardSliderImage3} alt="Feature 4" className="w-auto h-40" />
+        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
+          <img src={CardSliderImage3} alt="Feature 4" className="w-full h-64" />
         </div>
       </Carousel>
     </div>
