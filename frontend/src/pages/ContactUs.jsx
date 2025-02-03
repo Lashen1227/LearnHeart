@@ -54,20 +54,20 @@ function ContactUs() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen font-sans relative">
+    <div className="relative flex flex-col min-h-screen font-sans">
       <Navbar />
-      <main className="flex-grow bg-custom-page">
+      <main className="flex-grow py-20 bg-custom-page">
         <section className="py-10">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
-              <div className="bg-custom-light-green p-8 rounded-lg shadow-lg w-full lg:w-1/2">
+          <div className="container px-4 mx-auto">
+            <div className="flex flex-col items-center justify-center gap-12 lg:flex-row">
+              <div className="w-full p-8 rounded-lg shadow-lg bg-custom-green lg:w-1/2">
                 <form className="space-y-6" onSubmit={handleSubmit}>
-                  <h1 className="text-3xl font-bold text-center text-custom-black mb-6">
+                  <h1 className="mb-6 text-3xl font-bold text-center text-custom-black">
                     Contact Us
                   </h1>
 
                   <div>
-                    <label className="block text-custom-black font-bold mb-2" htmlFor="name">
+                    <label className="block mb-2 font-bold text-custom-black" htmlFor="name">
                       Name:
                     </label>
                     <input
@@ -75,14 +75,14 @@ function ContactUs() {
                       id="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full border border-selectBorder rounded-lg px-3 py-2 focus:ring-2 focus:ring-custom-blue focus:outline-none"
+                      className="w-full px-3 py-2 border rounded-lg border-selectBorder focus:ring-2 focus:ring-custom-blue focus:outline-none"
                       placeholder="Your Name"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-custom-black font-bold mb-2" htmlFor="email">
+                    <label className="block mb-2 font-bold text-custom-black" htmlFor="email">
                       Email:
                     </label>
                     <input
@@ -90,14 +90,14 @@ function ContactUs() {
                       id="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full border border-selectBorder rounded-lg px-3 py-2 focus:ring-2 focus:ring-custom-blue focus:outline-none"
+                      className="w-full px-3 py-2 border rounded-lg border-selectBorder focus:ring-2 focus:ring-custom-blue focus:outline-none"
                       placeholder="Your Email"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-custom-black font-bold mb-2" htmlFor="message">
+                    <label className="block mb-2 font-bold text-custom-black" htmlFor="message">
                       Message:
                     </label>
                     <textarea
@@ -105,7 +105,7 @@ function ContactUs() {
                       rows="4"
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full border border-selectBorder rounded-lg px-3 py-2 focus:ring-2 focus:ring-custom-blue focus:outline-none"
+                      className="w-full px-3 py-2 border rounded-lg border-selectBorder focus:ring-2 focus:ring-custom-blue focus:outline-none"
                       placeholder="Your Message"
                       required
                     ></textarea>
@@ -124,7 +124,7 @@ function ContactUs() {
                     >
                       {isSending && (
                         <svg
-                          className="mr-3 size-5 animate-spin text-white"
+                          className="mr-3 text-white size-5 animate-spin"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +152,7 @@ function ContactUs() {
                       <button
                         type="button"
                         onClick={() => setFormData({ name: "", email: "", message: "" })}
-                        className="bg-custom-orange text-custom-white px-6 py-2 rounded-lg transform transition-transform duration-300 hover:bg-opacity-90 hover:scale-105"
+                        className="px-6 py-2 transition-transform duration-300 transform rounded-lg bg-custom-orange text-custom-white hover:bg-opacity-90 hover:scale-105"
                       >
                         Clear
                       </button>
@@ -161,8 +161,8 @@ function ContactUs() {
                 </form>
               </div>
 
-              <div className="w-full lg:w-2/5 flex justify-center">
-                <img src={image6} alt="Contact-Us" className="max-h-full object-contain" />
+              <div className="flex justify-center w-full lg:w-2/5">
+                <img src={image6} alt="Contact-Us" className="object-contain max-h-full" />
               </div>
             </div>
           </div>
