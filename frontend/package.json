@@ -18,8 +18,12 @@
     "@mui/material": "^6.1.10",
     "@mui/styled-engine-sc": "^6.1.10",
     "axios": "^0.27.2",
+<<<<<<< HEAD
     "emailjs-com": "^3.2.0",
     "framer-motion": "^12.0.8",
+=======
+    "dotenv": "^16.4.7",
+>>>>>>> 52fbd80fc53333aaf92bbdb34f55d1069f973786
     "localforage": "^1.10.0",
     "match-sorter": "^8.0.0",
     "react": "^18.3.1",

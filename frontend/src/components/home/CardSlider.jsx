@@ -1,53 +1,55 @@
-
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import CardSliderImage1 from "../../assets/images/home-img/CardSliderImage1.jpg";
 import CardSliderImage2 from "../../assets/images/home-img/CardSliderImage2.jpeg";
 import CardSliderImage3 from "../../assets/images/home-img/CardSliderImage3.jpg";
 
 function CardSlider() {
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
-      items: 5
+      items: 5,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3
+      items: 3,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2
+      items: 2,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
+      items: 1,
+    },
   };
   return (
-    <div className='w-full py-8 bg-custom-page'>
-      <Carousel responsive={responsive} containerClass="carousel-container"
-    itemClass="carousel-item">
-  <div className="flex items-center justify-center h-80 w-96 border-2 border-[#3657AD] bg-blue-50 rounded-lg shadow-lg"> 
-    <img src={CardSliderImage1} alt="CardSliderImage1" />
-  </div>
-  <div className="flex items-center justify-center h-80 w-96 border-2 border-[#3657AD] bg-blue-50 rounded-lg shadow-lg">
-    <img src={CardSliderImage2} alt="CardSliderImage2" />
-  </div>
-  <div className="flex items-center justify-center h-80 w-96 border-2 border-[#3657AD] bg-blue-50 rounded-lg shadow-lg">
-    <img src={CardSliderImage3} alt="CardSliderImage3" />
-  </div>
-  <div className="flex items-center justify-center h-80 w-96 border-2 border-blue-500 bg-blue-50 rounded-lg shadow-lg">
-    <img src={CardSliderImage3} alt="CardSliderImage3" />
-  </div>
-  
-</Carousel>;
-      
-
+    <div className="w-full p-4 space-x-4 bg-custom-page ">
+      <Carousel
+        responsive={responsive}
+        infinite
+        autoPlay
+        autoPlaySpeed={3000}
+        transitionDuration={500}
+        className="mt-4"
+      >
+        {/* Carousel Items */}
+        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
+          <img src={CardSliderImage1} alt="Feature 1" className="w-full h-64" />
+        </div>
+        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
+          <img src={CardSliderImage2} alt="Feature 2" className="w-full h-64" />
+        </div>
+        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
+          <img src={CardSliderImage3} alt="Feature 3" className="w-full h-64" />
+        </div>
+        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
+          <img src={CardSliderImage3} alt="Feature 4" className="w-full h-64" />
+        </div>
+      </Carousel>
     </div>
-  )
+  );
 }
 
-export default CardSlider
+export default CardSlider;
