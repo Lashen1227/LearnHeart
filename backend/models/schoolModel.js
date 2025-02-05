@@ -1,4 +1,4 @@
-const mongoose = require('express')
+const mongoose = require('mongoose')
 const {Schema} = mongoose;
 
 const schoolSchema = new Schema(
@@ -8,10 +8,10 @@ const schoolSchema = new Schema(
             required: true,
             default: "School name"
         },
-        owner:{
-            type : String,
+        contact:{
+            type : Number,
             required : true,
-            default : "not mentioned"
+            default : "0"
         },
         username: {
             type: String,
@@ -33,4 +33,4 @@ const schoolSchema = new Schema(
         timestamps : true
     }
 );
-module.exports = mongoose.module('school',schoolSchema);
+module.exports = mongoose.model('School',schoolSchema);
