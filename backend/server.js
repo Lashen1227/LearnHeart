@@ -9,6 +9,7 @@ const organizationRoutes = require('./routes/organizationRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
 const seminarRoutes = require('./routes/seminarRoutes');
 const schoolRoutes = require('./routes/schoolRoutes');
+const announcementRoutes = require('./routes/announcementRoute');
 
 // Middlewares
 app.use(express.json());
@@ -32,3 +33,4 @@ app.use('/api/organizations', organizationRoutes);
 app.use('/api/volunteers', volunteerRoutes);
 app.use('/api/seminars', seminarRoutes);
 app.use('/api/schools', schoolRoutes);
+app.use('/api/announcements', announcementRoutes);
