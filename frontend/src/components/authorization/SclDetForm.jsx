@@ -68,9 +68,12 @@ function SclDetForm() {
 
       {/* Form Section */}
       <form
+      id="formSchool"
         onSubmit={submitForm}
         className="flex flex-col w-full max-w-lg p-6 space-y-6 border border-gray-300 shadow-lg lg:w-1/3 bg-custom-green rounded-xl lg:p-8"
+      
       >
+
         <h1 className="text-2xl font-bold text-center text-gray-900">
           Sign Up as <span className="text-custom-black">{Name}</span>
         </h1>
