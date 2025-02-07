@@ -30,6 +30,9 @@ import SclDashboard from './pages/schoolPages/SclDashboard.jsx';
 import VolDetForm from "./components/authorization/VolDetForm.jsx";
 import VolDashboard from './pages/volunteerPages/VolDashboard.jsx';
 
+// Resource Bank Pages
+import ResourceBank from './pages/resourceBankPages/ResourceBank.jsx';
+
 const { VITE_CLERK_PUBLISHABLE_KEY } = import.meta.env;
 const PUBLISHABLE_KEY = VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -58,6 +61,7 @@ const router = createBrowserRouter([
   { path: "/school/overview", element: <SclDashboard />, },
   { path: "/volunteer/details", element: <VolDetForm />, },
   { path: "/volunteer/overview", element: <VolDashboard />, },
+  { path: "/resource-bank", element: <ResourceBank />, },
 ]);
 
 
