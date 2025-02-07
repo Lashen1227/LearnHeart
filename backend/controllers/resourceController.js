@@ -177,3 +177,95 @@ const getVideosWithPaginate = async (req, res) => {
     res.status(500).json({ message: "Error fetching videos", error: err });
   }
 };
+
+// Add resources
+const addResource = async (req, res) => {
+  try {
+    const { title, grade, type, description, url, subject } = req.body;
+    let pdfUrl = null;
+
+    if (req.file) {
+      pdfUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    }
+
+    // Validate URL if provided
+    if (url && !isValidResourceURL(url)) {
+      return res.status(400).json({ message: 'Invalid URL. Only YouTube and Google Drive links are allowed.' });
+    }
+
+    const resource = new Resource({ title, grade, type, description, url, pdfUrl, subject });
+    await resource.save();
+
+    res.status(201).json(resource);
+  } catch (err) {
+    res.status(400).json({ message: 'Error adding resource', error: err.message });
+  }
+};
+
+// Get a resource by ID
+const getResourceById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid resource ID" });
+    }
+
+    const resource = await Resource.findById(id);
+
+    if (!resource) {
+      return res.status(404).json({ message: "Resource not found" });
+    }
+
+    res.status(200).json(resource);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching resource", error: err.message });
+  }
+};
+
+
+// Update an existing resource
+const updateResource = async (req, res) => {
+  try {
+    const { url } = req.body;
+
+    if (url && !isValidResourceURL(url)) {
+      return res.status(400).json({ message: 'Invalid URL. Only YouTube and Google Drive links are allowed.' });
+    }
+
+    const updatedResource = await Resource.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updatedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+
+    res.status(200).json(updatedResource);
+  } catch (err) {
+    res.status(400).json({ message: 'Error updating resource', error: err });
+  }
+};
+
+// Delete a resource
+const deleteResource = async (req, res) => {
+  try {
+    const deletedResource = await Resource.findByIdAndDelete(req.params.id);
+    if (!deletedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+    res.status(200).json({ message: 'Resource deleted' });
+  } catch (err) {
+    res.status(400).json({ message: 'Error deleting resource', error: err });
+  }
+};
+
+module.exports = {
+  getAllResources,
+  getNotes,
+  getVideos,
+  getNotesWithPaginate,
+  getVideosWithPaginate,
+  getResourceById,
+  addResource,
+  updateResource,
+  deleteResource,
+  upload,
+};
