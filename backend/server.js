@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
+const path = require('path');
 const app = express();
 const PORT = 3001;
 
@@ -17,6 +18,9 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 })
+
+// Serve uploaded PDF files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connecting database
 mongoose.connect(process.env.MONGO_URL)
