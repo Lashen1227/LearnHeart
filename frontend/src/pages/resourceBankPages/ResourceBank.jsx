@@ -26,7 +26,7 @@ const ResourceBank = () => {
 
   useEffect(() => {
     fetchData();
-  }, [notesPage, videosPage]);
+  }, [notesPage, videosPage, subject]);
 
   const fetchData = async () => {
     await fetchNotes();
