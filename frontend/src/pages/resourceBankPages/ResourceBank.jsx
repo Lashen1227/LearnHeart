@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import VideoModal from "../components/resourseBank/VideoModal";
-import PdfModal from "../components/resourseBank/PdfModal";
-import PDFIMAGE from '../assets/images/resource_bank-img/PDF.jpg';
-import VIDEOIMAGE from '../assets/images/resource_bank-img/VIDEO.jpg';
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import VideoModal from "../../components/resourceBank/VideoModal";
+import PdfModal from "../../components/resourceBank/PdfModal";
+import PDFIMAGE from '../../assets/images/resource_bank-img/PDF.jpg';
+import VIDEOIMAGE from '../../assets/images/resource_bank-img/VIDEO.jpg';
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
