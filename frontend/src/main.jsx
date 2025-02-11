@@ -9,6 +9,10 @@ import AboutUs from './pages/AboutUs.jsx';
 import Team from './pages/Team.jsx';
 import ContactUs from './pages/ContactUs.jsx';
 import Loading from './pages/authorizationPages/Loading.jsx';
+import CommunityPage from './pages/CommunityPage.jsx';
+import CreatePost from './components/communityForm/CreatePost.jsx';
+import EditPost from './components/communityForm/EditPost.jsx';
+import SinglePost from './components/communityForm/SinglePost.jsx';
 
 // Authorization Pages
 import Login from './pages/authorizationPages/Login.jsx';
@@ -42,6 +46,10 @@ const router = createBrowserRouter([
   { path: "/about-us", element: <AboutUs />, },
   { path: "/team", element: <Team />, },
   { path: "/contact-us", element: <ContactUs />, },
+  { path: "/posts", element: <CommunityPage />, },
+  { path: "/posts/create", element: <CreatePost />, },
+  { path: "/post/edit/:id", element: <EditPost />, },
+  { path: "/post/:id", element: <SinglePost />, },
   { path: "/next", element: <Loading />, },
   { path: "/sign-in", element: <Login />, },
   { path: "/sign-up", element: <SignUP />, },

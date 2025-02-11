@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import axios from 'axios';
 import registerImg from "../../assets/images/home-img/register.png";
-import Spinner from '../Spinner';
 
 function VolDetForm() {
   const Navigate = useNavigate();
@@ -30,11 +29,6 @@ function VolDetForm() {
   const [Address, setAddress] = useState("");
   const [PhoneNumber, setPhoneNumber] = useState("");
 
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [selectedOrg, setSelectedOrg] = useState(null);
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const showShadow = windowWidth >= 640;
 
@@ -45,37 +39,6 @@ function VolDetForm() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  let handleSelectedOrgChange = (e) => {
-    setSelectedOrg(e.target.value);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/api/organizations/');
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        setError(error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-
-    return () => {};
-  }, []);
-
-  if (isLoading) {
-    return <div><Spinner /> </div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const organizations = data.map(item => ({ _id: item._id, name: item.name }));
 
   function submitForm() {
     console.log("submit");
@@ -90,7 +53,6 @@ function VolDetForm() {
       "phoneNumber": PhoneNumber,
       "volunteerProfileImageAvailable": VolunteerProfileImageAvailable,
       "volunteerProfileColor": VolunteerProfileColor,
-      "orgID": selectedOrg,
     });
   }
 
@@ -107,7 +69,7 @@ function VolDetForm() {
       <form className={`w-full sm:w-[90%] md:w-[60%] lg:w-[50%] xl:w-[40%] h-auto sm:h-auto md:h-auto lg:h-auto rounded-lg ${showShadow ? "shadow-lg" : ""} flex flex-col justify-center items-center relative bg-custom-green`}>
         <div className="flex flex-col justify-center items-center w-full px-4 sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%]">
           <h1 className="my-4 text-xl font-bold text-center font-roboto">
-            Sign Up as a Volunteer
+            Sign Up as <span className="text-custom-black">{Name}</span>
           </h1>
 
           <input
@@ -138,10 +100,6 @@ function VolDetForm() {
             value={PhoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
-          <select onChange={handleSelectedOrgChange} className="w-full sm:w-[80%] border-selectBorder border bg-selectFill mb-4 text-gray-600 text-sm px-4 py-2 rounded-lg">
-            <option value="null"> -- Select an Organization -- </option>
-            {organizations.map((selectedOrg) => <option key={selectedOrg._id} value={selectedOrg._id}>{selectedOrg.name}</option>)}
-          </select>
 
           <button
             onClick={submitForm}
@@ -149,6 +107,7 @@ function VolDetForm() {
           >
             Submit
           </button>
+          <br />
         </div>
       </form>
     </div>

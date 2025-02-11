@@ -18,6 +18,7 @@ function OrgDetForm() {
   const [Description, setDescription] = useState("");
   const [phnNbr, setPhnNbr] = useState("");
   const [WebSite, setWebSite] = useState("");
+  const [SeminarLocations, setSeminarLocations] = useState("");
 
   async function submitForm(e) {
     e.preventDefault();
@@ -29,6 +30,7 @@ function OrgDetForm() {
       phone: phnNbr,
       email: Email,
       website: WebSite,
+      seminarLocations: SeminarLocations,
       userID: UserID,
       profilePic: ProfPic,
     });
@@ -41,6 +43,7 @@ function OrgDetForm() {
         phone: phnNbr,
         email: Email,
         website: WebSite,
+        seminarLocations: SeminarLocations,
         userID: UserID,
         profilePic: ProfPic,
       });
@@ -88,6 +91,13 @@ function OrgDetForm() {
           placeholder="Website"
           value={WebSite}
           onChange={(e) => setWebSite(e.target.value)}
+          className="w-full px-4 py-3 text-base text-gray-600 border rounded-lg focus:ring-2 focus:ring-orange-600 focus:outline-none"
+        />
+        <input
+          type="text"
+          placeholder="Seminar Conduct Locations"
+          value={SeminarLocations}
+          onChange={(e) => setSeminarLocations(e.target.value)}
           className="w-full px-4 py-3 text-base text-gray-600 border rounded-lg focus:ring-2 focus:ring-orange-600 focus:outline-none"
         />
         <button

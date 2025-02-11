@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import CardSliderImage1 from "../../assets/images/home-img/CardSliderImage1.jpg";
 import CardSliderImage2 from "../../assets/images/home-img/CardSliderImage2.jpeg";
 import CardSliderImage3 from "../../assets/images/home-img/CardSliderImage3.jpg";
+import CardSliderImage4 from "../../assets/images/home-img/CardSliderImage4.jpg";
 
 function CardSlider() {
   const responsive = {
@@ -45,7 +46,7 @@ function CardSlider() {
           <img src={CardSliderImage3} alt="Feature 3" className="w-full h-64" />
         </div>
         <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
-          <img src={CardSliderImage3} alt="Feature 4" className="w-full h-64" />
+          <img src={CardSliderImage4} alt="Feature 4" className="w-full h-64" />
         </div>
       </Carousel>
     </div>
