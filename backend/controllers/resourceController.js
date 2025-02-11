@@ -73,7 +73,7 @@ const getNotes = async (req, res) => {
   try {
     const { page = 1, limit = 3, sort = "title", order = "asc" } = req.query;
 
-    const query = { type: "PDF" };
+    const query = { type: "Note" };
     const sortOption = { [sort]: order === "asc" ? 1 : -1 };
 
     const notes = await Resource.find(query)
@@ -125,7 +125,7 @@ const getNotesWithPaginate = async (req, res) => {
   try {
     const { subject, grade, page = 1, limit = 3, sort = "title", order = "asc" } = req.body;
 
-    const query = { type: "PDF" };
+    const query = { type: "Note" };
     if (subject) query.subject = { $regex: new RegExp(subject, 'i') }; // Case-insensitive search
     if (grade) query.grade = Number(grade);
 
