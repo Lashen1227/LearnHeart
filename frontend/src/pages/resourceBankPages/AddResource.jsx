@@ -3,7 +3,6 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 //import { useNavigate } from "react-router-dom";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AddResource = () => {
   const [title, setTitle] = useState("");
@@ -35,7 +34,7 @@ const AddResource = () => {
     }
 
     try {
-      const response = await fetch(`${BASE_URL}`, {
+      const response = await fetch("http://localhost:3001/api/resources", {
         method: "POST",
         body: formData,
       });

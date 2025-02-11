@@ -9,7 +9,6 @@ import VIDEOIMAGE from '../../assets/images/resource_bank-img/VIDEO.jpg';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ResourceBank = () => {
   const [notes, setNotes] = useState([]);
@@ -36,7 +35,7 @@ const ResourceBank = () => {
   const fetchNotes = async () => {
     try {
       const response = await axios.post(
-        `${BASE_URL}/notes/withPaginate`,
+        "http://localhost:3001/api/resources/notes/withPaginate",
         { subject: subject.toLowerCase(), grade, page: notesPage, limit: 3, sort: "title", order: "asc" }
       );
       setNotes(response.data.data || []);
@@ -49,7 +48,7 @@ const ResourceBank = () => {
   const fetchVideos = async () => {
     try {
       const response = await axios.post(
-        `${BASE_URL}/videos/withPaginate`,
+        "http://localhost:3001/api/resources/videos/withPaginate",
         { subject: subject.toLowerCase(), grade, page: videosPage, limit: 3, sort: "title", order: "asc" }
       );
       setVideos(response.data.data || []);
