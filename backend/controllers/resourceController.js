@@ -126,7 +126,7 @@ const getNotesWithPaginate = async (req, res) => {
     const { subject, grade, page = 1, limit = 3, sort = "title", order = "asc" } = req.body;
 
     const query = { type: "PDF" };
-    if (subject) query.subject = subject;
+    if (subject) query.subject = { $regex: new RegExp(subject, 'i') }; // Case-insensitive search
     if (grade) query.grade = Number(grade);
 
     const sortOption = { [sort]: order === "asc" ? 1 : -1 };
@@ -155,7 +155,7 @@ const getVideosWithPaginate = async (req, res) => {
     const { subject, grade, page = 1, limit = 3, sort = "title", order = "asc" } = req.body;
 
     const query = { type: "Seminar video" };
-    if (subject) query.subject = subject;
+    if (subject) query.subject = { $regex: new RegExp(subject, 'i') }; // Case-insensitive search
     if (grade) query.grade = Number(grade);
 
     const sortOption = { [sort]: order === "asc" ? 1 : -1 };
