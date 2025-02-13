@@ -45,9 +45,8 @@ const CreatePost = () => {
   });
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-custom-page">
+    <div className="flex items-center justify-center bg-custom-page">
       <div>
-        <h1 className="mb-6 text-2xl font-bold text-center">Create Post</h1>
         <form onSubmit={handleSubmit} className="w-full max-w-3xl p-8 mx-auto bg-white rounded-lg shadow-md">
           <div className="mb-6">
             <label className="block text-sm font-semibold text-gray-700">Post Title</label>
@@ -64,7 +63,7 @@ const CreatePost = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Post Content</label>
+            <label className="block text-sm font-semibold text-gray-700">Post Content</label>
             <ReactQuill
               theme="snow"
               value={values.content}
@@ -99,7 +98,7 @@ const CreatePost = () => {
                 </div>
               )}
             </Dropzone>
-          </div>
+          </div><br />
 
           <button type="submit" className="w-full py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
             Create Post

@@ -7,7 +7,7 @@ import registerImg from "../../assets/images/home-img/register.png";
 function VolDetForm() {
   const Navigate = useNavigate();
   const { user } = useUser();
-  const Name = user?.firstName;
+  const Name = user?.fullName;
   const UserID = user?.id;
   const Status = "pending";
   const VolunteerProfileImageAvailable = user?.hasImage;

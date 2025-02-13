@@ -9,7 +9,7 @@ function OrgDetForm() {
   const { user } = useUser();
   const { organization } = useOrganization();
 
-  const Name = organization?.name;
+  const Name = organization?.fullName;
   const OrgID = organization?.id;
   const UserID = user?.id;
   const ProfPic = organization?.imageUrl;
