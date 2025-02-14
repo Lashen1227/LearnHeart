@@ -5,7 +5,8 @@ const resourceSchema = new mongoose.Schema({
   grade: { type: Number, required: true },
   type: { type: String, required: true }, // e.g., "Notes", "Seminar videos"
   description: { type: String },
-  url: { type: String, required: true },
+  url: { type: String }, // For YouTube or Google Drive videos
+  pdfUrl: { type: String}, // New field for storing uploaded PDFs
   subject: { type: String, required: true },
 });
 

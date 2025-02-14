@@ -9,6 +9,10 @@ import AboutUs from './pages/AboutUs.jsx';
 import Team from './pages/Team.jsx';
 import ContactUs from './pages/ContactUs.jsx';
 import Loading from './pages/authorizationPages/Loading.jsx';
+import CommunityPage from './pages/CommunityPage.jsx';
+import CreatePost from './components/communityForm/CreatePost.jsx';
+import EditPost from './components/communityForm/EditPost.jsx';
+import SinglePost from './components/communityForm/SinglePost.jsx';
 
 // Authorization Pages
 import Login from './pages/authorizationPages/Login.jsx';
@@ -30,6 +34,10 @@ import SclDashboard from './pages/schoolPages/SclDashboard.jsx';
 import VolDetForm from "./components/authorization/VolDetForm.jsx";
 import VolDashboard from './pages/volunteerPages/VolDashboard.jsx';
 
+// Resource Bank Pages
+import ResourceBank from './pages/resourceBankPages/ResourceBank.jsx';
+import AddResource from './pages/resourceBankPages/AddResource.jsx';
+
 const { VITE_CLERK_PUBLISHABLE_KEY } = import.meta.env;
 const PUBLISHABLE_KEY = VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -42,6 +50,10 @@ const router = createBrowserRouter([
   { path: "/about-us", element: <AboutUs />, },
   { path: "/team", element: <Team />, },
   { path: "/contact-us", element: <ContactUs />, },
+  { path: "/posts", element: <CommunityPage />, },
+  { path: "/posts/create", element: <CreatePost />, },
+  { path: "/post/edit/:id", element: <EditPost />, },
+  { path: "/post/:id", element: <SinglePost />, },
   { path: "/next", element: <Loading />, },
   { path: "/sign-in", element: <Login />, },
   { path: "/sign-up", element: <SignUP />, },
@@ -58,6 +70,8 @@ const router = createBrowserRouter([
   { path: "/school/overview", element: <SclDashboard />, },
   { path: "/volunteer/details", element: <VolDetForm />, },
   { path: "/volunteer/overview", element: <VolDashboard />, },
+  { path: "/resource-bank", element: <ResourceBank />, },
+  { path: "/resource-bank/add", element: <AddResource />, },
 ]);
 
 
