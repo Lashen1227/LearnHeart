@@ -1,36 +1,41 @@
 const mongoose = require('mongoose')
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const schoolSchema = new Schema(
     {
         schoolName: {
             type: String,
-            required: true,
-            default: "School name"
+            required: true
         },
-        contact:{
-            type : Number,
-            required : true,
-            default : "0"
-        },
-        username: {
-            type: String,
-            required: true,
-            default: "User"
+        contact: {
+            type: Number,
+            required: true
         },
         email: {
             type: String,
-            required: true,
+            required: false,
             match: [/.+\@.+\..+/, "Please fill a valid email address"],
-            default: "noemail"
         },
-        password: {
+        userID: {
+            type: String,
+            required: true
+        },
+        address: {
             type: String,
             required: true,
-            select: false
+        },
+        website: {
+            type: String,
+            required: false,
+        },
+        description: {
+            type: String,
+            required: false
         }
-    },{
-        timestamps : true
+    },
+    {
+        timestamps: true
     }
 );
-module.exports = mongoose.model('School',schoolSchema);
+
+module.exports = mongoose.model('School', schoolSchema);

@@ -1,16 +1,17 @@
 const express = require('express');
-const router = express.Router();
-const {createschool,
-    getAllschools,
+const {
+    getAllSchools, 
     getSchool,
+    createSchool,
     updateSchool,
     deleteSchool
-
 } = require('../controllers/schoolController');
+const router = express.Router();
 
-router.post('/',createschool);
-router.get('/',getAllschools);
-router.get('/:email',getSchool);
-router.put('/:email',updateSchool);
-router.delete('/:email',deleteSchool);
+router.get('/', getAllSchools);
+router.get('/:id', getSchool);
+router.post('/', createSchool);
+router.patch('/:id', updateSchool);
+router.delete('/:id', deleteSchool);
+
 module.exports = router;
