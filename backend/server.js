@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
+const path = require('path');
 const app = express();
 const PORT = 3001;
 
@@ -16,6 +17,7 @@ const volunteerRoutes = require('./routes/volunteerRoutes');
 const seminarRoutes = require('./routes/seminarRoutes');
 const schoolRoutes = require('./routes/schoolRoutes');
 const postRoutes = require('./routes/postRoute');
+const resourceRoutes = require('./routes/resourceRoutes');
 
 // Middleware
 app.use(cors());
@@ -26,6 +28,9 @@ app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.path}`);
   next();
 });
+
+// Serve uploaded PDF files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connecting database
 mongoose.connect(process.env.MONGO_URL)
@@ -42,3 +47,4 @@ app.use('/api/volunteers', volunteerRoutes);
 app.use('/api/seminars', seminarRoutes);
 app.use('/api/schools', schoolRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/resources', resourceRoutes);
