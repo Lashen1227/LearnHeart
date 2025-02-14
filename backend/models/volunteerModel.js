@@ -41,7 +41,7 @@ const volunteerSchema = new Schema({
     orgID: {
         type: Schema.Types.ObjectId,
         ref: 'organizations',
-        required: true
+        required: false
     }
 }, {
     timestamps: true,

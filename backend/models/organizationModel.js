@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const organizationSchema = new Schema({
-    orgID:{
+    orgID: {
         type: String,
         required: true
     },
@@ -34,6 +34,10 @@ const organizationSchema = new Schema({
         type: String,
         required: true
     },
+    seminarLocations: {
+        type: String,
+        required: false
+    }
 });
 
 module.exports = mongoose.model('Organization', organizationSchema);

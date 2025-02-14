@@ -6,18 +6,28 @@ const path = require('path');
 const app = express();
 const PORT = 3001;
 
+const bodyParser = require("body-parser");
+const http = require("http");
+const { Server } = require("socket.io");
+const server = http.createServer(app);
+const io = new Server(server);
+
 const organizationRoutes = require('./routes/organizationRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
 const seminarRoutes = require('./routes/seminarRoutes');
+const schoolRoutes = require('./routes/schoolRoutes');
+const postRoutes = require('./routes/postRoute');
 const resourceRoutes = require('./routes/resourceRoutes');
 
-// Middlewares
-app.use(express.json());
+// Middleware
 app.use(cors());
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(express.json());
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
+  console.log(`[${req.method}] ${req.path}`);
   next();
-})
+});
 
 // Serve uploaded PDF files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -35,4 +45,6 @@ app.listen(PORT, () => {
 app.use('/api/organizations', organizationRoutes);
 app.use('/api/volunteers', volunteerRoutes);
 app.use('/api/seminars', seminarRoutes);
+app.use('/api/schools', schoolRoutes);
+app.use('/api/posts', postRoutes);
 app.use('/api/resources', resourceRoutes);
