@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
@@ -7,58 +7,52 @@ import registerImg from "../../assets/images/home-img/register.png";
 function SclDetForm() {
   const Navigate = useNavigate();
   const { user } = useUser();
-
+  
   const UserID = user?.id;
   const Name = user?.fullName;
+  const Email = user?.primaryEmailAddress?.emailAddress;
   const [Description, setDescription] = useState("");
   const [Address, setAddress] = useState("");
-  const [phnNbr, setPhnNbr] = useState("");
+  const [PhoneNumber, setPhoneNumber] = useState("");
   const [WebSite, setWebSite] = useState("");
-  const ProfImageAvailable = user?.hasImage;
-  let ProfileColour = "null";
 
-  if (!ProfImageAvailable) {
-    const colors = [
-      "#d3d3d3", "#a9a9a9", "#708090", "#ccccff", "#aaccaa",
-      "#e6e6fa", "#ffe0cc", "#f0e68c", "#c2c2f0", "#d9d9f3",
-      "#e0e0e0", "#b3b3cc", "#d6abab", "#c9c9b9", "#e2cac4",
-      "#d2b48c", "#c7a5a5", "#999999", "#b3ccff",
-    ];
-    ProfileColour = colors[Math.floor(Math.random() * colors.length)];
-  }
+  function submitForm(event) {
+    event.preventDefault(); // Prevent default form submission
 
+    // Log to check if data is ready to be sent
+    console.log({
+      userID: UserID,
+      schoolName: Name,
+      contact: PhoneNumber,
+      email: Email,
+      address: Address,
+      website: WebSite,
+      description: Description
+    });
 
-  async function submitForm(e) {
-    e.preventDefault();
-
-    if (!Description || !Address || !phnNbr || !WebSite) {
-      alert("All fields are required.");
-      return;
-    }
-
-    try {
-      await axios.post("http://localhost:3001/api/schools/", {
-        userID: UserID,
-        name: Name,
-        description: Description,
-        address: Address,
-        phoneNumber: phnNbr,
-        website: WebSite,
-        profileColor: ProfileColour,
-        profileImageAvailable: ProfImageAvailable,
-      });
-      alert("Form submitted successfully!");
-      Navigate("/school/overview");
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred. Please try again.");
-    }
+    // Send data to the server
+    axios.post("http://localhost:3001/api/schools/", {
+      userID: UserID,
+      schoolName: Name,
+      contact: PhoneNumber,
+      email: Email,
+      address: Address,
+      website: WebSite,
+      description: Description
+    })
+    .then((response) => {
+      console.log(response.data);
+      Navigate("/School/Overview");
+    })
+    .catch((error) => {
+      console.error("There was an error sending the data:", error);
+    });
   }
 
   return (
-    <div className="flex flex-col-reverse items-center justify-center min-h-screen px-4 lg:flex-row bg-custom-page lg:px-16">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 lg:flex-row lg:px-16 bg-custom-page">
       {/* Image Section */}
-      <div className="w-full lg:w-2/5">
+      <div className="w-full mb-6 lg:w-2/5 lg:mb-0">
         <img
           src={registerImg}
           alt="Register"
@@ -68,12 +62,10 @@ function SclDetForm() {
 
       {/* Form Section */}
       <form
-      id="formSchool"
+        id="formSchool"
         onSubmit={submitForm}
         className="flex flex-col w-full max-w-lg p-6 space-y-6 border border-gray-300 shadow-lg lg:w-1/3 bg-custom-green rounded-xl lg:p-8"
-      
       >
-
         <h1 className="text-2xl font-bold text-center text-gray-900">
           Sign Up as <span className="text-custom-black">{Name}</span>
         </h1>
@@ -94,8 +86,8 @@ function SclDetForm() {
         <input
           type="text"
           placeholder="Phone Number"
-          value={phnNbr}
-          onChange={(e) => setPhnNbr(e.target.value)}
+          value={PhoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
           className="w-full px-4 py-3 text-base text-gray-600 border rounded-lg focus:ring-2 focus:ring-orange-600 focus:outline-none"
         />
         <input
@@ -117,3 +109,4 @@ function SclDetForm() {
 }
 
 export default SclDetForm;
+  
