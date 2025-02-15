@@ -1,13 +1,13 @@
 import Footer from "../../components/Footer";
-import VolHeader from "../../components/header/VolHeader";
+import SclHeader from "../../components/school/SclHeader";
 
-function VolDashboard() {
+function SclDashboard() {
   return (
     <div className="h-screen bg-custom-page">
       <div className="flex flex-col min-h-screen">
-        <VolHeader />
+        <SclHeader />
         <div className="container flex-1 py-20 mx-auto max-w-7xl">
-          <h1>Volunteer Dashboard</h1>
+          <h1>School Dashboard</h1>
         </div>
         <Footer />
       </div>
@@ -15,4 +15,4 @@ function VolDashboard() {
   )
 }
 
-export default VolDashboard
+export default SclDashboard
