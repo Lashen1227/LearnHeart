@@ -1,5 +1,5 @@
 import Footer from "../../components/Footer";
-import OrgHeader from "../../components/header/OrgHeader";
+import OrgHeader from "../../components/organization/OrgHeader";
 
 function OrgDashboard() {
   return (

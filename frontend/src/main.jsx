@@ -24,15 +24,15 @@ import OrgOwnerCreate from './components/authorization/OrgOwner-Create.jsx';
 
 // Organization Pages
 import OrgDetForm from "./components/authorization/OrgDetForm.jsx";
-import OrgDashboard from './pages/organizationPages/OrgDashboard.jsx';
+import OrgDashboard from './pages/userPages/OrgDashboard.jsx';
 
 // School Pages
 import SclDetForm from "./components/authorization/SclDetForm.jsx";
-import SclDashboard from './pages/schoolPages/SclDashboard.jsx';
+import SclDashboard from './pages/userPages/SclDashboard.jsx';
 
 // Volunteer Pages
 import VolDetForm from "./components/authorization/VolDetForm.jsx";
-import VolDashboard from './pages/volunteerPages/VolDashboard.jsx';
+import VolDashboard from './pages/userPages/VolDashboard.jsx';
 
 // Resource Bank Pages
 import ResourceBank from './pages/resourceBankPages/ResourceBank.jsx';
