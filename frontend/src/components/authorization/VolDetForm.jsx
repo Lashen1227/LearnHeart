@@ -11,6 +11,7 @@ function VolDetForm() {
   const UserID = user?.id;
   const Status = "pending";
   const VolunteerProfileImageAvailable = user?.hasImage;
+  const VolunteerId = user?.id;
   let VolunteerProfileColor = "null";
 
   if (!VolunteerProfileImageAvailable) {
@@ -25,7 +26,6 @@ function VolDetForm() {
   }
 
   const [Description, setDescription] = useState("");
-  const [VolunteerId, setVolunteerId] = useState("");
   const [Address, setAddress] = useState("");
   const [PhoneNumber, setPhoneNumber] = useState("");
 
@@ -71,18 +71,10 @@ function VolDetForm() {
           <h1 className="my-4 text-xl font-bold text-center font-roboto">
             Sign Up as <span className="text-custom-black">{Name}</span>
           </h1>
-
-          <input
-            className="w-full sm:w-[80%] mb-4 bg-white text-gray-600 text-sm px-4 py-2 border-b rounded-lg focus:ring-2 focus:ring-orange-600 focus:outline-none"
-            placeholder="Volunteer ID"
-            type="text"
-            value={VolunteerId}
-            onChange={(e) => setVolunteerId(e.target.value)}
-          />
           <input
             className="w-full sm:w-[80%] mb-4 bg-white text-gray-600 text-sm px-4 py-2 border-b rounded-lg focus:ring-2 focus:ring-orange-600 focus:outline-none"
             type="text"
-            placeholder="Description"
+            placeholder="About You"
             value={Description}
             onChange={(e) => setDescription(e.target.value)}
           />

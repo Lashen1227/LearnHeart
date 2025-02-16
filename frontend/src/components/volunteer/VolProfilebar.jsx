@@ -22,29 +22,28 @@ function VolProfilebar() {
     }, []);
 
     return (
-        <div className="relative flex flex-col items-center p-6 text-white rounded-lg bg-custom-blue">
-            <div className="flex items-center justify-center pointer-events-none">
+        <div className="relative flex flex-col items-center p-6 text-white rounded-lg bg-custom-blue w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto shadow-lg min-h-[400px] flex-grow">
+            <div className="flex flex-col items-center justify-center flex-grow">
                 <UserButton 
                     appearance={{ 
                         elements: { 
-                            userButtonAvatarBox: "w-32 h-32",
+                            userButtonAvatarBox: "w-24 h-24 md:w-32 md:h-32",
                             userButtonAvatarImage: "w-full h-full object-cover"
                         } 
                     }} 
                 />
+                <h2 className="mt-4 text-lg font-semibold text-center md:text-xl">{clarkId?.name}</h2>
+                <p className="px-4 mt-2 text-sm text-center md:text-base md:px-6">
+                    {clarkId?.email} <br />
+                    {clarkId?.description}
+                </p>
             </div>
-            <h2 className="mt-4 text-xl font-semibold">{clarkId?.name}</h2>
-            <p className="mt-2 text-sm text-center">
-                {clarkId?.email} <br />
-                {clarkId?.description}
-            </p>
             
-            {/* Buttons moved to the bottom */}
-            <div className="absolute w-full space-y-3 bottom-6">
-                <button className="block w-1/2 py-2 mx-auto duration-300 bg-white border rounded-xl hover:scale-110 hover:bg-blue-50 text-custom-blue">
+            <div className="flex flex-col items-center w-full pb-6 mt-4 space-y-3">
+                <button className="w-3/4 py-2 duration-300 bg-white border md:w-1/2 rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue">
                     Verify Skills
                 </button>
-                <button className="block w-1/2 py-2 mx-auto text-white duration-300 border rounded-xl hover:scale-110 bg-custom-orange hover:bg-orange-600">
+                <button className="w-3/4 py-2 text-white duration-300 border md:w-1/2 rounded-xl hover:scale-105 bg-custom-orange hover:bg-orange-600">
                     <Link to="/"> Back to Home </Link>
                 </button>
             </div>
