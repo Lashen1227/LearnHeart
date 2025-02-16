@@ -1,12 +1,14 @@
-import PropTypes from 'prop-types';
-import { Paper, Typography, Box, Button } from '@mui/material';
+import PropTypes from "prop-types";
+import { Paper, Typography, Box, Button } from "@mui/material";
 import { CalendarCheck, Clock } from "lucide-react";
 
 export const SessionsList = ({ title, sessions, type }) => {
   return (
     <Paper elevation={3} sx={{ p: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>{title}</Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Typography variant="h6" sx={{ mb: 2 }}>
+        {title}
+      </Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {Array.isArray(sessions) && sessions.length > 0 ? (
           sessions.map((session) => (
             <Paper
@@ -14,30 +16,50 @@ export const SessionsList = ({ title, sessions, type }) => {
               variant="outlined"
               sx={{
                 p: 2,
-                '&:hover': {
-                  borderColor: 'primary.light',
+                "&:hover": {
+                  borderColor: "primary.light",
                 },
               }}
             >
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                }}
+              >
                 <Box>
                   <Typography variant="subtitle1">{session.subject}</Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      color: "text.secondary",
+                    }}
+                  >
                     <CalendarCheck style={{ width: 16, height: 16 }} />
                     <Typography variant="body2">{session.date}</Typography>
                   </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      color: "text.secondary",
+                    }}
+                  >
                     <Clock style={{ width: 16, height: 16 }} />
                     <Typography variant="body2">{session.time}</Typography>
                   </Box>
                 </Box>
                 {type === "scheduled" && (
-                  <Button 
+                  <Button
                     variant="outlined"
                     size="small"
-                    onClick={() => console.log('Join clicked')}
+                    onClick={() => console.log("Join clicked")}
                   >
-                    Join
+                    View
                   </Button>
                 )}
               </Box>
