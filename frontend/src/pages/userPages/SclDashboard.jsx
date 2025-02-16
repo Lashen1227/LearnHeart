@@ -44,36 +44,67 @@ function SclDashboard() {
   return (
     <div className="h-screen bg-custom-page">
       <div className="flex flex-col min-h-screen">
-        <SclHeader />
         <Box
           sx={{
             minHeight: "100vh",
             background: "linear-gradient(to bottom right, #e0f2fe, #e0e7ff)",
           }}
         >
-          <Container maxWidth="lg" sx={{ py: 4 }}>
+          <SclHeader />
+          <Container maxWidth="lg" sx={{ py: 10 }}>
             <Grid container spacing={4}>
               {/* Left Column */}
               <Grid item xs={12} md={3}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
                   <SchoolProfile />
-                  <RequestSession />
                 </Box>
               </Grid>
 
               {/* Middle Column */}
               <Grid item xs={12} md={6}>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                  <SessionsList
-                    title="Scheduled Sessions"
-                    sessions={scheduledSessions}
-                    type="scheduled"
-                  />
-                  <SessionsList
-                    title="Completed Sessions"
-                    sessions={completedSessions}
-                    type="completed"
-                  />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 4,
+                    pb: 4,
+                  }}
+                >
+                  {/* Scrollable Scheduled Sessions */}
+                  <Box
+                    sx={{
+                      boxShadow: 1, // Small shadow for subtle effect
+                      borderRadius: 2, // Optional: Add rounded corners
+                      maxHeight: 300, // Set max height
+                      overflowY: "auto", // Enable vertical scrolling
+                      scrollbarWidth: "none", // Hide scrollbar for Firefox
+                      "&::-webkit-scrollbar": { display: "none" }, // Hide scrollbar for Chrome, Safari
+                    }}
+                  >
+                    <SessionsList
+                      title="Scheduled Sessions"
+                      sessions={scheduledSessions}
+                      type="scheduled"
+                    />
+                  </Box>
+
+                  {/* Scrollable Completed Sessions */}
+                  <Box
+                    sx={{
+                      boxShadow: 1, // Small shadow for subtle effect
+                      borderRadius: 2, // Optional: Add rounded corners
+                      maxHeight: 300, // Set max height
+                      overflowY: "auto", // Enable vertical scrolling
+                      scrollbarWidth: "none", // Hide scrollbar for Firefox
+                      "&::-webkit-scrollbar": { display: "none" }, // Hide scrollbar for Chrome, Safari
+                    }}
+                  >
+                    <SessionsList
+                      title="Completed Sessions"
+                      sessions={completedSessions}
+                      type="completed"
+                    />
+                  </Box>
                 </Box>
               </Grid>
 
@@ -81,6 +112,8 @@ function SclDashboard() {
               <Grid item xs={12} md={3}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
                   <Reviews />
+
+                  {/* Scrollable Pending Requests */}
                   <Paper elevation={3} sx={{ p: 3 }}>
                     <Typography
                       variant="h6"
@@ -88,15 +121,27 @@ function SclDashboard() {
                     >
                       Pending Requests
                     </Typography>
+
+                    {/* Scrollable Box */}
                     <Box
-                      sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        maxHeight: 210, // Set max height for scrolling
+                        overflowY: "auto", // Enable vertical scrolling
+                        scrollbarWidth: "none", // Hide scrollbar for Firefox
+                        "&::-webkit-scrollbar": { display: "none" }, // Hide scrollbar for Chrome, Safari
+                      }}
                     >
+                      {/* Sample Pending Requests */}
                       <Paper
                         variant="outlined"
                         sx={{
                           p: 2,
                           bgcolor: "#fff7ed",
                           borderColor: "#fed7aa",
+                          boxSizing: "border-box", // Prevent overflow due to padding
                         }}
                       >
                         <Typography variant="subtitle1" sx={{ mb: 1 }}>
@@ -111,12 +156,14 @@ function SclDashboard() {
                           View
                         </Button>
                       </Paper>
+
                       <Paper
                         variant="outlined"
                         sx={{
                           p: 2,
                           bgcolor: "#fff7ed",
                           borderColor: "#fed7aa",
+                          boxSizing: "border-box", // Prevent overflow due to padding
                         }}
                       >
                         <Typography variant="subtitle1" sx={{ mb: 1 }}>
@@ -131,11 +178,14 @@ function SclDashboard() {
                           View
                         </Button>
                       </Paper>
+
+                      {/* Add more pending requests dynamically as needed */}
                     </Box>
                   </Paper>
                 </Box>
               </Grid>
             </Grid>
+            <RequestSession />
           </Container>
 
           <Footer />
