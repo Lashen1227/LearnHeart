@@ -23,7 +23,7 @@ function VolProfilebar() {
 
     return (
         <div className="relative flex flex-col items-center p-6 text-white rounded-lg bg-custom-blue w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto shadow-lg min-h-[400px] flex-grow">
-            <div className="flex flex-col items-center justify-center flex-grow">
+            <div className="flex flex-col items-center justify-center flex-grow pointer-events-none">
                 <UserButton 
                     appearance={{ 
                         elements: { 

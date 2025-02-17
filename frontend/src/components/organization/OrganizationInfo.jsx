@@ -5,9 +5,11 @@ import { UserButton, useUser } from "@clerk/clerk-react";
 import { Box, Button, Typography, Paper, Modal, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddResource from "../../pages/resourceBankPages/AddResource";
+import CreatePost from "../../components/communityForm/CreatePost";
 
 const OrganizationInfo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPostModalOpen, setIsPostModalOpen] = useState(false);
     
     const [organizations, setOrganizations] = useState([])
     const user = useUser().user;
@@ -32,7 +34,7 @@ const OrganizationInfo = () => {
   return (
     <div className="min-h-screen bg-custom-page">
         <div className="p-20 text-white rounded-lg bg-custom-blue">
-            <div className="flex flex-col items-center justify-center flex-grow">
+            <div className="flex flex-col items-center justify-center flex-grow pointer-events-none">
                     <UserButton 
                         appearance={{ 
                             elements: { 
@@ -53,9 +55,32 @@ const OrganizationInfo = () => {
                     <button className="px-3 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue">
                         Verify Skills
                     </button>
-                    <button className="px-3 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue">
-                        Designated Areas
+                    <button className="px-3 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsPostModalOpen(true)}>
+                        Share Announcements
                     </button>
+
+                    <Modal open={isPostModalOpen} onClose={() => setIsPostModalOpen(false)}>
+                        <Box
+                            position="absolute"
+                            top="50%"
+                            left="50%"
+                            sx={{
+                                transform: "translate(-50%, -50%)",
+                                bgcolor: "#EAEFFB",
+                                p: 3,
+                                borderRadius: 2,
+                                width: "50%",
+                                maxHeight: "80vh",
+                                overflowY: "auto",
+                            }}
+                        >
+                            <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsPostModalOpen(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                            <CreatePost />
+                        </Box>
+                    </Modal>
+
                 </div>
 
                 {/* Back to Home Button */}
