@@ -26,8 +26,6 @@ export const SchoolProfile = () => {
     fetchSchoolProfiles();
   }, []);
 
-  console.log("Fetched School Profiles:", schoolProfiles);
-
   if (!isLoaded || schoolProfiles.length === 0) {
     return <p>Loading...</p>;
   }

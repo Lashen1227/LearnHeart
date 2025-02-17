@@ -7,12 +7,13 @@ import {
   Box,
   Alert,
 } from "@mui/material";
-// import { useAuth } from "@clerk/clerk-react";
 
 import axios from "axios";
+import { useUser } from "@clerk/clerk-react";
 
 export const RequestSession = () => {
-  //const { userId, sessionId } = useAuth(); // Retrieve user session or userId from Clerk
+  const { user } = useUser(); // Get logged-in user details
+  console.log("User:", user);
   const [formData, setFormData] = useState({
     name: "",
     subject: "",
@@ -42,56 +43,48 @@ export const RequestSession = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("Form Data:", formData);
     e.preventDefault();
-    window.location.reload();
     setStatus({ message: "", isError: false, loading: true });
-
-    // if (!userId) {
-    //   console.error("User is not authenticated");
-    //   return;
-    // }
 
     try {
       const response = await axios.post(
         "http://localhost:3001/api/seminars/",
         {
           ...formData,
+          schoolId: user.id, // Automatically attach user ID
         },
         {
           headers: {
             "Content-Type": "application/json",
-            // Authorization: `Bearer ${sessionId}`,// Send the session token as a bearer token (or if using Clerk's session management)
           },
         }
       );
 
       if (response.status !== 201) {
-        // Check if the request was successful
-        throw new Error("Failed to submit request");
+        // Reset form after successful submission
+        setFormData({
+          name: "",
+          subject: "",
+          description: "",
+          grade: "",
+          expDate: "",
+          location: "",
+          expStudentCount: "",
+          expTeacherCount: "",
+          phoneNumber: "",
+          organization: "",
+          additionalRequests: "",
+        });
+
+        console.log("Form Data Submitted:", response.data);
+
+        setStatus({
+          message: "Form submitted successfully!",
+          isError: false,
+          loading: false,
+        });
       }
-
-      // Reset form after successful submission
-      setFormData({
-        name: "",
-        subject: "",
-        description: "",
-        grade: "",
-        expDate: "",
-        location: "",
-        expStudentCount: "",
-        expTeacherCount: "",
-        phoneNumber: "",
-        organization: "",
-        additionalRequests: "",
-      });
-
-      console.log("Form Data Submitted:", response.data);
-
-      setStatus({
-        message: "Form submitted successfully!",
-        isError: false,
-        loading: false,
-      });
     } catch (error) {
       setStatus({
         message:
