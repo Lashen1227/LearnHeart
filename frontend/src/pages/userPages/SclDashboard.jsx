@@ -190,7 +190,7 @@ function SclDashboard() {
 
           <Footer />
         </Box>
-        <Footer />
+        
       </div>
     </div>
   );

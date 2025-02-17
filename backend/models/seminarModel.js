@@ -66,6 +66,7 @@ const seminarSchema = new Schema(
         ],
         schoolId: {
             type: mongoose.Schema.Types.ObjectId,
+            ref: 'School', 
             required: false // Reference to the School model
         },
         organizationId: {

@@ -7,8 +7,12 @@ import {
   Box,
   Alert,
 } from "@mui/material";
+// import { useAuth } from "@clerk/clerk-react";
+
+import axios from "axios";
 
 export const RequestSession = () => {
+  //const { userId, sessionId } = useAuth(); // Retrieve user session or userId from Clerk
   const [formData, setFormData] = useState({
     name: "",
     subject: "",
@@ -39,18 +43,30 @@ export const RequestSession = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    window.location.reload();
     setStatus({ message: "", isError: false, loading: true });
 
-    try {
-      const response = await fetch("http://localhost:3001/api/seminars/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+    // if (!userId) {
+    //   console.error("User is not authenticated");
+    //   return;
+    // }
 
-      if (!response.ok) {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/seminars/",
+        {
+          ...formData,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${sessionId}`,// Send the session token as a bearer token (or if using Clerk's session management)
+          },
+        }
+      );
+
+      if (response.status !== 201) {
+        // Check if the request was successful
         throw new Error("Failed to submit request");
       }
 
@@ -68,10 +84,19 @@ export const RequestSession = () => {
         organization: "",
         additionalRequests: "",
       });
-      console.log("Form Data Submitted:", formData);
+
+      console.log("Form Data Submitted:", response.data);
+
+      setStatus({
+        message: "Form submitted successfully!",
+        isError: false,
+        loading: false,
+      });
     } catch (error) {
       setStatus({
-        message: error.message || "Something went wrong. Please try again.",
+        message:
+          error.response?.data?.error ||
+          "Something went wrong. Please try again.",
         isError: true,
         loading: false,
       });

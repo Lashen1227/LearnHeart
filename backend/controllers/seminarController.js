@@ -48,10 +48,16 @@ const createSeminar = async (req, res) => {
         expTeacherCount,
         additionalRequests,
         expDate,
-        schoolId,
         organizationId
     } = req.body;
     
+    // const schoolId = req.session.userid;// Get userId from Clerk session
+
+
+    // if (!userId) {
+    //     return res.status(401).json({ error: "User not authenticated" }); // Unauthorized if no userId in session
+    // }
+
 
 
     try {
@@ -68,7 +74,7 @@ const createSeminar = async (req, res) => {
             expTeacherCount,
             additionalRequests,
             expDate,
-            schoolId,
+            schoolId,// Associate the seminar with the authenticated user
             organizationId
         });
 
