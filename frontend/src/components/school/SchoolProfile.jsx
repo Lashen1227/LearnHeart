@@ -1,10 +1,10 @@
 import { Paper, Box, Typography } from "@mui/material";
-import { Building } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import { SignOutButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
+import { UserButton } from "@clerk/clerk-react";
 
 export const SchoolProfile = () => {
   const [schoolProfiles, setSchoolProfiles] = useState([]); // Pluralized state name
@@ -45,25 +45,16 @@ export const SchoolProfile = () => {
           textAlign: "center",
         }}
       >
-        <Box
-          sx={{
-            width: 96,
-            height: 150,
-            bgcolor: "primary.main",
-            borderRadius: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            mb: 2,
-            transition: "transform 0.2s",
-            "&:hover": {
-              transform: "scale(1.05)",
-            },
-          }}
-        >
-          <Building style={{ width: 48, height: 48, color: "white" }} />
-        </Box>
-        <Typography variant="h5" sx={{ mb: 1, color: "primary.dark" }}>
+        <div className="flex flex-col items-center justify-center flex-grow pointer-events-none">
+          <UserButton
+            appearance={{
+              elements: {
+                userButtonAvatarBox: "w-24 h-24 md:w-32 md:h-32",
+                userButtonAvatarImage: "w-full h-full object-cover",
+              },
+            }}
+          />
+                  <Typography variant="h5" sx={{ mb: 1, color: "primary.dark" }}>
           <strong>{matchingSchool?.schoolName}</strong>
         </Typography>
         <Typography variant="body1" sx={{ mb: 2, color: "text.secondary" }}>
@@ -77,6 +68,7 @@ export const SchoolProfile = () => {
           <br />
           {matchingSchool?.website}
         </Typography>
+        </div>
 
         <div className="flex items-center space-x-4">
           <SignOutButton>
