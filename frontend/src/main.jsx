@@ -6,6 +6,7 @@ import { ClerkProvider } from '@clerk/clerk-react';
 
 // Landing Pages
 import AboutUs from './pages/AboutUs.jsx';
+import PastEvents from './pages/PastEvents.jsx';
 import Team from './pages/Team.jsx';
 import ContactUs from './pages/ContactUs.jsx';
 import Loading from './pages/authorizationPages/Loading.jsx';
@@ -48,6 +49,7 @@ if (!PUBLISHABLE_KEY) {
 const router = createBrowserRouter([
   { path: "/", element: <App />, },
   { path: "/about-us", element: <AboutUs />, },
+  { path: "/past-events", element: <PastEvents />, },
   { path: "/team", element: <Team />, },
   { path: "/contact-us", element: <ContactUs />, },
   { path: "/posts", element: <CommunityPage />, },
