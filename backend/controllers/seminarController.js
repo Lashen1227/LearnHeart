@@ -48,6 +48,7 @@ const createSeminar = async (req, res) => {
         expTeacherCount,
         additionalRequests,
         expDate,
+        schoolId,
         organizationId
     } = req.body;
     
@@ -79,7 +80,7 @@ const createSeminar = async (req, res) => {
         });
 
         res.status(200).json(seminar);
-        
+        console.log("Seminar created successfully"+seminar);
 
     } catch (error) {
         res.status(400).json({ error: error.message });
