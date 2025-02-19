@@ -51,6 +51,15 @@ const createSeminar = async (req, res) => {
         schoolId,
         organizationId
     } = req.body;
+    
+    // const schoolId = req.session.userid;// Get userId from Clerk session
+
+
+    // if (!userId) {
+    //     return res.status(401).json({ error: "User not authenticated" }); // Unauthorized if no userId in session
+    // }
+
+
 
     try {
         const seminar = await Seminar.create({
@@ -66,11 +75,13 @@ const createSeminar = async (req, res) => {
             expTeacherCount,
             additionalRequests,
             expDate,
-            schoolId,
+            schoolId,// Associate the seminar with the authenticated user
             organizationId
         });
 
         res.status(200).json(seminar);
+        console.log("Seminar created successfully"+seminar);
+
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

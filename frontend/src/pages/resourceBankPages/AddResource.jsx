@@ -1,8 +1,4 @@
 import { useState } from "react";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-//import { useNavigate } from "react-router-dom";
-
 
 const AddResource = () => {
   const [title, setTitle] = useState("");
@@ -14,7 +10,6 @@ const AddResource = () => {
   const [pdf, setPdf] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  //const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +37,6 @@ const AddResource = () => {
       if (response.ok) {
         resetForm();
         setError("");
-        //navigate("/volunteer/overview")
       } else {
         setError("Failed to add resource. Please try again.");
       }
@@ -65,19 +59,18 @@ const AddResource = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="bg-custom-page min-h-screen flex items-center justify-center py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl w-full space-y-8 p-10 bg-custom-white shadow-2xl rounded-lg">
-          <h1 className="text-3xl font-bold text-center mb-8 text-custom-black">Add New Resource</h1>
+      <div className="flex items-center justify-center px-4 bg-custom-page">
+        <div className="w-full max-w-3xl p-8 space-y-6 rounded-lg shadow-2xl bg-custom-white">
+          <h1 className="mb-6 text-2xl font-bold text-center text-custom-black">Add New Resource</h1>
           {error && (
-            <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+            <div className="p-3 mb-4 text-red-700 bg-red-100 border-l-4 border-red-500" role="alert">
               <p className="font-bold">Error</p>
               <p>{error}</p>
             </div>
           )}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="title" className="block text-base font-medium text-custom-lightb mb-1">
+              <label htmlFor="title" className="block mb-1 text-sm font-medium text-custom-lightb">
                 Title
               </label>
               <input
@@ -86,58 +79,58 @@ const AddResource = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
-                placeholder="Enter title of the resource"
-                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                placeholder="Enter title"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue"
               />
             </div>
-            <div>
-              <label htmlFor="grade" className="block text-base font-medium text-custom-lightb mb-1">
-                Grade
-              </label>
-              <input
-                type="number"
-                id="grade"
-                value={grade}
-                onChange={(e) => setGrade(e.target.value)}
-                required
-                placeholder="Enter the grade"
-                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue"
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="grade" className="block mb-1 text-sm font-medium text-custom-lightb">
+                  Grade
+                </label>
+                <input
+                  type="number"
+                  id="grade"
+                  value={grade}
+                  onChange={(e) => setGrade(e.target.value)}
+                  required
+                  placeholder="Enter grade"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                />
+              </div>
+              <div>
+                <label htmlFor="type" className="block mb-1 text-sm font-medium text-custom-lightb">
+                  Type
+                </label>
+                <select
+                  id="type"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                >
+                  <option value="" disabled>Select Type</option>
+                  <option value="Note">Note</option>
+                  <option value="Seminar video">Seminar video</option>
+                </select>
+              </div>
             </div>
             <div>
-              <label htmlFor="type" className="block text-base font-medium text-custom-lightb mb-1">
-                Type
-              </label>
-              <select
-                id="type"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                required
-                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue"
-              >
-                <option value="" disabled>
-                  Select Type
-                </option>
-                <option value="Note">Note</option>
-                <option value="Seminar video">Seminar video</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="description" className="block text-base font-medium text-custom-lightb mb-1">
+              <label htmlFor="description" className="block mb-1 text-sm font-medium text-custom-lightb">
                 Description
               </label>
               <textarea
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Enter a brief description of the resource"
-                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue"
-                rows="4"
+                placeholder="Enter description"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                rows="3"
               ></textarea>
             </div>
             {type === "Note" && (
               <div>
-                <label htmlFor="pdf" className="block text-base font-medium text-custom-lightb mb-1">
+                <label htmlFor="pdf" className="block mb-1 text-sm font-medium text-custom-lightb">
                   Upload PDF
                 </label>
                 <div className="flex items-center space-x-2">
@@ -151,32 +144,32 @@ const AddResource = () => {
                   <button
                     type="button"
                     onClick={() => document.getElementById("pdf").click()}
-                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    className="px-4 py-2 text-gray-800 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
                   >
                     Choose File
                   </button>
-                  <span className="text-base text-custom-lightb">{pdf ? pdf.name : "No file chosen"}</span>
+                  <span className="text-sm text-custom-lightb">{pdf ? pdf.name : "No file chosen"}</span>
                 </div>
               </div>
             )}
             {type !== "Note" && (
               <div>
-                <label htmlFor="url" className="block text-base font-medium text-custom-lightb mb-1">
+                <label htmlFor="url" className="block mb-1 text-sm font-medium text-custom-lightb">
                   Resource URL
                 </label>
                 <input
                   type="url"
                   id="url"
-                  placeholder="Add YouTube video URL or Google Drive link here"
+                  placeholder="Enter video URL or Drive link"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   required={type !== "Note"}
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue"
                 />
               </div>
             )}
             <div>
-              <label htmlFor="subject" className="block text-bas font-medium text-custom-lightb mb-1">
+              <label htmlFor="subject" className="block mb-1 text-sm font-medium text-custom-lightb">
                 Subject
               </label>
               <input
@@ -185,8 +178,8 @@ const AddResource = () => {
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 required
-                placeholder="Enter the subject"
-                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-custom-blue"
+                placeholder="Enter subject"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue"
               />
             </div>
             <div>
@@ -205,7 +198,6 @@ const AddResource = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

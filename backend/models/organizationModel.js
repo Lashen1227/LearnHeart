@@ -8,11 +8,11 @@ const organizationSchema = new Schema({
     },
     name: {
         type: String,
-        required: true
+        required: false
     },
     description: {
         type: String,
-        required: true
+        required: false
     },
     phone: {
         type: String,
@@ -32,7 +32,7 @@ const organizationSchema = new Schema({
     },
     profilePic: {
         type: String,
-        required: true
+        required: false
     },
     seminarLocations: {
         type: String,

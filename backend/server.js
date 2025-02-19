@@ -3,8 +3,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
 const path = require('path');
+//const {withSession} = require('@clerk/clerk-sdk-node');
 const app = express();
 const PORT = 3001;
+//app.use(withSession0);
 
 const bodyParser = require("body-parser");
 const http = require("http");
