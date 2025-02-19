@@ -1,12 +1,15 @@
-import { Paper, Box, Typography } from "@mui/material";
+import { Paper, Box, Typography, Modal, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
-import { SignOutButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import { UserButton } from "@clerk/clerk-react";
+import OrgSearchList from "../organization/OrgSearchList";
 
 export const SchoolProfile = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [schoolProfiles, setSchoolProfiles] = useState([]); // Pluralized state name
   const { user: curruntID, isLoaded } = useUser();
   // Get school from Clerk's user object
@@ -35,7 +38,7 @@ export const SchoolProfile = () => {
   }
 
   return (
-    <Paper elevation={3} sx={{ p: 3 }}>
+    <Paper elevation={3} sx={{ p: 3, bgcolor: "#3657AD" }}>
       <Box
         sx={{
           display: "flex",
@@ -54,33 +57,61 @@ export const SchoolProfile = () => {
               },
             }}
           />
-                  <Typography variant="h5" sx={{ mb: 1, color: "primary.dark" }}>
-          <strong>{matchingSchool?.schoolName}</strong>
-        </Typography>
-        <Typography variant="body1" sx={{ mb: 2, color: "text.secondary" }}>
-          <strong>{matchingSchool?.description}</strong>
           <br />
-          {matchingSchool?.address}
+          <Typography variant="h5" sx={{ mb: 1, color: "white" }}>
+            <strong>{matchingSchool?.schoolName}</strong>
+          </Typography>
           <br />
-          {matchingSchool?.contact}
-          <br />
-          {matchingSchool?.email}
-          <br />
-          {matchingSchool?.website}
-        </Typography>
+          <Typography variant="body1" sx={{ mb: 2, color: "white" }}>
+            <strong>{matchingSchool?.description}</strong>
+            <br />
+            {matchingSchool?.address}
+            <br />
+            {matchingSchool?.contact}
+            <br />
+            {matchingSchool?.email}
+          </Typography>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <SignOutButton>
-            <Link
-              to="/"
-              className="px-4 py-2 text-sm font-medium text-white transition-all duration-200 border border-transparent rounded-lg bg-custom-orange hover:bg-orange-600"
-            >
-              Sign out
-            </Link>
-          </SignOutButton>
+        <button className="px-2 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsModalOpen(true)}>
+          <SearchIcon />Find Organizations
+        </button><br />
+        <div className="flex items-center justify-center w-full space-x-3">
+          <button className="py-2 text-white duration-300 border md:w-1/2 rounded-xl hover:scale-105 bg-custom-orange hover:bg-orange-600">
+            <Link to="/"> Back to Home </Link>
+          </button>
         </div>
       </Box>
+
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <Box 
+          position="absolute" 
+          top="50%" 
+          left="50%" 
+          sx={{
+            transform: "translate(-50%, -50%)",
+            bgcolor: "#EAEFFB", 
+            p: 3, 
+            borderRadius: 2,
+            width: {
+              xs: '90%',  // 90% width on extra small screens (mobile)
+              sm: '75%',  // 75% width on small screens (tablet)
+              md: '60%',  // 60% width on medium screens (iPad)
+              lg: '50%',  // 50% width on large screens
+              xl: '35%'   // 35% width on extra-large screens
+            },
+            maxHeight: "80vh", 
+            overflowY: "auto"
+          }}
+        >
+          <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsModalOpen(false)}>
+            <CloseIcon />
+          </IconButton>
+          <OrgSearchList />
+        </Box>
+      </Modal>
+
+
     </Paper>
   );
 };
