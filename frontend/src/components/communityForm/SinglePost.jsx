@@ -2,9 +2,7 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import { blue } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box } from "@mui/material";
 import axios from "axios";
@@ -14,7 +12,6 @@ import Navbar from "../Navbar";
 import Footer from "../Footer";
 import Loader from "../Spinner";
 import { Link } from 'react-router-dom';
-import PersonIcon from '@mui/icons-material/Person';
 
 const SinglePost = () => {
   const { id } = useParams();
@@ -50,7 +47,6 @@ const SinglePost = () => {
         ) : (
           <Card className="w-full max-w-3xl">
             <CardHeader
-              avatar={<Avatar sx={{ bgcolor: blue[800] }}><PersonIcon /></Avatar>}
               action={
                 <Link to={`/post/edit/${id}`}>
                   <IconButton aria-label="settings"><MoreVertIcon /></IconButton>
