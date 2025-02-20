@@ -78,6 +78,10 @@ const seminarSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             required: false
         },
+        organization: {
+            type: String,
+            required: false
+        },
     },
     {
         timestamps: false, // Show timestamps

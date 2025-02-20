@@ -136,7 +136,9 @@ const RequestedSessions = () => {
             </Card>
           ))
         ) : (
-          <Typography textAlign="center">No seminar requests available.</Typography>
+          <Typography Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
+            No seminar requests available.
+          </Typography>
         )}
       </Box>
     </Paper>

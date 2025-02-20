@@ -1,35 +1,13 @@
 import Navbar from "../../components/organization/OrgHeader";
 import Footer from "../../components/Footer";
 import OrganizationInfo from "../../components/organization/OrganizationInfo";
-import SessionsList from "../../components/organization/SessionsList";
+import UpcomingOrganization from "../../components/organization/UpcomingOrganization";
+import CompleteSessions from "../../components/organization/CompleteSessions";
 import VolunteerRequest from "../../components/organization/VolunteerRequest";
 import RequestedSessions from "../../components/organization/RequestedSessions";
-import ReviewsList from "../../components/organization/ReviewsList";
+// import ReviewsList from "../../components/organization/ReviewsList";
 
 const OrgDashboard = () => {
-
-  const scheduledSessions = [
-    {
-      date: "18.11.2024",
-      school: "High School, Galle",
-      subject: "Mathematics",
-      grade: "11",
-      status: "Completed",
-    },
-    {
-      date: "25.11.2024",
-      school: "High School, Matara",
-      subject: "English",
-      grade: "08",
-      status: "Completed",
-    },
-  ];
-
-  const completedSessions = [
-    { date: "10.05.2024", school: "High School, Galle" },
-    { date: "28.05.2024", school: "High School, Matara" },
-    { date: "07.11.2024", school: "High School, Galle" },
-  ];
 
   const requestedSessions = [
     {
@@ -50,14 +28,15 @@ const OrgDashboard = () => {
         <OrganizationInfo />
 
         <div className="space-y-6">
-          <SessionsList title="Scheduled Sessions" sessions={scheduledSessions} />
-          <SessionsList title="Completed Sessions" sessions={completedSessions} />
+          {/* <SessionsList title="Scheduled Sessions" sessions={scheduledSessions} /> */}
+          <UpcomingOrganization />
+          <CompleteSessions />
         </div>
 
         <div className="space-y-6">
           <VolunteerRequest/>
           <RequestedSessions sessions={requestedSessions} />
-          <ReviewsList />
+          {/* <ReviewsList /> */}
         </div>
       </div>
 

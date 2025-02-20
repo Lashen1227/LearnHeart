@@ -82,7 +82,7 @@ export const RequestSession = () => {
           expStudentCount: formData.expStudentCount,
           expTeacherCount: formData.expTeacherCount,
           phoneNumber: clarkId?.contact,
-          organization: formData.organization,
+          organization: organizations.find((org) => org.name === formData.organization)?.name,
           medium: formData.medium,
           additionalRequests: formData.additionalRequests || "-",
           schoolId: clarkId?._id,
