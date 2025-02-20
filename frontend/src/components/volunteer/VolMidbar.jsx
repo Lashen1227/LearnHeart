@@ -137,6 +137,7 @@ function VolMidbar() {
           <div className="mb-4">
             <label className="block text-left mb-2">Preferred Organization</label>
             <select name="organization" value={formData.organization} onChange={handleChange} required className="w-full p-2 border rounded">
+              <option className="text-custom-lightb"value="">Select Organization</option>
               {organizations.map((org) => (
                 <option key={org._id} value={org._id}>{org.name}</option>
               ))}
