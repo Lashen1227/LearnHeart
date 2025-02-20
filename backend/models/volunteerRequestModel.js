@@ -8,6 +8,8 @@ const volunteerRequestSchema = new mongoose.Schema(
     organization: { type: mongoose.Schema.Types.ObjectId, ref: "Organization", required: true },
     availableDates: { type: [String], required: true },
     cv: { type: String }, // Store CV file path
+    isPending: { type: Boolean, default: true },
+    isRejected: { type: Boolean, default: null },
   },
   { timestamps: true }
 );
