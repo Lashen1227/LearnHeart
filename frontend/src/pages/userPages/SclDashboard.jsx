@@ -14,7 +14,7 @@ import { useUser } from "@clerk/clerk-react";
 function SclDashboard() {
   const [completedSessions, setCompletedSessions] = useState([]);
   const [scheduledSessions, setScheduledSessions] = useState([]);
-  const { user, isLoaded } = useUser(); //get the currnt user from clerk
+  const { user } = useUser(); //get the currnt user from clerk
 
   const matchingCompletedSessions = completedSessions.find(
     (cSessions) => cSessions.schoolId === user?.id
@@ -51,12 +51,6 @@ function SclDashboard() {
   console.log(completedSessions);
   console.log(scheduledSessions);
 
-  if (!isLoaded || completedSessions.length === 0) {
-    return <p>Loading...</p>;
-  }
-  if (!isLoaded || scheduledSessions.length === 0) {
-    return <p>Loading...</p>;
-  }
 
   // const scheduledSessions = [
   //   {
