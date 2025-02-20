@@ -39,6 +39,10 @@ const seminarSchema = new Schema(
             type: Number,
             required: false
         },
+        medium: {
+            type: String,
+            required: false
+        },
         expStudentCount: {
             type: Number,
             required:false
