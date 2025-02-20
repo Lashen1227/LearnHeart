@@ -5,7 +5,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useUser } from "@clerk/clerk-react";
 
-const RequestedSessions = () => {
+const SeminarRequests = () => {
   const [seminars, setSeminars] = useState([]);
   const [schools, setSchools] = useState([]);
   const [organizations, setOrganizations] = useState([]);
@@ -145,4 +145,4 @@ const RequestedSessions = () => {
   );
 };
 
-export default RequestedSessions;
+export default SeminarRequests;

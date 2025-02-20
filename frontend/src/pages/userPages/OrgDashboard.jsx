@@ -4,21 +4,9 @@ import OrganizationInfo from "../../components/organization/OrganizationInfo";
 import UpcomingOrganization from "../../components/organization/UpcomingOrganization";
 import CompleteSessions from "../../components/organization/CompleteSessions";
 import VolunteerRequest from "../../components/organization/VolunteerRequest";
-import RequestedSessions from "../../components/organization/RequestedSessions";
-// import ReviewsList from "../../components/organization/ReviewsList";
+import SeminarRequests from "../../components/organization/SeminarRequests";
 
 const OrgDashboard = () => {
-
-  const requestedSessions = [
-    {
-      date: "27.11.2024",
-      school: "High School, Matara",
-    },
-    {
-      date: "20.12.2024",
-      school: "High School, Galle",
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-custom-page">
@@ -28,14 +16,13 @@ const OrgDashboard = () => {
         <OrganizationInfo />
 
         <div className="space-y-6">
-          {/* <SessionsList title="Scheduled Sessions" sessions={scheduledSessions} /> */}
           <UpcomingOrganization />
           <CompleteSessions />
         </div>
 
         <div className="space-y-6">
           <VolunteerRequest/>
-          <RequestedSessions sessions={requestedSessions} />
+          <SeminarRequests/>
           {/* <ReviewsList /> */}
         </div>
       </div>

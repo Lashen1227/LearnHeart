@@ -101,7 +101,8 @@ export const SchoolProfile = () => {
               xl: '35%'
             },
             maxHeight: "80vh", 
-            overflowY: "auto"
+            overflowY: "auto",
+            scrollbarWidth: "none",
           }}
         >
           <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsModalOpen(false)}>

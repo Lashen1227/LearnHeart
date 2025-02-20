@@ -136,7 +136,7 @@ export const RequestSession = () => {
   }, []);
 
   return (
-    <Paper elevation={3} sx={{ p: 3, mt: 4, backgroundColor: "#4db6ac" }}>
+    <Paper elevation={3} sx={{ p: 3, backgroundColor: "#4db6ac" }}>
       <Typography variant="h6" sx={{ m: 2, textAlign: "center" }}>
         Request Seminar Session
       </Typography>
