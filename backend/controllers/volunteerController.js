@@ -141,6 +141,20 @@ const createVolunteerRequest = async (req, res) => {
     const { qualifications, language, subjects, organization, availableDates } = req.body;
     const cvPath = req.file ? req.file.path : null;
 
+    if (!qualifications || !language || !subjects || !organization || !availableDates || !cvPath) {
+      if (cvPath) {
+        fs.unlinkSync(cvPath); // Delete the uploaded file
+      }
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(organization)) {
+      if (cvPath) {
+        fs.unlinkSync(cvPath); // Delete the uploaded file
+      }
+      return res.status(400).json({ error: "Invalid organization ID" });
+    }
+
     const newRequest = new VolunteerRequest({
       qualifications,
       language,
@@ -153,6 +167,10 @@ const createVolunteerRequest = async (req, res) => {
     await newRequest.save();
     res.status(201).json({ message: "Volunteer request submitted successfully" });
   } catch (error) {
+    console.error("Error creating volunteer request:", error);
+    if (req.file && req.file.path) {
+      fs.unlinkSync(req.file.path); // Delete the uploaded file
+    }
     res.status(500).json({ error: error.message });
   }
 };

@@ -60,6 +60,12 @@ function VolMidbar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.organization) {
+      setAlertMessage("Please select an organization.");
+      setAlertType("error");
+      return;
+    }
+
     const formDataToSend = new FormData();
     formDataToSend.append("qualifications", formData.qualifications);
     formDataToSend.append("language", formData.language);
@@ -70,6 +76,8 @@ function VolMidbar() {
     if (formData.cv) {
       formDataToSend.append("cv", formData.cv);
     }
+
+    console.log("Submitting form data:", formDataToSend);
 
     try {
       const response = await axios.post("http://localhost:3001/api/volunteers/request", formDataToSend, {
@@ -103,7 +111,11 @@ function VolMidbar() {
 
     } catch (error) {
       console.error("Error submitting form:", error);
-      setAlertMessage("Error submitting request. Please try again.");
+      if (error.response && error.response.data && error.response.data.error) {
+        setAlertMessage(`Error: ${error.response.data.error}`);
+      } else {
+        setAlertMessage("Error submitting request. Please try again.");
+      }
       setAlertType("error");
     }
   };
@@ -171,6 +183,6 @@ function VolMidbar() {
       </div>
     </div>
   );
-}    
+}
 
 export default VolMidbar;
