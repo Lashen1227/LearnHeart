@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import PersonIcon from '@mui/icons-material/Person';
 
 const PostCard = ({ id, title, subheader, image, content }) => {
   PostCard.propTypes = {
@@ -25,11 +24,8 @@ const PostCard = ({ id, title, subheader, image, content }) => {
   return (
     <div className="w-full max-w-sm overflow-hidden transition-transform duration-300 bg-white border border-gray-200 rounded-lg shadow-lg hover:scale-105">
       <div className="flex items-center gap-3 p-4 border-b border-gray-200">
-        <div className="flex items-center justify-center w-10 h-10 text-white bg-blue-600 rounded-full">
-          <PersonIcon fontSize="small" />
-        </div>
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
+          <h2 className="text-lg font-bold text-gray-800">{title}</h2>
           <p className="text-sm text-gray-500">{subheader}</p>
         </div>
       </div>

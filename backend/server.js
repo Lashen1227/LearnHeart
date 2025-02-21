@@ -3,9 +3,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
 const path = require('path');
+//const {withSession} = require('@clerk/clerk-sdk-node');
 const app = express();
 const PORT = 3001;
+//app.use(withSession0);
 
+const { v2: cloudinary } = require('cloudinary');
 const bodyParser = require("body-parser");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -18,6 +21,13 @@ const seminarRoutes = require('./routes/seminarRoutes');
 const schoolRoutes = require('./routes/schoolRoutes');
 const postRoutes = require('./routes/postRoute');
 const resourceRoutes = require('./routes/resourceRoutes');
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // Middleware
 app.use(cors());
