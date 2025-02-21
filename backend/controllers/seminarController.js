@@ -44,11 +44,13 @@ const createSeminar = async (req, res) => {
         status,
         subject,
         grade,
+        medium,
         expStudentCount,
         expTeacherCount,
         additionalRequests,
         expDate,
         schoolId,
+        organization,
         organizationId
     } = req.body;
     
@@ -71,11 +73,13 @@ const createSeminar = async (req, res) => {
             status,
             subject,
             grade,
+            medium,
             expStudentCount,
             expTeacherCount,
             additionalRequests,
             expDate,
             schoolId,// Associate the seminar with the authenticated user
+            organization,
             organizationId
         });
 

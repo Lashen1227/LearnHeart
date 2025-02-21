@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Paper,
   Typography,
@@ -6,25 +6,33 @@ import {
   Button,
   Box,
   Alert,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 
 export const RequestSession = () => {
-  const { user } = useUser(); // Get logged-in user details
+  const [schools, setSchools] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
+
+  const { user } = useUser();
   console.log("User:", user);
+
+  const clarkId = schools.find((sch) => sch.userID === user?.id);
+  console.log(clarkId);
+
   const [formData, setFormData] = useState({
-    name: "",
     subject: "",
-    description: "",
     grade: "",
     expDate: "",
-    location: "",
     expStudentCount: "",
     expTeacherCount: "",
-    phoneNumber: "",
     organization: "",
+    medium: "",
     additionalRequests: "",
   });
 
@@ -42,6 +50,20 @@ export const RequestSession = () => {
     }));
   };
 
+  const clearForm = () => {
+    setFormData({
+      subject: "",
+      grade: "",
+      expDate: "",
+      expStudentCount: "",
+      expTeacherCount: "",
+      organization: "",
+      medium: "",
+      additionalRequests: "",
+    });
+    setStatus({ message: "", isError: false, loading: false });
+  };
+
   const handleSubmit = async (e) => {
     console.log("Form Data:", formData);
     e.preventDefault();
@@ -51,8 +73,20 @@ export const RequestSession = () => {
       const response = await axios.post(
         "http://localhost:3001/api/seminars/",
         {
-          ...formData,
-          schoolId: user.id, // Automatically attach user ID
+          name: clarkId?.name,
+          description: `${formData.subject} for grade ${formData.grade} students` + (formData.medium ? ` in ${formData.medium}.` : ""),
+          subject: formData.subject,
+          grade: formData.grade,
+          expDate: formData.expDate,
+          location: clarkId?.address,
+          expStudentCount: formData.expStudentCount,
+          expTeacherCount: formData.expTeacherCount,
+          phoneNumber: clarkId?.contact,
+          organization: organizations.find((org) => org.name === formData.organization)?.name,
+          medium: formData.medium,
+          additionalRequests: formData.additionalRequests || "-",
+          schoolId: clarkId?._id,
+          organizationId: organizations.find((org) => org.name === formData.organization)?._id,
         },
         {
           headers: {
@@ -61,45 +95,50 @@ export const RequestSession = () => {
         }
       );
 
-      if (response.status !== 201) {
-        // Reset form after successful submission
-        setFormData({
-          name: "",
-          subject: "",
-          description: "",
-          grade: "",
-          expDate: "",
-          location: "",
-          expStudentCount: "",
-          expTeacherCount: "",
-          phoneNumber: "",
-          organization: "",
-          additionalRequests: "",
-        });
-
-        console.log("Form Data Submitted:", response.data);
-
+      if (response.status === 201) {
+        clearForm();
         setStatus({
-          message: "Form submitted successfully!",
+          message: "Successfully sent request",
           isError: false,
           loading: false,
         });
       }
     } catch (error) {
       setStatus({
-        message:
-          error.response?.data?.error ||
-          "Something went wrong. Please try again.",
+        message: error.response?.data?.error || "Something went wrong. Please try again.",
         isError: true,
         loading: false,
       });
     }
   };
 
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/schools");
+        setSchools(response.data);
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+
+    const fetchOrganizations = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/api/organizations");
+        setOrganizations(response.data);
+      } catch (error) {
+        console.log("Error fetching organizations:", error);
+      }
+    };
+
+    fetchSchools();
+    fetchOrganizations();
+  }, []);
+
   return (
-    <Paper elevation={3} sx={{ p: 3, mt: 4 }}>
-      <Typography variant="h6" sx={{ m: 2 }}>
-        Request Session
+    <Paper elevation={3} sx={{ p: 3, backgroundColor: "#4db6ac" }}>
+      <Typography variant="h6" sx={{ m: 2, textAlign: "center" }}>
+        Request Seminar Session
       </Typography>
 
       {status.message && (
@@ -111,17 +150,6 @@ export const RequestSession = () => {
       <form onSubmit={handleSubmit}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, pt: 2 }}>
           <TextField
-            label="Name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter name of the seminar"
-            fullWidth
-            variant="outlined"
-            size="small"
-            required
-          />
-          <TextField
             label="Subject"
             name="subject"
             value={formData.subject}
@@ -132,16 +160,7 @@ export const RequestSession = () => {
             size="small"
             required
           />
-          <TextField
-            label="Description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Enter description"
-            fullWidth
-            variant="outlined"
-            size="medium"
-          />
+
           <TextField
             label="Grade"
             name="grade"
@@ -153,6 +172,21 @@ export const RequestSession = () => {
             size="small"
             required
           />
+
+          <FormControl fullWidth variant="outlined" size="small" required>
+            <InputLabel>Medium</InputLabel>
+            <Select
+              name="medium"
+              value={formData.medium}
+              onChange={handleChange}
+              label="Medium"
+            >
+              <MenuItem value="Sinhala">Sinhala</MenuItem>
+              <MenuItem value="English">English</MenuItem>
+              <MenuItem value="Tamil">Tamil</MenuItem>
+            </Select>
+          </FormControl>
+
           <TextField
             label="Date"
             name="expDate"
@@ -165,17 +199,7 @@ export const RequestSession = () => {
             InputLabelProps={{ shrink: true }}
             required
           />
-          <TextField
-            label="Location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            placeholder="Enter location"
-            fullWidth
-            variant="outlined"
-            size="small"
-            required
-          />
+
           <TextField
             label="Total Students"
             name="expStudentCount"
@@ -189,8 +213,9 @@ export const RequestSession = () => {
             inputProps={{ min: 1 }}
             required
           />
+
           <TextField
-            label="Total Teachers"
+            label="Expected Teachers Count"
             name="expTeacherCount"
             type="number"
             value={formData.expTeacherCount}
@@ -201,29 +226,23 @@ export const RequestSession = () => {
             size="small"
             inputProps={{ min: 1 }}
           />
-          <TextField
-            label="contact"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            placeholder="Enter Contact number"
-            fullWidth
-            variant="outlined"
-            size="small"
-            inputProps={{ min: 1 }}
-            required
-          />
-          <TextField
-            label="Organization"
-            name="organization"
-            value={formData.organization}
-            onChange={handleChange}
-            placeholder="Enter organization"
-            fullWidth
-            variant="outlined"
-            size="small"
-            required
-          />
+
+          <FormControl fullWidth variant="outlined" size="small" required>
+            <InputLabel>Organization</InputLabel>
+            <Select
+              name="organization"
+              value={formData.organization}
+              onChange={handleChange}
+              label="Organization"
+            >
+              {organizations.map((org) => (
+                <MenuItem key={org._id} value={org.name}>
+                  {org.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <TextField
             label="Additional Information"
             name="additionalRequests"
@@ -235,16 +254,27 @@ export const RequestSession = () => {
             size="medium"
           />
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            disabled={status.loading}
-            sx={{ mt: 2 }}
-          >
-            {status.loading ? "Sending Request..." : "Send Request"}
-          </Button>
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="warning"
+              fullWidth
+              disabled={status.loading}
+            >
+              {status.loading ? "Request Sent" : "Send Request"}
+            </Button>
+
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={clearForm}
+            >
+              Clear
+            </Button>
+          </Box>
         </Box>
       </form>
     </Paper>

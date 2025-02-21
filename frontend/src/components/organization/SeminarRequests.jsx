@@ -5,24 +5,25 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useUser } from "@clerk/clerk-react";
 
-const RequestedSessions = () => {
+const SeminarRequests = () => {
   const [seminars, setSeminars] = useState([]);
   const [schools, setSchools] = useState([]);
   const [organizations, setOrganizations] = useState([]);
   const [filteredSessions, setFilteredSessions] = useState([]);
-  
+
   const user = useUser().user;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const orgResponse = await axios.get("http://localhost:3001/api/organizations");
+        const [orgResponse, schoolResponse, seminarResponse] = await Promise.all([
+          axios.get("http://localhost:3001/api/organizations"),
+          axios.get("http://localhost:3001/api/schools"),
+          axios.get("http://localhost:3001/api/seminars")
+        ]);
+
         setOrganizations(orgResponse.data);
-        
-        const schoolResponse = await axios.get("http://localhost:3001/api/schools");
         setSchools(schoolResponse.data);
-        
-        const seminarResponse = await axios.get("http://localhost:3001/api/seminars");
         setSeminars(seminarResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -38,13 +39,17 @@ const RequestedSessions = () => {
     const currentOrganization = organizations.find(org => org.userID === user?.id);
     if (!currentOrganization) return;
 
-    const combinedSessions = seminars.filter(seminar => seminar.organizationId === currentOrganization._id && seminar.status === "pending")
+    const combinedSessions = seminars
+      .filter(seminar => seminar.organizationId === currentOrganization._id && seminar.status === "pending")
       .map(seminar => {
         const school = schools.find(sch => sch._id === seminar.schoolId);
         return {
           ...seminar,
-          schoolName: school?.name || "Unknown School",
-          schoolAddress: school?.address || "Unknown Address",
+          schoolName: school?.schoolName,
+          schoolAddress: school?.address,
+          schoolEmail: school?.email,
+          schoolWebsite: school?.website,
+          schoolPhoneNumber: school?.contact
         };
       });
 
@@ -74,21 +79,39 @@ const RequestedSessions = () => {
       <Typography variant="h6" mb={2} sx={{ textAlign: "center" }}>
         Requested Sessions
       </Typography>
-      <Box display="flex" flexDirection="column" gap={2}>
+      <Box sx={{ maxHeight: 400, overflowY: "auto", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
         {filteredSessions.length > 0 ? (
           filteredSessions.map((session) => (
-            <Card key={session._id} variant="outlined">
+            <Card key={session._id} variant="outlined" sx={{ mb: 2, maxHeight: 200 }}>
               <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Box>
                     <Typography variant="body2" fontWeight="bold">
-                      {new Date(session.createdAt).toLocaleDateString()}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
                       {session.schoolName} - {session.schoolAddress}
                     </Typography>
+                    <Typography variant="body2">
+                      Subject: {session.subject} | Grade: {session.grade}
+                    </Typography>
+                    <Typography variant="body2">
+                      Medium: {session.medium}
+                    </Typography>
+                    <Typography variant="body2">
+                      Date: {new Date(session.expDate).toLocaleDateString()}
+                    </Typography>
+                    <Typography variant="body2">
+                      Expected Teachers Count: {session.expTeacherCount}
+                    </Typography>
+                    <Typography variant="body2">
+                      Number of Students: {session.expStudentCount}
+                    </Typography>
+                    <Typography variant="body2">
+                      Contact: {session.schoolPhoneNumber} | {session.schoolEmail}
+                    </Typography>
+                    <Typography variant="body2">
+                      Additional Requests: {session.additionalRequests}
+                    </Typography>
                   </Box>
-                  <Box display="flex" gap={1}>
+                  <Box display="flex" gap={1} flexDirection="column">
                     <Button
                       variant="contained"
                       color="warning"
@@ -113,11 +136,13 @@ const RequestedSessions = () => {
             </Card>
           ))
         ) : (
-          <Typography textAlign="center">No seminar requests available.</Typography>
+          <Typography Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
+            No seminar requests available.
+          </Typography>
         )}
       </Box>
     </Paper>
   );
 };
 
-export default RequestedSessions;
+export default SeminarRequests;
