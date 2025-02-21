@@ -2,17 +2,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const organizationSchema = new Schema({
-    orgID:{
+    orgID: {
         type: String,
         required: true
     },
     name: {
         type: String,
-        required: true
+        required: false
     },
     description: {
         type: String,
-        required: true
+        required: false
     },
     phone: {
         type: String,
@@ -32,8 +32,12 @@ const organizationSchema = new Schema({
     },
     profilePic: {
         type: String,
-        required: true
+        required: false
     },
+    seminarLocations: {
+        type: String,
+        required: false
+    }
 });
 
 module.exports = mongoose.model('Organization', organizationSchema);

@@ -101,17 +101,9 @@ export default function Navbar() {
             Past Events
           </Link>
           <Link
-            to="/contact-us"
+            to="/posts"
             className={`text-base ${
-              isActive("/contact-us") ? "text-custom-orange" : "text-white"
-            } hover:text-custom-orange transition duration-300`}
-          >
-            Contact Us
-          </Link>
-          <Link
-            to="/announcements"
-            className={`text-base ${
-              isActive("/announcements") ? "text-custom-orange" : "text-white"
+              isActive("/posts") ? "text-custom-orange" : "text-white"
             } hover:text-custom-orange transition duration-300`}
           >
             Announcements

@@ -4,16 +4,16 @@ const mongoose = require('mongoose');
 const getAllOrganizations = async (req, res) => {
     const organizations = await Organization.find({}).sort({createdAt: -1});
     setTimeout(() => {
-        console.log(organizations)
+        console.log(organizations);
         res.status(200).json(organizations);
     }, 2000);
-}
+};
 
 const getOrganization = async (req, res) => {
     const { id } = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such organization with that id'})
+        return res.status(404).json({error: 'No such organization with that id'});
     }
 
     const organization = await Organization.findById(id);
@@ -23,7 +23,7 @@ const getOrganization = async (req, res) => {
     }
 
     res.status(200).json(organization);
-}
+};
 
 const createOrganization = async (req, res) => {
     const {
@@ -35,11 +35,12 @@ const createOrganization = async (req, res) => {
         website,
         userID,
         profilePic,
+        seminarLocations
     } = req.body;
-    let empltyFields = [];
+    let emptyFields = [];
 
     if (!name) {
-        empltyFields.push('name');
+        emptyFields.push('name');
     }
 
     try{
@@ -51,13 +52,14 @@ const createOrganization = async (req, res) => {
             email,
             website,
             userID,
-            profilePic
-        })
-        res.status(200).json(organization)
+            profilePic,
+            seminarLocations
+        });
+        res.status(200).json(organization);
     }catch(error){
         res.status(400).json({error: error.message});
     }
-}
+};
 
 const deleteOrganization = async (req, res) => {
     const { id } = req.params;
@@ -106,4 +108,4 @@ module.exports = {
     createOrganization,
     deleteOrganization,
     updateOrganization
-}
+};
