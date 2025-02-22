@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { useUser } from "@clerk/clerk-react";
 
 function VolMidbar() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,9 @@ function VolMidbar() {
     organization: "",
     cv: null,
   });
+
+  const { user } = useUser();
+  console.log("User:", user);
 
   const [organizations, setOrganizations] = useState([]);
   const [alertMessage, setAlertMessage] = useState(""); // Success or Error message
@@ -75,6 +79,12 @@ function VolMidbar() {
   
     if (formData.cv) {
       formDataToSend.append("cv", formData.cv);
+    }
+
+    if (user) {
+      formDataToSend.append("userId", user.id);
+      formDataToSend.append("fullName", user.fullName);
+      formDataToSend.append("email", user.primaryEmailAddress.emailAddress);
     }
 
     console.log("Submitting form data:", formDataToSend);

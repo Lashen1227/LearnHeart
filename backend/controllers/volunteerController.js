@@ -162,6 +162,9 @@ const createVolunteerRequest = async (req, res) => {
       organization,
       availableDates: JSON.parse(availableDates),
       cv: cvPath,
+      userId: req.body.userId,
+      fullName: req.body.fullName,
+      email: req.body.email,
     });
 
     await newRequest.save();
@@ -175,6 +178,63 @@ const createVolunteerRequest = async (req, res) => {
   }
 };
 
+// Get volunteer requests based on isPending status and organizationId
+const getVolunteerRequests = async (req, res) => {
+  const { isPending, organizationId } = req.body;
+
+  if (isPending === undefined || !organizationId) {
+    return res.status(400).json({ error: "isPending and organizationId are required" });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(organizationId)) {
+    return res.status(400).json({ error: "Invalid organization ID" });
+  }
+
+  try {
+    const volunteerRequests = await VolunteerRequest.find({
+      isPending,
+      organization: organizationId
+    });
+
+    res.status(200).json(volunteerRequests);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Accept volunteer request
+const acceptVolunteerRequest = async (req, res) => {
+  const { requestId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(requestId)) {
+    return res.status(400).json({ error: "Invalid request ID" });
+  }
+
+  try {
+    await VolunteerRequest.findByIdAndUpdate(requestId, { isRejected: false, isPending: false });
+    res.status(200).json({ message: "Volunteer request accepted" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Reject volunteer request
+const rejectVolunteerRequest = async (req, res) => {
+  const { requestId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(requestId)) {
+    return res.status(400).json({ error: "Invalid request ID" });
+  }
+
+  try {
+    await VolunteerRequest.findByIdAndUpdate(requestId, { isRejected: true, isPending: false });
+    res.status(200).json({ message: "Volunteer request rejected" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 module.exports = {
   getAllVolunteers,
   getVolunteer,
@@ -182,5 +242,8 @@ module.exports = {
   updateVolunteer,
   deleteVolunteer,
   createVolunteerRequest,
+  getVolunteerRequests,
+  acceptVolunteerRequest,
+  rejectVolunteerRequest,
   upload,
 };

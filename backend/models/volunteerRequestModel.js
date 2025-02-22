@@ -9,7 +9,11 @@ const volunteerRequestSchema = new mongoose.Schema(
     availableDates: { type: [String], required: true },
     cv: { type: String }, // Store CV file path
     isPending: { type: Boolean, default: true },
-    isRejected: { type: Boolean, default: null },
+    isAccepted: { type: Boolean, default: false },
+    isRejected: { type: Boolean, default: false },
+    userId: { type: String, ref: "User", required: true },
+    fullName: { type: String, required: true },
+    email: { type: String, required: true },
   },
   { timestamps: true }
 );
