@@ -49,7 +49,6 @@ if (!PUBLISHABLE_KEY) {
 const router = createBrowserRouter([
   { path: "/", element: <App />, },
   { path: "/about-us", element: <AboutUs />, },
-  { path: "/past-events", element: <PastEvents />, },
   { path: "/team", element: <Team />, },
   { path: "/contact-us", element: <ContactUs />, },
   { path: "/posts", element: <CommunityPage />, },
