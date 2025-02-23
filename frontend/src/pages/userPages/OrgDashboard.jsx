@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Navbar from "../../components/organization/OrgHeader";
 import Footer from "../../components/Footer";
 import OrganizationInfo from "../../components/organization/OrganizationInfo";
@@ -5,8 +6,28 @@ import UpcomingOrganization from "../../components/organization/UpcomingOrganiza
 import CompleteSessions from "../../components/organization/CompleteSessions";
 import VolunteerRequest from "../../components/organization/VolunteerRequest";
 import SeminarRequests from "../../components/organization/SeminarRequests";
+import { useUser } from "@clerk/clerk-react";
+import axios from "axios";
 
 const OrgDashboard = () => {
+
+  const [organizations, setOrganizations] = useState([])
+
+  const user = useUser();
+
+  const clarkUser = organizations.find((org) => org.userID === user?.user?.id);
+
+  useEffect(() => {
+    const fetchOrganizations = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/api/organizations");
+            setOrganizations(response.data);
+        } catch (error) {
+            console.error("Error fetching organizations:", error);
+        }
+    };
+    fetchOrganizations();
+}, []);
 
   return (
     <div className="min-h-screen bg-custom-page">
@@ -21,7 +42,7 @@ const OrgDashboard = () => {
         </div>
 
         <div className="space-y-6">
-          <VolunteerRequest/>
+          <VolunteerRequest clarkUser={clarkUser}/>
           <SeminarRequests/>
           {/* <ReviewsList /> */}
         </div>
