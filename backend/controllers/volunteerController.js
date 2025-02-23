@@ -255,6 +255,30 @@ const rejectVolunteerRequest = async (req, res) => {
   }
 };
 
+const getAcceptedOrganizationsForVolunteer = async (req, res) => {
+  const { userId } = req.params; // Assuming userId is passed as a route parameter
+
+  try {
+    // Get all accepted requests for the volunteer
+    const acceptedRequests = await VolunteerRequest.find({
+      userId: userId,
+      isAccepted: true
+    }).select("organization"); // Only fetch organization field
+
+    // Extract organization IDs
+    const organizationIds = acceptedRequests.map(req => req.organization);
+
+    // Get organization names
+    const organizations = await Organization.find({ _id: { $in: organizationIds } }).select("name");
+
+    // Return the organization names
+    res.status(200).json(organizations.map(org => org.name));
+  } catch (error) {
+    console.error("Error fetching organizations:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getAllVolunteers,
   getVolunteer,
@@ -265,5 +289,6 @@ module.exports = {
   getVolunteerRequests,
   acceptVolunteerRequest,
   rejectVolunteerRequest,
+  getAcceptedOrganizationsForVolunteer,
   upload,
 };

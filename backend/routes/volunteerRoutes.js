@@ -9,6 +9,7 @@ const {
     getVolunteerRequests,
     acceptVolunteerRequest,
     rejectVolunteerRequest,
+    getAcceptedOrganizationsForVolunteer,
     upload
 } = require('../controllers/volunteerController');
 const router = express.Router();
@@ -22,5 +23,6 @@ router.post("/request", upload.single("cv"), createVolunteerRequest);
 router.post("/volunteer-requests", getVolunteerRequests);
 router.post('/accept', acceptVolunteerRequest);
 router.post('/reject', rejectVolunteerRequest);
+router.get('/accepted-organizations/:userId', getAcceptedOrganizationsForVolunteer);
 
 module.exports = router;
