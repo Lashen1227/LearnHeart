@@ -51,7 +51,7 @@ const VolunteerRequest = ({ clarkUser }) => {
         <Box sx={{ flex: 1 }} />
         <Box sx={{ flex: 1 }} />
         <Typography variant="h6" gutterBottom sx={{ lineHeight: 1.8, textAlign: "center" }}>
-          Volunteer Request
+          Volunteer Requests
         </Typography>
         <Box sx={{ flex: 1 }} />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
