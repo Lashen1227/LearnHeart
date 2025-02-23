@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const volunteerRequestSchema = new mongoose.Schema(
   {
@@ -11,9 +11,7 @@ const volunteerRequestSchema = new mongoose.Schema(
     isPending: { type: Boolean, default: true },
     isAccepted: { type: Boolean, default: false },
     isRejected: { type: Boolean, default: false },
-    userId: { type: String, ref: "User", required: true },
-    fullName: { type: String, required: true },
-    email: { type: String, required: true },
+    userId: { type: String, required: true },
   },
   { timestamps: true }
 );

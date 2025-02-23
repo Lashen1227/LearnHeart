@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
 const VolunteerRequest = require("../models/volunteerRequestModel");
+const Organization = require("../models/organizationModel"); 
 
 //get all volunteers
 const getAllVolunteers = async (req, res) => {
@@ -163,8 +164,6 @@ const createVolunteerRequest = async (req, res) => {
       availableDates: JSON.parse(availableDates),
       cv: cvPath,
       userId: req.body.userId,
-      fullName: req.body.fullName,
-      email: req.body.email,
     });
 
     await newRequest.save();
@@ -178,7 +177,6 @@ const createVolunteerRequest = async (req, res) => {
   }
 };
 
-// Get volunteer requests based on isPending status and organizationId
 const getVolunteerRequests = async (req, res) => {
   const { isPending, organizationId } = req.body;
 
@@ -191,16 +189,30 @@ const getVolunteerRequests = async (req, res) => {
   }
 
   try {
-    const volunteerRequests = await VolunteerRequest.find({
-      isPending,
-      organization: organizationId
-    });
+    const volunteerRequests = await VolunteerRequest.aggregate([
+      {
+        $match: {
+          isPending: isPending,
+          organization: new mongoose.Types.ObjectId(organizationId), // Fixed with `new`
+        },
+      },
+      {
+        $lookup: {
+          from: "volunteers",
+          localField: "userId",
+          foreignField: "volunteerId",
+          as: "volunteerDetails",
+        },
+      },
+      { $unwind: "$volunteerDetails" },
+    ]);
 
     res.status(200).json(volunteerRequests);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Accept volunteer request
 const acceptVolunteerRequest = async (req, res) => {
@@ -211,12 +223,17 @@ const acceptVolunteerRequest = async (req, res) => {
   }
 
   try {
-    await VolunteerRequest.findByIdAndUpdate(requestId, { isRejected: false, isPending: false });
+    await VolunteerRequest.findByIdAndUpdate(requestId, {
+      isRejected: false, // Set isRejected to false
+      isAccepted: true,  // Set isAccepted to true
+      isPending: false   // Set isPending to false
+    });
     res.status(200).json({ message: "Volunteer request accepted" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Reject volunteer request
 const rejectVolunteerRequest = async (req, res) => {
@@ -227,13 +244,16 @@ const rejectVolunteerRequest = async (req, res) => {
   }
 
   try {
-    await VolunteerRequest.findByIdAndUpdate(requestId, { isRejected: true, isPending: false });
+    await VolunteerRequest.findByIdAndUpdate(requestId, {
+      isRejected: true,  // Set isRejected to true
+      isAccepted: false, // Set isAccepted to false
+      isPending: false   // Set isPending to false
+    });
     res.status(200).json({ message: "Volunteer request rejected" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 module.exports = {
   getAllVolunteers,
