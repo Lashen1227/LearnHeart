@@ -83,8 +83,6 @@ function VolMidbar() {
 
     if (user) {
       formDataToSend.append("userId", user.id);
-      formDataToSend.append("fullName", user.fullName);
-      formDataToSend.append("email", user.primaryEmailAddress.emailAddress);
     }
 
     console.log("Submitting form data:", formDataToSend);
@@ -187,8 +185,8 @@ function VolMidbar() {
           </div>
 
           <div className="flex gap-2 mt-4">
-            <button type="button" onClick={handleClear} className="w-full p-2 bg-custom-blue rounded text-custom-white">Clear</button>
-            <button type="submit" className="w-full p-2 bg-custom-orange text-custom-white rounded">Join</button>
+            <button type="button" onClick={handleClear} className="w-3/4 py-2 duration-300 bg-white border rounded-lg hover:scale-105 hover:bg-blue-50 text-custom-blue">Clear</button>
+            <button type="submit" className="w-3/4 py-2 text-white duration-300 border rounded-lg hover:scale-105 bg-custom-orange hover:bg-orange-600">Join</button>
           </div>
         </form>
       </div>
