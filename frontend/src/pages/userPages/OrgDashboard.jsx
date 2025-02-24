@@ -1,46 +1,33 @@
+import { useEffect, useState } from "react";
 import Navbar from "../../components/organization/OrgHeader";
 import Footer from "../../components/Footer";
 import OrganizationInfo from "../../components/organization/OrganizationInfo";
-import SessionsList from "../../components/organization/SessionsList";
+import UpcomingOrganization from "../../components/organization/UpcomingOrganization";
+import CompleteSessions from "../../components/organization/CompleteSessions";
 import VolunteerRequest from "../../components/organization/VolunteerRequest";
-import RequestedSessions from "../../components/organization/RequestedSessions";
-import ReviewsList from "../../components/organization/ReviewsList";
+import SeminarRequests from "../../components/organization/SeminarRequests";
+import { useUser } from "@clerk/clerk-react";
+import axios from "axios";
 
 const OrgDashboard = () => {
 
-  const scheduledSessions = [
-    {
-      date: "18.11.2024",
-      school: "High School, Galle",
-      subject: "Mathematics",
-      grade: "11",
-      status: "Completed",
-    },
-    {
-      date: "25.11.2024",
-      school: "High School, Matara",
-      subject: "English",
-      grade: "08",
-      status: "Completed",
-    },
-  ];
+  const [organizations, setOrganizations] = useState([])
 
-  const completedSessions = [
-    { date: "10.05.2024", school: "High School, Galle" },
-    { date: "28.05.2024", school: "High School, Matara" },
-    { date: "07.11.2024", school: "High School, Galle" },
-  ];
+  const user = useUser();
 
-  const requestedSessions = [
-    {
-      date: "27.11.2024",
-      school: "High School, Matara",
-    },
-    {
-      date: "20.12.2024",
-      school: "High School, Galle",
-    },
-  ];
+  const clarkUser = organizations.find((org) => org.userID === user?.user?.id);
+
+  useEffect(() => {
+    const fetchOrganizations = async () => {
+        try {
+            const response = await axios.get("http://localhost:3001/api/organizations");
+            setOrganizations(response.data);
+        } catch (error) {
+            console.error("Error fetching organizations:", error);
+        }
+    };
+    fetchOrganizations();
+}, []);
 
   return (
     <div className="min-h-screen bg-custom-page">
@@ -50,14 +37,14 @@ const OrgDashboard = () => {
         <OrganizationInfo />
 
         <div className="space-y-6">
-          <SessionsList title="Scheduled Sessions" sessions={scheduledSessions} />
-          <SessionsList title="Completed Sessions" sessions={completedSessions} />
+          <UpcomingOrganization />
+          <CompleteSessions />
         </div>
 
         <div className="space-y-6">
-          <VolunteerRequest/>
-          <RequestedSessions sessions={requestedSessions} />
-          <ReviewsList />
+          <VolunteerRequest clarkUser={clarkUser}/>
+          <SeminarRequests/>
+          {/* <ReviewsList /> */}
         </div>
       </div>
 

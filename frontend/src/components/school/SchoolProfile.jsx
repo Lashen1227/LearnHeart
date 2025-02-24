@@ -11,7 +11,7 @@ import OrgSearchList from "../organization/OrgSearchList";
 export const SchoolProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [schoolProfiles, setSchoolProfiles] = useState([]); // Pluralized state name
-  const { user: curruntID, isLoaded } = useUser();
+  const { user: curruntID } = useUser();
   // Get school from Clerk's user object
   const matchingSchool = schoolProfiles.find(
     (sch) => sch.userID === curruntID?.id
@@ -28,15 +28,7 @@ export const SchoolProfile = () => {
     };
     fetchSchoolProfiles();
   }, []);
-
-  if (!isLoaded || schoolProfiles.length === 0) {
-    return <p>Loading...</p>;
-  }
-
-  if (!matchingSchool) {
-    return <p>No matching school profile found.</p>;
-  }
-
+  
   return (
     <Paper elevation={3} sx={{ p: 3, bgcolor: "#3657AD" }}>
       <Box
@@ -58,11 +50,11 @@ export const SchoolProfile = () => {
             }}
           />
           <br />
-          <Typography variant="h5" sx={{ mb: 1, color: "white" }}>
+          <Typography variant="h6" sx={{ mb: 1, color: "white" }}>
             <strong>{matchingSchool?.schoolName}</strong>
           </Typography>
           <br />
-          <Typography variant="body1" sx={{ mb: 2, color: "white" }}>
+          <Typography variant="body" sx={{ mb: 2, color: "white" }}>
             <strong>{matchingSchool?.description}</strong>
             <br />
             {matchingSchool?.address}
@@ -94,14 +86,15 @@ export const SchoolProfile = () => {
             p: 3, 
             borderRadius: 2,
             width: {
-              xs: '90%',  // 90% width on extra small screens (mobile)
-              sm: '75%',  // 75% width on small screens (tablet)
-              md: '60%',  // 60% width on medium screens (iPad)
-              lg: '50%',  // 50% width on large screens
-              xl: '35%'   // 35% width on extra-large screens
+              xs: '90%',
+              sm: '75%',
+              md: '60%',
+              lg: '50%',
+              xl: '35%'
             },
             maxHeight: "80vh", 
-            overflowY: "auto"
+            overflowY: "auto",
+            scrollbarWidth: "none",
           }}
         >
           <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsModalOpen(false)}>
