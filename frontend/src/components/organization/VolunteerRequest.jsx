@@ -82,6 +82,11 @@ const VolunteerRequest = ({ clarkUser }) => {
             maxHeight: 400,
             overflowY: "auto",
             p: 1,
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
           }}
         >
           {requests.map((request, index) => (
