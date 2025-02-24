@@ -10,6 +10,7 @@
   "author": "Team CodeNova",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "react-router-dom": "^7.2.0"
   }
 }

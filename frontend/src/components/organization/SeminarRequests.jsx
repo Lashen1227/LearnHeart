@@ -24,6 +24,7 @@ const SeminarRequests = () => {
   const [organizations, setOrganizations] = useState([]);
   const [filteredSessions, setFilteredSessions] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [selectedSession, setSelectedSession] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
