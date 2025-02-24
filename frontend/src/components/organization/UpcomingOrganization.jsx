@@ -2,64 +2,70 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '@clerk/clerk-react';
 import PropTypes from "prop-types";
-import { Box, Card, CardContent, Typography, Chip, Paper, Button } from "@mui/material";
+import { Box, Card, CardContent, Typography, Chip, Paper, Button, CircularProgress } from "@mui/material";
 
-const SessionsList = ({ title, sessions, handleComplete }) => {
+const SessionsList = ({ title, sessions, handleComplete, isLoading }) => {
   return (
     <Paper elevation={3} sx={{ bgcolor: "#4db6ac", p: 3, borderRadius: 2, maxHeight: 610, overflowY: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
       <Typography variant="h6" mb={2} sx={{ textAlign: "center", color: "black" }}>
         {title}
       </Typography>
-      <Box display="flex" flexDirection="column" gap={2}>
-        {sessions.length > 0 ? (
-          sessions.slice(0, 3).map((session, index) => (
-            <Card key={index} variant="outlined" sx={{ position: 'relative' }}>
-              <CardContent>
-                <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
-                  <Box>
-                    <Typography variant="body2" fontWeight="bold">
-                      {session.date}
-                    </Typography>
-                    <Typography variant="body2" fontWeight="bold">
-                      {session.school} - {session.address}
-                    </Typography>
-                    {session.subject && (
-                      <Typography variant="body2" color="text.secondary">
-                        {session.subject} | Grade {session.grade} | Medium: {session.medium}
+      {isLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height={200}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box display="flex" flexDirection="column" gap={2}>
+          {sessions.length > 0 ? (
+            sessions.slice(0, 3).map((session, index) => (
+              <Card key={index} variant="outlined" sx={{ position: 'relative' }}>
+                <CardContent>
+                  <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
+                    <Box>
+                      <Typography variant="body2" fontWeight="bold">
+                        {session.date}
                       </Typography>
+                      <Typography variant="body2" fontWeight="bold">
+                        {session.school} - {session.address}
+                      </Typography>
+                      {session.subject && (
+                        <Typography variant="body2" color="text.secondary">
+                          {session.subject} | Grade {session.grade} | Medium: {session.medium}
+                        </Typography>
+                      )}
+                      <Typography variant="body2" color="text.secondary">
+                        Required Teacher Count: {session.expTeacherCount} | Num of Students: {session.expStudentCount}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Additional Requests: {session.additionalRequests}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {session.phoneNumber} | {session.email}
+                      </Typography>
+                    </Box>
+                    {session.status && (
+                      <Chip label={session.status} color="primary" size="small" />
                     )}
-                    <Typography variant="body2" color="text.secondary">
-                      Required Teacher Count: {session.expTeacherCount} | Num of Students: {session.expStudentCount}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Additional Requests: {session.additionalRequests}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {session.phoneNumber} | {session.email}
-                    </Typography>
                   </Box>
-                  {session.status && (
-                    <Chip label={session.status} color="primary" size="small" />
-                  )}
-                </Box>
-                <Button
-                  variant="contained"
-                  color="warning"
-                  size="small"
-                  sx={{ position: 'absolute', bottom: 8, right: 8 }}
-                  onClick={() => handleComplete(session)}
-                >
-                  Completed
-                </Button>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
-            No upcoming seminars found.
-          </Typography>
-        )}
-      </Box>
+                  <Button
+                    variant="contained"
+                    color="warning"
+                    size="small"
+                    sx={{ position: 'absolute', bottom: 8, right: 8 }}
+                    onClick={() => handleComplete(session)}
+                  >
+                    Completed
+                  </Button>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
+              No upcoming seminars found.
+            </Typography>
+          )}
+        </Box>
+      )}
     </Paper>
   );
 };
@@ -82,7 +88,8 @@ SessionsList.propTypes = {
       additionalRequests: PropTypes.string
     })
   ).isRequired,
-  handleComplete: PropTypes.func.isRequired
+  handleComplete: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 const UpcomingOrganization = () => {
@@ -159,7 +166,7 @@ const UpcomingOrganization = () => {
   };
 
   return (
-    <SessionsList title="Upcoming Seminars" sessions={specificSeminar} handleComplete={handleComplete} />
+    <SessionsList title="Upcoming Seminars" sessions={specificSeminar} handleComplete={handleComplete} isLoading={isLoading} />
   );
 };
 

@@ -30,6 +30,14 @@ const volunteerSchema = new Schema({
         type: String,
         required: true
     },
+    skills: {
+        type: String,
+        required: false
+    },
+    email: {
+        type: String,
+        required: false
+    },
     volunteerProfileImageAvailable: {
         type: Boolean,
         required: false

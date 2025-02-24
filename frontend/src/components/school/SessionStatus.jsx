@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import PropTypes from "prop-types";
-import { Box, Card, CardContent, Typography, Chip, Paper, IconButton } from "@mui/material";
+import { Box, Card, CardContent, Typography, Chip, Paper, IconButton, CircularProgress } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const SeminarStatus = () => {
   const [seminars, setSeminars] = useState([]);
   const [schools, setSchools] = useState([]);
   const [filteredSessions, setFilteredSessions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const user = useUser().user;
 
-  // Define status to color mapping
   const statusColorMapping = {
     "completed": "success",
     "accepted": "info",
@@ -19,14 +19,17 @@ const SeminarStatus = () => {
     "rejected": "error",
   };
 
-  // Function to handle closing a seminar card
-  const handleCloseCard = (id) => {
-    setFilteredSessions((prevSessions) =>
-      prevSessions.filter((session) => session._id !== id)
-    );
+  const handleCloseCard = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/seminars/${id}`);
+      setFilteredSessions((prevSessions) =>
+        prevSessions.filter((session) => session._id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting seminar:", error);
+    }
   };
 
-  // Function to process the seminar date
   const ProcessDate = (seminar) => {
     const date = seminar.expDate ? new Date(seminar.expDate) : null;
     return (
@@ -52,6 +55,8 @@ const SeminarStatus = () => {
         setSchools(schoolResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -61,10 +66,8 @@ const SeminarStatus = () => {
   useEffect(() => {
     if (!seminars.length || !schools.length) return;
 
-    // Get school from Clerk's user object
     const matchingSchool = schools.find((sch) => sch.userID === user?.id);
 
-    // Find the specific seminars for the school
     const currentSchoolSeminars = seminars
       .filter((seminar) => seminar.schoolId === matchingSchool?._id)
       .map((seminar) => ({
@@ -99,67 +102,77 @@ const SeminarStatus = () => {
       >
         Seminar Status
       </Typography>
-      <Box display="flex" flexDirection="column" gap={2}>
-        {filteredSessions.length > 0 ? (
-          filteredSessions.map((session) => (
-            <Card
-              key={session._id}
-              variant="outlined"
-              sx={{ position: "relative" }}
-            >
-              <CardContent><br />
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="start"
-                  mb={1}
-                >
-                  <Box>
-                    <Typography variant="body2" fontWeight="bold">
-                      {session.organization}
-                    </Typography>
-                    <Typography variant="body2">
-                      Subject: {session.subject} | Grade: {session.grade}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Date: {ProcessDate(session)}
-                    </Typography>
-                  </Box>
-                  {session.status && (
-                    <Chip
-                      label={session.status}
-                      color={statusColorMapping[session.status] || "default"}
-                      size="small"
-                    />
-                  )}
-                  {/* Close button */}
-                  <IconButton
-                    onClick={() => handleCloseCard(session._id)}
-                    sx={{
-                        position: 'absolute',
-                        top: 0,
-                        right: 8,
-                        padding: '2px',
-                        fontSize: '1px',
-                    }}
+      {isLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height={400}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box display="flex" flexDirection="column" gap={2}>
+          {filteredSessions.length > 0 ? (
+            filteredSessions.map((session) => (
+              <Card
+                key={session._id}
+                variant="outlined"
+                sx={{ position: "relative" }}
+              >
+                <CardContent><br />
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="start"
+                    mb={1}
                   >
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            textAlign="center"
-            fontWeight="bold"
-          >
-            No seminar status available.
-          </Typography>
-        )}
-      </Box>
+                    <Box>
+                      <Typography variant="body2" fontWeight="bold">
+                        {session.organization}
+                      </Typography>
+                      <Typography variant="body2">
+                        Subject: {session.subject} | Grade: {session.grade}
+                      </Typography>
+                      <Typography variant="body2">
+                        Medium: {session.medium}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Date: {ProcessDate(session)}
+                      </Typography>
+                    </Box>
+                    {session.status && (
+                      <Chip
+                        label={session.status}
+                        color={statusColorMapping[session.status] || "default"}
+                        size="small"
+                      />
+                    )}
+                    {session.status === "rejected" && (
+                      <IconButton
+                        onClick={() => handleCloseCard(session._id)}
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          right: 8,
+                          padding: '2px',
+                          fontSize: '1px',
+                        }}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    )}
+                  </Box>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textAlign="center"
+              fontWeight="bold"
+            >
+              No seminar status available.
+            </Typography>
+          )}
+        </Box>
+      )}
     </Paper>
   );
 };

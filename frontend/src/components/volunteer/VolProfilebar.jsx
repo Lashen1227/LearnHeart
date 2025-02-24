@@ -34,8 +34,8 @@ function VolProfilebar() {
                 />
                 <h2 className="mt-4 text-lg font-semibold text-center md:text-xl">{clarkId?.name}</h2>
                 <p className="px-4 mt-2 text-sm text-center md:text-base md:px-6">
+                    {clarkId?.description} <br />
                     {clarkId?.email} <br />
-                    {clarkId?.description}
                 </p>
             </div>
             

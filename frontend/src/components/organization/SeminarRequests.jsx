@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Card, CardContent, Typography, Button, Paper } from "@mui/material";
+import { Box, Card, CardContent, Typography, Button, Paper, CircularProgress } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useUser } from "@clerk/clerk-react";
@@ -10,6 +10,7 @@ const SeminarRequests = () => {
   const [schools, setSchools] = useState([]);
   const [organizations, setOrganizations] = useState([]);
   const [filteredSessions, setFilteredSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const user = useUser().user;
 
@@ -27,6 +28,8 @@ const SeminarRequests = () => {
         setSeminars(seminarResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -136,9 +139,14 @@ const SeminarRequests = () => {
             </Card>
           ))
         ) : (
-          <Typography Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
-            No seminar requests available.
-          </Typography>
+          <Box textAlign="center" mt={2}>
+            <Typography variant="body2" color="text.secondary" fontWeight="bold">
+              No seminar requests available.
+            </Typography>
+            {loading && (
+              <CircularProgress size={40} sx={{ mt: 2 }} />
+            )}
+          </Box>
         )}
       </Box>
     </Paper>
