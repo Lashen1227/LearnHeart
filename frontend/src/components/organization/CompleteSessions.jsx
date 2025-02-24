@@ -4,13 +4,19 @@ import { useUser } from '@clerk/clerk-react';
 import PropTypes from "prop-types";
 import { Box, Card, CardContent, Typography, Chip, Paper, IconButton, CircularProgress } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import RefreshIcon from '@mui/icons-material/Refresh';  // Import the RefreshIcon
 
-const SessionsList = ({ title, sessions, handleRemove, isLoading }) => {
+const SessionsList = ({ title, sessions, handleRemove, isLoading, handleRefresh }) => {
   return (
     <Paper elevation={3} sx={{ bgcolor: "#4db6ac", p: 3, borderRadius: 2, maxHeight: 400, overflowY: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
-      <Typography variant="h6" mb={2} sx={{ textAlign: "center", color: "black" }}>
-        {title}
-      </Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography variant="h6" mb={0} sx={{ textAlign: "center", color: "black" }}>
+          {title}
+        </Typography>
+        <IconButton onClick={handleRefresh} sx={{ padding: '6px', color: 'black' }}>
+          <RefreshIcon />
+        </IconButton>
+      </Box>
       {isLoading ? (
         <Box textAlign="center" mt={2}>
           <CircularProgress size={40} />
@@ -82,7 +88,9 @@ SessionsList.propTypes = {
     })
   ).isRequired,
   handleRemove: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired
+
+  isLoading: PropTypes.bool.isRequired,
+  handleRefresh: PropTypes.func.isRequired // Add handleRefresh prop
 };
 
 const CompletedOrganization = () => {
@@ -102,21 +110,26 @@ const CompletedOrganization = () => {
     }).replaceAll('/', '.') || 'N/A';
   };
 
-  useEffect(() => {
-    const fetchData = async (apiUrl, setState) => {
-      try {
-        const response = await axios.get(apiUrl);
-        setState(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const [orgResponse, seminarResponse, schoolResponse] = await Promise.all([
+        axios.get('http://localhost:3001/api/organizations'),
+        axios.get('http://localhost:3001/api/seminars'),
+        axios.get('http://localhost:3001/api/schools')
+      ]);
+      setOrganizations(orgResponse.data);
+      setSeminars(seminarResponse.data);
+      setSchools(schoolResponse.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchData('http://localhost:3001/api/organizations', setOrganizations);
-    fetchData('http://localhost:3001/api/seminars', setSeminars);
-    fetchData('http://localhost:3001/api/schools', setSchools);
+  useEffect(() => {
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -154,7 +167,7 @@ const CompletedOrganization = () => {
   };
 
   return (
-    <SessionsList title="Completed Seminars" sessions={completedSeminars} handleRemove={handleRemove} isLoading={isLoading} />
+    <SessionsList title="Completed Seminars" sessions={completedSeminars} handleRemove={handleRemove} isLoading={isLoading} handleRefresh={fetchData} />
   );
 };
 
