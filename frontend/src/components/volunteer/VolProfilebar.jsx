@@ -9,6 +9,7 @@ import OrgSearchList from "../organization/OrgSearchList";
 
 function VolProfilebar() {
     const [volunteers, setVolunteers] = useState([]);
+    const [organizations, setOrganizations] = useState([]);
     const user = useUser().user;
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -26,6 +27,21 @@ function VolProfilebar() {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        const fetchOrganizations = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/api/volunteers/accepted-organizations/${user?.id}`);
+                setOrganizations(response.data);
+            } catch (error) {
+                console.error("Error fetching organizations:", error);
+            }
+        };
+    
+        if (user?.id) {
+            fetchOrganizations();
+        }
+    }, [user]);
+
     return (
         <div className="relative flex flex-col items-center p-6 text-white rounded-lg bg-custom-blue w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto shadow-lg min-h-[400px] flex-grow">
             <div className="flex flex-col items-center justify-center flex-grow pointer-events-none">
@@ -37,11 +53,19 @@ function VolProfilebar() {
                         } 
                     }} 
                 />
-                <h2 className="mt-4 text-lg font-semibold text-center md:text-xl">{clarkId?.name}</h2>
+                <h2 className="mt-4 text-3xl font-semibold text-center md:text-xl">{clarkId?.name}</h2>
                 <p className="px-4 mt-2 text-sm text-center md:text-base md:px-6">
                     {clarkId?.description} <br />
                     {clarkId?.email} <br />
                 </p>
+                <div className="mt-10">
+                    <h3 className="text-md font-semibold text-center md:text-lg">Joined Organizations</h3>
+                    <ul className="list-disc list-inside">
+                        {organizations.map((org, index) => (
+                            <li key={index}>{org}</li>
+                        ))}
+                    </ul>
+                </div>
             </div>
             
             <div className="flex flex-col items-center w-full pb-6 mt-4 space-y-3">
