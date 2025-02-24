@@ -5,56 +5,60 @@ const seminarSchema = new Schema(
     {
         name: {
             type: String,
-            required: true,
+            required: false,
             default: "Seminar"
         },
         description: {
             type: String,
-            required: true,
+            required:false,
             default: "This is a seminar"
         },
         rating: {
             type: Number,
-            required: true,
+            required: false,
             default: 0
         },
         location: {
             type: String,
-            required: true
+            required: false
         },
         phoneNumber: {
-            type: String,
-            required: true
+            type: Number,
+            required: false
         },
         status: {
             type: String,
-            required: true,
+            required: false,
             default: "pending"
         },
         subject: {
             type: String,
-            required: true
+            required: false
         },
         grade: {
             type: Number,
-            required: true
+            required: false
+        },
+        medium: {
+            type: String,
+            required: false
         },
         expStudentCount: {
             type: Number,
-            required: true
+            required:false
         },
         expTeacherCount: {
             type: Number,
-            required: true
+            required: false
         },
         additionalRequests: {
             type: String,
-            required: true,
+            required: false,
             default: "No additional requests"
         },
         expDate: {
-            type: String,
-            required: true
+            type: Date,
+            required: false
         },
         volunteers: [
             {
@@ -65,16 +69,22 @@ const seminarSchema = new Schema(
             },
         ],
         schoolId: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true // Reference to the School model
+            type :String,
+            //type: mongoose.Schema.Types.ObjectId,
+            //ref: 'School', 
+            required: false // Reference to the School model
         },
         organizationId: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true
+            required: false
+        },
+        organization: {
+            type: String,
+            required: false
         },
     },
     {
-        timestamps: true, // Show timestamps
+        timestamps: false, // Show timestamps
     }
 );
 

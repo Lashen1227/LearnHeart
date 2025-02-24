@@ -30,6 +30,14 @@ const volunteerSchema = new Schema({
         type: String,
         required: true
     },
+    skills: {
+        type: String,
+        required: false
+    },
+    email: {
+        type: String,
+        required: false
+    },
     volunteerProfileImageAvailable: {
         type: Boolean,
         required: false
@@ -41,7 +49,7 @@ const volunteerSchema = new Schema({
     orgID: {
         type: Schema.Types.ObjectId,
         ref: 'organizations',
-        required: true
+        required: false
     }
 }, {
     timestamps: true,
