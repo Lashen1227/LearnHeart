@@ -34,6 +34,8 @@ const createVolunteer = async (req, res) => {
     status,
     address,
     phoneNumber,  // Added phoneNumber
+    skills,
+    email,
     volunteerProfileImageAvailable,
     volunteerProfileColor,
     orgID
@@ -69,6 +71,8 @@ const createVolunteer = async (req, res) => {
       status,
       address,
       phoneNumber,  // Added phoneNumber to database creation
+      skills,
+      email,
       volunteerProfileImageAvailable,
       volunteerProfileColor,
       orgID

@@ -2,64 +2,63 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '@clerk/clerk-react';
 import PropTypes from "prop-types";
-import { Box, Card, CardContent, Typography, Chip, Paper, IconButton } from "@mui/material";
+import { Box, Card, CardContent, Typography, Chip, Paper, IconButton, CircularProgress } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
-const SessionsList = ({ title, sessions, handleRemove }) => {
+const SessionsList = ({ title, sessions, handleRemove, isLoading }) => {
   return (
     <Paper elevation={3} sx={{ bgcolor: "#4db6ac", p: 3, borderRadius: 2, maxHeight: 400, overflowY: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
       <Typography variant="h6" mb={2} sx={{ textAlign: "center", color: "black" }}>
         {title}
       </Typography>
-      <Box display="flex" flexDirection="column" gap={2}>
-        {sessions.length > 0 ? (
-          sessions.map((session, index) => (
-            <Card key={index} variant="outlined" sx={{ position: 'relative' }}>
-              <CardContent>
-                {/* Close button */}
-                <IconButton
-                  edge="end"
-                  onClick={() => handleRemove(session.id)}
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 8,
-                    padding: '2px',
-                    fontSize: '1px',
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton><br />
-                <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
-                  <Box>
-                    <Typography variant="body2" fontWeight="bold">
-                      {session.date}
-                    </Typography>
-                    <Typography variant="body2" fontWeight="bold">
-                      {session.school} - {session.address}
-                    </Typography>
-                    {session.subject && (
-                      <Typography variant="body2" color="text.secondary">
-                        {session.subject} | Grade {session.grade} | Medium: {session.medium}
+      {isLoading ? (
+        <Box textAlign="center" mt={2}>
+          <CircularProgress size={40} />
+        </Box>
+      ) : (
+        <Box display="flex" flexDirection="column" gap={2}>
+          {sessions.length > 0 ? (
+            sessions.map((session, index) => (
+              <Card key={index} variant="outlined" sx={{ position: 'relative' }}>
+                <CardContent>
+                  <IconButton
+                    edge="end"
+                    onClick={() => handleRemove(session.id)}
+                    sx={{ position: 'absolute', top: 0, right: 8, padding: '2px' }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                  <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
+                    <Box>
+                      <Typography variant="body2" fontWeight="bold">
+                        {session.date}
                       </Typography>
+                      <Typography variant="body2" fontWeight="bold">
+                        {session.school} - {session.address}
+                      </Typography>
+                      {session.subject && (
+                        <Typography variant="body2" color="text.secondary">
+                          {session.subject} | Grade {session.grade} | Medium: {session.medium}
+                        </Typography>
+                      )}
+                      <Typography variant="body2" color="text.secondary">
+                        {session.phoneNumber} | {session.email}
+                      </Typography>
+                    </Box>
+                    {session.status && (
+                      <Chip label={session.status} color="success" size="small" />
                     )}
-                    <Typography variant="body2" color="text.secondary">
-                      {session.phoneNumber} | {session.email}
-                    </Typography>
                   </Box>
-                  {session.status && (
-                    <Chip label={session.status} color="success" size="small" />
-                  )}
-                </Box>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
-            No completed seminars found.
-          </Typography>
-        )}
-      </Box>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
+              No completed seminars found.
+            </Typography>
+          )}
+        </Box>
+      )}
     </Paper>
   );
 };
@@ -82,7 +81,8 @@ SessionsList.propTypes = {
       additionalRequests: PropTypes.string
     })
   ).isRequired,
-  handleRemove: PropTypes.func.isRequired
+  handleRemove: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 const CompletedOrganization = () => {
@@ -154,7 +154,7 @@ const CompletedOrganization = () => {
   };
 
   return (
-    <SessionsList title="Completed Seminars" sessions={completedSeminars} handleRemove={handleRemove} />
+    <SessionsList title="Completed Seminars" sessions={completedSeminars} handleRemove={handleRemove} isLoading={isLoading} />
   );
 };
 
