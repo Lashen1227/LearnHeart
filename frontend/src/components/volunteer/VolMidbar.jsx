@@ -130,9 +130,9 @@ function VolMidbar() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="p-6 rounded-lg text-center bg-custom-green shadow-md">
-        <h2 className="text-xl font-semibold">Join with Organizations</h2>
-        <p className="mt-2 text-gray-600">Select an organization to submit your request.</p>
+      <div className="p-6 text-center rounded-lg shadow-md bg-[#4db6ac]">
+        <h2 className="text-xl">Join with Organizations</h2>
+        <p className="mt-2 text-gray-900">Select an organization to submit your request.</p>
 
         {/* Success or Error Alert */}
         {alertMessage && (
@@ -143,7 +143,7 @@ function VolMidbar() {
 
         <form onSubmit={handleSubmit} className="mt-4">
           <div className="mb-4">
-            <label className="block text-left mb-2">Preferred Organization</label>
+            <label className="block mb-2 text-left">Preferred Organization</label>
             <select name="organization" value={formData.organization} onChange={handleChange} required className="w-full p-2 border rounded">
               <option className="text-custom-lightb"value="">Select Organization</option>
               {organizations.map((org) => (
@@ -153,22 +153,22 @@ function VolMidbar() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-left mb-2">Education / Work Qualifications</label>
+            <label className="block mb-2 text-left">Education / Work Qualifications</label>
             <input type="text" name="qualifications" value={formData.qualifications} onChange={handleChange} required className="w-full p-2 border rounded" />
           </div>
 
           <div className="mb-4">
-            <label className="block text-left mb-2">Language Proficiency</label>
+            <label className="block mb-2 text-left">Language Proficiency</label>
             <input type="text" name="language" value={formData.language} onChange={handleChange} required className="w-full p-2 border rounded" />
           </div>
 
           <div className="mb-4">
-            <label className="block text-left mb-2">Teaching Subjects</label>
+            <label className="block mb-2 text-left">Teaching Subjects</label>
             <input type="text" name="subjects" value={formData.subjects} onChange={handleChange} required className="w-full p-2 border rounded" />
           </div>
 
           <div className="mb-4">
-            <label className="block text-left mb-2">Available Dates</label>
+            <label className="block mb-2 text-left">Available Dates</label>
             <div className="flex flex-wrap gap-2">
               {availableDatesOptions.map((date) => (
                 <label key={date} className="flex items-center">
@@ -180,13 +180,13 @@ function VolMidbar() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-left mb-2">Upload CV</label>
+            <label className="block mb-2 text-left">Upload CV</label>
             <input type="file" name="cv" onChange={handleChange} accept=".pdf,.doc,.docx" required ref={fileInputRef} className="w-full p-2 border rounded" />
           </div>
 
           <div className="flex gap-2 mt-4">
-            <button type="button" onClick={handleClear} className="w-3/4 py-2 duration-300 bg-white border rounded-lg hover:scale-105 hover:bg-blue-50 text-custom-blue">Clear</button>
-            <button type="submit" className="w-3/4 py-2 text-white duration-300 border rounded-lg hover:scale-105 bg-custom-orange hover:bg-orange-600">Join</button>
+            <button type="submit" className="w-3/4 py-2 text-white rounded-lg bg-custom-orange hover:bg-orange-600">Join</button>
+            <button type="button" onClick={handleClear} className="w-3/4 py-2 bg-white border rounded-lg hover:bg-blue-50 text-custom-blue">Clear</button>
           </div>
         </form>
       </div>

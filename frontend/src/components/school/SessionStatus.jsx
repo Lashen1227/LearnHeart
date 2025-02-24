@@ -4,6 +4,7 @@ import { useUser } from "@clerk/clerk-react";
 import PropTypes from "prop-types";
 import { Box, Card, CardContent, Typography, Chip, Paper, IconButton, CircularProgress } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import RefreshIcon from "@mui/icons-material/Refresh"; // Import Refresh Icon
 
 const SeminarStatus = () => {
   const [seminars, setSeminars] = useState([]);
@@ -43,23 +44,23 @@ const SeminarStatus = () => {
     );
   };
 
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const [seminarResponse, schoolResponse] = await Promise.all([
+        axios.get("http://localhost:3001/api/seminars"),
+        axios.get("http://localhost:3001/api/schools"),
+      ]);
+      setSeminars(seminarResponse.data);
+      setSchools(schoolResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [seminarResponse, schoolResponse] = await Promise.all([
-          axios.get("http://localhost:3001/api/seminars"),
-          axios.get("http://localhost:3001/api/schools"),
-        ]);
-
-        setSeminars(seminarResponse.data);
-        setSchools(schoolResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -95,13 +96,14 @@ const SeminarStatus = () => {
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-      <Typography
-        variant="h6"
-        mb={2}
-        sx={{ textAlign: "center", color: "black" }}
-      >
-        Seminar Status
-      </Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography variant="h6" mb={0} sx={{ textAlign: "center", color: "black" }}>
+          Seminar Status
+        </Typography>
+        <IconButton onClick={fetchData} sx={{ padding: "0px", color: 'black' }}>
+          <RefreshIcon />
+        </IconButton>
+      </Box>
       {isLoading ? (
         <Box display="flex" justifyContent="center" alignItems="center" height={400}>
           <CircularProgress />
@@ -110,18 +112,9 @@ const SeminarStatus = () => {
         <Box display="flex" flexDirection="column" gap={2}>
           {filteredSessions.length > 0 ? (
             filteredSessions.map((session) => (
-              <Card
-                key={session._id}
-                variant="outlined"
-                sx={{ position: "relative" }}
-              >
+              <Card key={session._id} variant="outlined" sx={{ position: "relative" }}>
                 <CardContent><br />
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="start"
-                    mb={1}
-                  >
+                  <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
                     <Box>
                       <Typography variant="body2" fontWeight="bold">
                         {session.organization}
@@ -162,12 +155,7 @@ const SeminarStatus = () => {
               </Card>
             ))
           ) : (
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              textAlign="center"
-              fontWeight="bold"
-            >
+            <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
               No seminar status available.
             </Typography>
           )}

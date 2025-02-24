@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { Visibility, Refresh as RefreshIcon } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useUser } from "@clerk/clerk-react";
 
@@ -28,25 +29,26 @@ const SeminarRequests = () => {
 
   const user = useUser().user;
 
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [orgResponse, schoolResponse, seminarResponse] = await Promise.all([
+        axios.get("http://localhost:3001/api/organizations"),
+        axios.get("http://localhost:3001/api/schools"),
+        axios.get("http://localhost:3001/api/seminars")
+      ]);
+
+      setOrganizations(orgResponse.data);
+      setSchools(schoolResponse.data);
+      setSeminars(seminarResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [orgResponse, schoolResponse, seminarResponse] = await Promise.all([
-          axios.get("http://localhost:3001/api/organizations"),
-          axios.get("http://localhost:3001/api/schools"),
-          axios.get("http://localhost:3001/api/seminars")
-        ]);
-
-        setOrganizations(orgResponse.data);
-        setSchools(schoolResponse.data);
-        setSeminars(seminarResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -103,9 +105,14 @@ const SeminarRequests = () => {
 
   return (
     <Paper elevation={3} sx={{ bgcolor: "#4db6ac", p: 3, borderRadius: 2 }}>
-      <Typography variant="h6" mb={2} sx={{ textAlign: "center", color: "black" }}>
-        Requested Sessions
-      </Typography>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+        <Typography variant="h6" sx={{ color: "black", mr: 1 }}>
+          Requested Sessions
+        </Typography>
+        <IconButton onClick={fetchData} sx={{ color: 'black' }}>
+          <RefreshIcon />
+        </IconButton>
+      </Box>
       <Box sx={{ maxHeight: 400, overflowY: "auto", scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
         {filteredSessions.length > 0 ? (
           filteredSessions.map((session) => (
@@ -118,7 +125,7 @@ const SeminarRequests = () => {
                 <Typography variant="body2">Grade: {session.grade}</Typography>
                 <Typography variant="body2">Date: {new Date(session.expDate).toLocaleDateString()}</Typography>
                 <Box display="flex" gap={1} mt={2}>
-                  <Button variant="contained" color="primary" size="small" onClick={() => handleView(session)}>
+                  <Button variant="contained" color="primary" size="small" startIcon={<Visibility />} onClick={() => handleView(session)}>
                     View
                   </Button>
                   <Button variant="contained" color="success" size="small" startIcon={<CheckCircleIcon />} onClick={() => handleAccept(session._id)}>
@@ -149,7 +156,7 @@ const SeminarRequests = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            bgcolor: "#EAEFFB",
+            bgcolor: "#ffffff",
             p: 4,
             borderRadius: 2,
             width: { xs: "70%", sm: "45%", md: "35%" },

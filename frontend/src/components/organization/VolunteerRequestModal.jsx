@@ -1,14 +1,12 @@
-import { Modal, Box, Typography, Avatar, TextField, InputLabel, CardActions, Button } from "@mui/material";
-import { CheckCircle, Cancel } from "@mui/icons-material";
+import { Modal, Box, Typography, TextField, InputLabel, CardActions, Button, IconButton } from "@mui/material";
+import { CheckCircle, Cancel, Close } from "@mui/icons-material";
 import PropTypes from "prop-types";
 
 const VolunteerRequestModal = ({ open, handleClose, selectedRequest, handleAccept, handleReject }) => {
 
   const handleViewCV = () => {
     if (selectedRequest && selectedRequest.cv) {
-      // Construct the full URL to the CV file
       const cvUrl = `http://localhost:3001/${selectedRequest.cv.replace(/\\/g, '/')}`;
-      // Open the URL in a new tab
       window.open(cvUrl, '_blank');
     }
   };
@@ -30,128 +28,89 @@ const VolunteerRequestModal = ({ open, handleClose, selectedRequest, handleAccep
         bgcolor: 'background.paper',
         borderRadius: 5,
         p: 4,
+        boxShadow: 24,
       }}>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <Close />
+        </IconButton>
+
         {selectedRequest && (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Avatar sx={{ bgcolor: "#3657ad", width: 100, height: 100, border: '0 4px 8px rgba(0, 0, 0, 0.2)', fontSize: '2rem' }}>
-              {selectedRequest.volunteerDetails.name.charAt(0)}
-            </Avatar>
-            <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ mt: 1, fontWeight: 600 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mt: 1, fontWeight: 600 }}>
               {selectedRequest.volunteerDetails.name}
             </Typography>
-            <Typography id="modal-modal-description" variant="body1" sx={{ fontWeight: 500 }}>
+            <Typography variant="body1" sx={{ fontWeight: 500 }}>
               Address: {selectedRequest.volunteerDetails.address}
             </Typography>
-            <Typography id="modal-modal-description" variant="body1" sx={{ fontWeight: 500 }}>
+            <Typography variant="body1" sx={{ fontWeight: 500 }}>
               Contact No: {selectedRequest.volunteerDetails.phoneNumber}
             </Typography>
+
             <Box sx={{ width: '100%', mb: 2, mt: 2 }}>
-              <InputLabel htmlFor="modal-modal-qualifications" sx={{ color: 'black', fontSize: '1.1rem', fontWeight: 600, mb: 1, ml: 1 }}>Education / Work Qualifications</InputLabel>
+              <InputLabel sx={{ color: 'black', fontSize: '1rem', fontWeight: 600, mb: 1, ml: 1 }}>Education / Work Qualifications</InputLabel>
               <TextField
-                id="modal-modal-qualifications"
                 variant="outlined"
                 value={selectedRequest.qualifications}
                 disabled
                 fullWidth
-                InputProps={{
-                  style: { height: 40 }, // Adjust the height of the input field
-                }}
-                sx={{
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    color: 'black',
-                    WebkitTextFillColor: 'black',
-                  },
-                }}
+                InputProps={{ style: { height: 40 } }}
+                sx={{ '& .MuiInputBase-input.Mui-disabled': { color: 'black', WebkitTextFillColor: 'black' } }}
               />
             </Box>
+
             <Box sx={{ width: '100%', mb: 2 }}>
-              <InputLabel htmlFor="modal-modal-language" sx={{ color: 'black', fontSize: '1.1rem', fontWeight: 600, mb: 1, ml: 1 }}>Language Proficiency</InputLabel>
+              <InputLabel sx={{ color: 'black', fontSize: '1rem', fontWeight: 600, mb: 1, ml: 1 }}>Language Proficiency</InputLabel>
               <TextField
-                id="modal-modal-language"
                 variant="outlined"
                 value={selectedRequest.language}
                 disabled
                 fullWidth
-                InputProps={{
-                  style: { height: 40 }, // Adjust the height of the input field
-                }}
-                sx={{
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    color: 'black',
-                    WebkitTextFillColor: 'black',
-                  },
-                }}
+                InputProps={{ style: { height: 40 } }}
+                sx={{ '& .MuiInputBase-input.Mui-disabled': { color: 'black', WebkitTextFillColor: 'black' } }}
               />
             </Box>
+
             <Box sx={{ width: '100%', mb: 2 }}>
-              <InputLabel htmlFor="modal-modal-subjects" sx={{ color: 'black', fontSize: '1.1rem', fontWeight: 600, mb: 1, ml: 1 }}>Teaching Subjects</InputLabel>
+              <InputLabel sx={{ color: 'black', fontSize: '1rem', fontWeight: 600, mb: 1, ml: 1 }}>Teaching Subjects</InputLabel>
               <TextField
-                id="modal-modal-subjects"
                 variant="outlined"
                 value={selectedRequest.subjects}
                 disabled
                 fullWidth
-                InputProps={{
-                  style: { height: 40 }, // Adjust the height of the input field
-                }}
-                sx={{
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    color: 'black',
-                    WebkitTextFillColor: 'black',
-                  },
-                }}
+                InputProps={{ style: { height: 40 } }}
+                sx={{ '& .MuiInputBase-input.Mui-disabled': { color: 'black', WebkitTextFillColor: 'black' } }}
               />
             </Box>
+
             <Box sx={{ width: '100%', mb: 2 }}>
-              <InputLabel htmlFor="modal-modal-availableDates" sx={{ color: 'black', fontSize: '1.1rem', fontWeight: 600, mb: 1, ml: 1 }}>Available Dates</InputLabel>
+              <InputLabel sx={{ color: 'black', fontSize: '1rem', fontWeight: 600, mb: 1, ml: 1 }}>Available Dates</InputLabel>
               <TextField
-                id="modal-modal-availableDates"
                 variant="outlined"
                 value={selectedRequest.availableDates.join(", ")}
                 disabled
                 fullWidth
-                InputProps={{
-                  style: { height: 40 }, // Adjust the height of the input field
-                }}
-                sx={{
-                  '& .MuiInputBase-input.Mui-disabled': {
-                    color: 'black',
-                    WebkitTextFillColor: 'black',
-                  },
-                }}
+                InputProps={{ style: { height: 40 } }}
+                sx={{ '& .MuiInputBase-input.Mui-disabled': { color: 'black', WebkitTextFillColor: 'black' } }}
               />
             </Box>
+
             <CardActions sx={{ justifyContent: "flex-end", gap: 1, mt: 2 }}>
-              <Button
-                size="small"
-                variant="contained"
-                color="primary"
-                onClick={handleViewCV}
-              >
+              <Button size="small" variant="contained" color="primary" onClick={handleViewCV}>
                 View and Download CV
               </Button>
-              <Button
-                size="small"
-                variant="contained"
-                color="success"
-                startIcon={<CheckCircle />}
-                onClick={handleAccept}
-              >
+              <Button size="small" variant="contained" color="success" startIcon={<CheckCircle />} onClick={handleAccept}>
                 Accept
               </Button>
-              <Button
-                size="small"
-                variant="contained"
-                color="error"
-                startIcon={<Cancel />}
-                onClick={handleReject}
-              >
+              <Button size="small" variant="contained" color="error" startIcon={<Cancel />} onClick={handleReject}>
                 Reject
               </Button>
             </CardActions>
