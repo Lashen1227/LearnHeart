@@ -6,7 +6,6 @@ import { ClerkProvider } from '@clerk/clerk-react';
 
 // Landing Pages
 import AboutUs from './pages/AboutUs.jsx';
-import PastEvents from './pages/PastEvents.jsx';
 import Team from './pages/Team.jsx';
 import ContactUs from './pages/ContactUs.jsx';
 import Loading from './pages/authorizationPages/Loading.jsx';

@@ -88,7 +88,6 @@ SessionsList.propTypes = {
     })
   ).isRequired,
   handleRemove: PropTypes.func.isRequired,
-
   isLoading: PropTypes.bool.isRequired,
   handleRefresh: PropTypes.func.isRequired // Add handleRefresh prop
 };
