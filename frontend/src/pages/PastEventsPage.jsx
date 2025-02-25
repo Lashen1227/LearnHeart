@@ -38,6 +38,14 @@ export default function PastEvents() {
     }
   };
 
+  //Handle Comment Input Change
+  const handleCommentChange = (eventId, text) => {
+    setCommentInputs((prev) => ({
+      ...prev,
+      [eventId]: text,
+    }));
+  };
+
 
   return (
     <>
