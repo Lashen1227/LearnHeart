@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
+import { useUser } from "@clerk/clerk-react";
 
 export default function PastEvents() {
- 
+  const { user } = useUser();  
+  const username = user?.username || user?.fullName || "Unknown User";  
+  const userProfilePic = user?.profileImageUrl || "/default-avatar.png";
 
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [commentSuccess, setCommentSuccess] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
-
 
   useEffect(() => {
     fetchEvents();
@@ -45,6 +47,44 @@ export default function PastEvents() {
       [eventId]: text,
     }));
   };
+
+  //Handle Comment Submission
+const handleCommentSubmit = async (eventId) => {
+  const commentText = commentInputs[eventId];
+
+  if (!commentText?.trim()) return;
+
+  try {
+    //Send `profilePic` along with the comment
+    await axios.post(`http://localhost:3003/api/events/comment/${eventId}`, {
+      username,  
+      text: commentText,
+      profilePic: userProfilePic,
+    });
+
+    fetchEvents();
+
+    // Clear input for this event
+    setCommentInputs((prev) => ({
+      ...prev,
+      [eventId]: "",
+    }));
+
+    setCommentSuccess((prev) => ({
+      ...prev,
+      [eventId]: true,
+    }));
+
+    setTimeout(() => {
+      setCommentSuccess((prev) => ({
+        ...prev,
+        [eventId]: false,
+      }));
+    }, 3000);
+  } catch (error) {
+    console.error("Error adding comment:", error);
+  }
+};
 
 
   return (
