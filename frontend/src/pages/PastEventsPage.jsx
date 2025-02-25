@@ -8,15 +8,14 @@ import { useUser } from "@clerk/clerk-react";
 
 export default function PastEvents() {
   const { user } = useUser();  
-  const username = user?.username || user?.fullName || "Unknown User";  
-  const userProfilePic = user?.profileImageUrl || "/default-avatar.png";
 
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [commentSuccess, setCommentSuccess] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
-
+  
+  
   return (
     <>
       <Navbar />
