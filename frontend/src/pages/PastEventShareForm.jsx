@@ -1,5 +1,7 @@
 import { useState } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
+import { useDropzone } from "react-dropzone";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -11,8 +13,16 @@ const PastEventShareForm = () => {
     subject: "",
     date: "",
   });
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
 
+  // Handle Input Change
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  
   return (
     <>
       <Navbar />
