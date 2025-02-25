@@ -7,9 +7,7 @@ import Footer from "../components/Footer";
 import { useUser } from "@clerk/clerk-react";
 
 export default function PastEvents() {
-  const { user } = useUser();  
 
-  const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [commentSuccess, setCommentSuccess] = useState({});
