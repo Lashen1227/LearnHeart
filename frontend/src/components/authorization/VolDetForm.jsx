@@ -9,6 +9,7 @@ function VolDetForm() {
   const { user } = useUser();
   const Name = user?.fullName;
   const UserID = user?.id;
+  const email = user?.primaryEmailAddress?.emailAddress;
   const Status = "pending";
   const VolunteerProfileImageAvailable = user?.hasImage;
   const VolunteerId = user?.id;
@@ -51,6 +52,8 @@ function VolDetForm() {
       "status": Status,
       "address": Address,
       "phoneNumber": PhoneNumber,
+      "email": email,
+      "skills": "Volunteer",
       "volunteerProfileImageAvailable": VolunteerProfileImageAvailable,
       "volunteerProfileColor": VolunteerProfileColor,
     });

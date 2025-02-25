@@ -39,6 +39,10 @@ const seminarSchema = new Schema(
             type: Number,
             required: false
         },
+        medium: {
+            type: String,
+            required: false
+        },
         expStudentCount: {
             type: Number,
             required:false
@@ -72,6 +76,10 @@ const seminarSchema = new Schema(
         },
         organizationId: {
             type: mongoose.Schema.Types.ObjectId,
+            required: false
+        },
+        organization: {
+            type: String,
             required: false
         },
     },

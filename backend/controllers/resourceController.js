@@ -8,7 +8,7 @@ const { get } = require('http');
 // Configure Multer for PDF uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // PDFs will be stored in the "uploads" folder
+    cb(null, 'uploads/notes'); // PDFs will be stored in the "uploads" folder
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -185,7 +185,7 @@ const addResource = async (req, res) => {
     let pdfUrl = null;
 
     if (req.file) {
-      pdfUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      pdfUrl = `${req.protocol}://${req.get('host')}/uploads/notes/${req.file.filename}`;
     }
 
     // Validate URL if provided
