@@ -2,14 +2,20 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '@clerk/clerk-react';
 import PropTypes from "prop-types";
-import { Box, Card, CardContent, Typography, Chip, Paper, Button, CircularProgress } from "@mui/material";
+import { Box, Card, CardContent, Typography, Chip, Paper, Button, CircularProgress, IconButton } from "@mui/material";
+import RefreshIcon from '@mui/icons-material/Refresh';
 
-const SessionsList = ({ title, sessions, handleComplete, isLoading }) => {
+const SessionsList = ({ title, sessions, handleComplete, isLoading, onRefresh }) => {
   return (
     <Paper elevation={3} sx={{ bgcolor: "#4db6ac", p: 3, borderRadius: 2, maxHeight: 610, overflowY: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
-      <Typography variant="h6" mb={2} sx={{ textAlign: "center", color: "black" }}>
-        {title}
-      </Typography>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mb={0}>
+        <Typography variant="h6" sx={{ textAlign: "center", color: "black" }}>
+          {title}
+        </Typography>
+        <IconButton onClick={onRefresh}  sx={{ padding: '6px', color: 'black' }}>
+          <RefreshIcon />
+        </IconButton>
+      </Box>
       {isLoading ? (
         <Box display="flex" justifyContent="center" alignItems="center" height={200}>
           <CircularProgress />
@@ -89,7 +95,8 @@ SessionsList.propTypes = {
     })
   ).isRequired,
   handleComplete: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  onRefresh: PropTypes.func.isRequired,
 };
 
 const UpcomingOrganization = () => {
@@ -109,21 +116,27 @@ const UpcomingOrganization = () => {
     }).replaceAll('/', '.') || 'N/A';
   };
 
-  useEffect(() => {
-    const fetchData = async (apiUrl, setState) => {
-      try {
-        const response = await axios.get(apiUrl);
-        setState(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const [orgResponse, seminarResponse, schoolResponse] = await Promise.all([
+        axios.get('http://localhost:3001/api/organizations'),
+        axios.get('http://localhost:3001/api/seminars'),
+        axios.get('http://localhost:3001/api/schools')
+      ]);
+      
+      setOrganizations(orgResponse.data);
+      setSeminars(seminarResponse.data);
+      setSchools(schoolResponse.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchData('http://localhost:3001/api/organizations', setOrganizations);
-    fetchData('http://localhost:3001/api/seminars', setSeminars);
-    fetchData('http://localhost:3001/api/schools', setSchools);
+  useEffect(() => {
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -166,7 +179,13 @@ const UpcomingOrganization = () => {
   };
 
   return (
-    <SessionsList title="Upcoming Seminars" sessions={specificSeminar} handleComplete={handleComplete} isLoading={isLoading} />
+    <SessionsList
+      title="Upcoming Seminars"
+      sessions={specificSeminar}
+      handleComplete={handleComplete}
+      isLoading={isLoading}
+      onRefresh={fetchData}
+    />
   );
 };
 

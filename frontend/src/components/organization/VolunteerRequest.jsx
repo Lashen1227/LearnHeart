@@ -40,7 +40,7 @@ const VolunteerRequest = ({ clarkUser }) => {
   console.log("Requests: ", requests);
 
   return (
-    <Box sx={{ backgroundColor: "#4db6ac", p: 3, borderRadius: 2, position: 'relative' }}>
+    <Box sx={{ backgroundColor: "#4db6ac", p: 3, borderRadius: 2 }}>
       <Box
         sx={{
           display: 'flex',
@@ -48,9 +48,7 @@ const VolunteerRequest = ({ clarkUser }) => {
           alignItems: 'right',
         }}
       >
-        <Box sx={{ flex: 1 }} />
-        <Box sx={{ flex: 1 }} />
-        <Typography variant="h6" gutterBottom sx={{ lineHeight: 1.8, textAlign: "center" }}>
+        <Typography variant="h6" gutterBottom sx={{ lineHeight: 1.8 }}>
           Volunteer Requests
         </Typography>
         <Box sx={{ flex: 1 }} />
