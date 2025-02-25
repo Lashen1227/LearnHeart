@@ -40,6 +40,7 @@ import AddResource from './pages/resourceBankPages/AddResource.jsx';
 
 //Past Event Page
 import PastEvents from "./pages/PastEventsPage.jsx";
+import PastEventSharePage from "./pages/PastEventShareForm.jsx";
 
 const { VITE_CLERK_PUBLISHABLE_KEY } = import.meta.env;
 const PUBLISHABLE_KEY = VITE_CLERK_PUBLISHABLE_KEY;
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
   { path: "/resource-bank", element: <ResourceBank />, },
   { path: "/resource-bank/add", element: <AddResource />, },
   { path: "/past-events", element: <PastEvents />, },
+  { path: "/past-share", element: <PastEventSharePage />, },
 ]);
 
 
