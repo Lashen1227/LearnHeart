@@ -2,8 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useDropzone } from "react-dropzone";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 const PastEventShareForm = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +28,35 @@ const PastEventShareForm = () => {
       setImages([...images, ...acceptedFiles]);
     },
   });
+
   
+  // Handle Form Submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const formDataToSend = new FormData();
+    Object.keys(formData).forEach((key) => formDataToSend.append(key, formData[key]));
+    images.forEach((image) => formDataToSend.append("images", image));
+
+    try {
+      const response = await axios.post("http://localhost:3003/api/events/add", formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (response.status === 201) {
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+        setFormData({ schoolName: "", location: "", grade: "", subject: "", date: "" });
+        setImages([]);
+      }
+    } catch (error) {
+      console.error("Error submitting event:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Navbar />
