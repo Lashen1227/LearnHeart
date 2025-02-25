@@ -1,19 +1,44 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useUser } from "@clerk/clerk-react";
+
 
 export default function PastEvents() {
+ 
 
+  const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [commentSuccess, setCommentSuccess] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
-  
-  
+
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:3003/api/events/");
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  //Handle Rating Update
+  const handleRating = async (eventId, rating) => {
+    try {
+      await axios.post(`http://localhost:3003/api/events/rate/${eventId}`, { rating });
+      fetchEvents();
+    } catch (error) {
+      console.error("Error adding rating:", error);
+    }
+  };
+
+
   return (
     <>
       <Navbar />
