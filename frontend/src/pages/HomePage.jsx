@@ -75,7 +75,7 @@ export default function HomePage() {
               <img
                 src={ChooseUSImage}
                 alt="Why Choose Us"
-                className="object-cover w-full h-64 rounded-lg shadow-xl md:h-80 lg:h-96"
+                className="object-cover h-64 rounded-lg shadow-xl md:h-80 lg:h-96 w-100 md:w-100"
               />
             </div>
           </div>

@@ -2,11 +2,16 @@ import { UserButton, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Box, Modal, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import SearchIcon from '@mui/icons-material/Search';
+import OrgSearchList from "../organization/OrgSearchList";
 
 function VolProfilebar() {
     const [volunteers, setVolunteers] = useState([]);
     const [organizations, setOrganizations] = useState([]);
     const user = useUser().user;
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const clarkId = volunteers.find((vol) => vol.userID === user?.id);
 
@@ -50,8 +55,8 @@ function VolProfilebar() {
                 />
                 <h2 className="mt-4 text-3xl font-semibold text-center md:text-xl">{clarkId?.name}</h2>
                 <p className="px-4 mt-2 text-sm text-center md:text-base md:px-6">
+                    {clarkId?.description} <br />
                     {clarkId?.email} <br />
-                    {clarkId?.description}
                 </p>
                 <div className="mt-10">
                     <h3 className="text-md font-semibold text-center md:text-lg">Joined Organizations</h3>
@@ -64,6 +69,9 @@ function VolProfilebar() {
             </div>
             
             <div className="flex flex-col items-center w-full pb-6 mt-4 space-y-3">
+                <button className="px-2 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsModalOpen(true)}>
+                    <SearchIcon />Find Organizations
+                </button>
                 <button className="w-3/4 py-2 duration-300 bg-white border md:w-1/2 rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue">
                     Verify Skills
                 </button>
@@ -71,6 +79,34 @@ function VolProfilebar() {
                     <Link to="/"> Back to Home </Link>
                 </button>
             </div>
+            <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <Box 
+                position="absolute" 
+                top="50%" 
+                left="50%" 
+                sx={{
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "#EAEFFB", 
+                    p: 3, 
+                    borderRadius: 2,
+                    width: {
+                    xs: '90%',
+                    sm: '75%',
+                    md: '60%',
+                    lg: '50%',
+                    xl: '35%'
+                    },
+                    maxHeight: "80vh", 
+                    overflowY: "auto",
+                    scrollbarWidth: "none",
+                }}
+                >
+                <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsModalOpen(false)}>
+                    <CloseIcon />
+                </IconButton>
+                <OrgSearchList />
+                </Box>
+            </Modal>
         </div>
     );
 }

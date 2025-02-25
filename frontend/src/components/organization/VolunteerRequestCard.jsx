@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardContent, CardActions, Button, Typography, Avatar, Stack } from "@mui/material";
+import { Card, CardContent, CardActions, Button, Typography, Stack } from "@mui/material";
 import { CheckCircle, Cancel, Visibility } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import VolunteerRequestModal from './VolunteerRequestModal'; // Import the modal component
@@ -80,9 +80,8 @@ const VolunteerRequestCard = ({ request, refreshRequests }) => {
       <Card sx={{ p: 2, backgroundColor: "white", borderRadius: 2, minHeight: 150 }}>
         <CardContent>
           <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar sx={{ bgcolor: "#3657ad" }}>{request.volunteerDetails.name.charAt(0)}</Avatar>
             <div>
-              <Typography variant="h6" sx={{ fontWeight: 600 }}>
+              <Typography variant="h8" sx={{ fontWeight: 600 }}>
                 {request.volunteerDetails.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -91,10 +90,10 @@ const VolunteerRequestCard = ({ request, refreshRequests }) => {
             </div>
           </Stack>
         </CardContent>
-        <CardActions sx={{ justifyContent: "flex-end", gap: 1 }}>
+        <CardActions sx={{ gap: 1 }}>
           <Button
             size="small"
-            variant="outlined"
+            variant="contained"
             color="info"
             startIcon={<Visibility />}
             onClick={() => handleOpen(request)}
