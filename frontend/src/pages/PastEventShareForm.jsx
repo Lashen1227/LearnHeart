@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useDropzone } from "react-dropzone";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const PastEventShareForm = () => {
   const [formData, setFormData] = useState({
