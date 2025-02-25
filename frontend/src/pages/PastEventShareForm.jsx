@@ -22,6 +22,14 @@ const PastEventShareForm = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  // Drag and Drop Image Handling
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: "image/*",
+    onDrop: (acceptedFiles) => {
+      setImages([...images, ...acceptedFiles]);
+    },
+  });
   
   return (
     <>
