@@ -217,6 +217,49 @@ const getVolunteerRequests = async (req, res) => {
   }
 };
 
+const getVolunteerRequestsByUserId = async (req, res) => {
+  const { userId } = req.body;
+
+  if (!userId || typeof userId !== "string" || userId.trim() === "") {
+    return res.status(400).json({ error: "Invalid user ID" });
+  }
+
+  try {
+    const volunteerRequests = await VolunteerRequest.aggregate([
+      {
+        $match: { userId: userId },
+      },
+      {
+        $lookup: {
+          from: "organizations",
+          localField: "organization",
+          foreignField: "_id",
+          as: "organizationDetails",
+        },
+      },
+      {
+        $unwind: "$organizationDetails",
+      },
+      {
+        $project: {
+          _id: 1,
+          organizationName: "$organizationDetails.name",
+          isPending: 1,
+          isAccepted: 1,
+          updatedAt: 1,
+        },
+      },
+    ]);
+
+    if (volunteerRequests.length === 0) {
+      return res.status(404).json({ error: "No volunteer requests found" });
+    }
+
+    res.status(200).json(volunteerRequests);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // Accept volunteer request
 const acceptVolunteerRequest = async (req, res) => {
@@ -291,6 +334,7 @@ module.exports = {
   deleteVolunteer,
   createVolunteerRequest,
   getVolunteerRequests,
+  getVolunteerRequestsByUserId,
   acceptVolunteerRequest,
   rejectVolunteerRequest,
   getAcceptedOrganizationsForVolunteer,
