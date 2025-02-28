@@ -6,6 +6,7 @@ import { Box, Button, Typography, Paper, Modal, IconButton } from "@mui/material
 import CloseIcon from "@mui/icons-material/Close";
 import AddResource from "../../pages/resourceBankPages/AddResource";
 import CreatePost from "../../components/communityForm/CreatePost";
+import PastEventShareForm from "../../pages/PastEventShareForm";
 
 const OrganizationInfo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -111,7 +112,7 @@ const OrganizationInfo = () => {
                             <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsEventModalOpen(false)}>
                                 <CloseIcon />
                             </IconButton>
-                            <CreatePost />
+                            <PastEventShareForm />
                         </Box>
                     </Modal>
                 </div>
