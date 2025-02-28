@@ -21,6 +21,7 @@ const resourceRoutes = require('./routes/resourceRoutes');
 const eventRoutes = require("./routes/eventRoutes");
 
 
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));

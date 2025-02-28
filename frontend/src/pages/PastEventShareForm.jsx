@@ -17,7 +17,6 @@ const PastEventShareForm = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-
   // Handle Input Change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +30,6 @@ const PastEventShareForm = () => {
     },
   });
 
-  
   // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
