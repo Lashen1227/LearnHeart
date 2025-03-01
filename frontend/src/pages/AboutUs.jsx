@@ -2,10 +2,11 @@ import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import pictureOne from "../assets/images/about_us-img/abtus1.jpg";
 import pictureTwo from "../assets/images/about_us-img/abtus2.png";
-
+import pictureThree from "../assets/images/about_us-img/abtus3.png";
+import { useNavigate } from "react-router-dom";
 
 function AboutUs() {
-  
+    const navigate = useNavigate();
 
     return (
       <>
@@ -54,83 +55,65 @@ function AboutUs() {
             </div>
           </div>
 
-          {/* Card 4 */}
-          <div className="relative p-5 mt-16 text-center bg-custom-page">
-            <h1 className="-mb-20 text-2xl font-bold text-black">Why<br></br>LearnHeart?</h1> 
-          
-          {/* SVG Lines */}
-          <svg
-            className="absolute w-full h-full"
-            viewBox="0 0 800 200"
-            preserveAspectRatio="xMidYMid meet"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <line
-              x1="120"
-              y1="75"
-              x2="250"
-              y2="170"
-              stroke="#3657AD"
-              strokeWidth="3"
+          {/* Card 4 - Why LearnHeart? */}
+          <div className="relative w-full p-4 md:p-5 mt-16 text-center bg-custom-page">
+            <h1 className="mb-6 text-2xl font-bold text-black md:text-3xl">Why<br/>LearnHeart?</h1> 
+
+            {/* Image with Clickable Areas */}
+          <div className="relative w-full max-w-screen-lg mx-auto">
+            <img
+              className="w-full h-auto mb-2 rounded-lg"
+              src={pictureThree}
+              alt="Why LearnHeart"
             />
-            <line
-              x1="330"
-              y1="155"
-              x2="459"
-              y2="58"
-              stroke="#3657AD"
-              strokeWidth="3"
-            />
-            <line
-              x1="650"
-              y1="150"
-              x2="500"
-              y2="67"
-              stroke="#3657AD"
-              strokeWidth="3"
-            />
-          </svg>
-            
-            <div className="flex items-center justify-center p-10 gap-28">
-              <div className="flex flex-col items-center">
-                <div className="flex items-center justify-center w-32 h-32 text-3xl rounded-full text-custom-orange bg-custom-blue">
-                  <i className="items-center text-4xl fas fa-chalkboard"></i>
-                </div>
-                <p className="mt-2 text-[16px] text-custom-black">Request School<br></br>Seminars</p>
-              </div>
-              <div className="flex flex-col items-center mt-72">
-                <div className="flex items-center justify-center w-40 h-40 text-3xl rounded-full text-custom-orange bg-custom-blue">
-                  <i className="items-center text-6xl fas fa-user-friends"></i>
-                </div>
-                <p className="mt-2 text-[16px] text-custom-black">Help Students</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="flex items-center justify-center w-32 h-32 text-3xl rounded-full text-custom-orange bg-custom-blue">
-                  <i className="text-4xl fas fa-network-wired"></i>
-                </div>
-                <p className="mt-2 text-[16px] text-custom-black">Connect with<br></br>Volunteers</p>
-              </div>
-              <div className="flex flex-col items-center mt-72">
-                <div className="flex items-center justify-center w-40 h-40 text-3xl rounded-full text-custom-orange bg-custom-blue">
-                  <i className="text-6xl fas fa-book"></i>
-                </div>
-                <p className="mt-2 text-[16px] text-custom-black">Access to<br></br>Resources</p>
-              </div>
+
+            {/* Clickable Areas Over the Circles */}
+            <div className="absolute top-0 left-0 w-full h-full">
+              
+              {/* Circle 1 - Request School Seminars */}
+              <div
+                className="absolute w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full cursor-pointer"
+                style={{ top: "15%", left: "5%" }}
+                onClick={() => navigate("/request-seminar")}
+              ></div>
+
+              {/* Circle 2 - Help Students */}
+              <div
+                className="absolute w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full cursor-pointer"
+                style={{ top: "50%", left: "30%" }}
+                onClick={() => navigate("/help-students")}
+              ></div>
+
+              {/* Circle 3 - Connect with Volunteers */}
+              <div
+                className="absolute w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full cursor-pointer"
+                style={{ top: "15%", left: "57%" }}
+                onClick={() => navigate("/volunteers")}
+              ></div>
+
+              {/* Circle 4 - Access to Resources */}
+              <div
+                className="absolute w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full cursor-pointer"
+                style={{ top: "50%", left: "85%" }}
+                onClick={() => navigate("/resource-bank")}
+              ></div>
             </div>
           </div>
+        </div>
 
+        <Footer />  
+      </div>
+    </>
+  );
+}
 
+export default AboutUs;
 
-
-
-          </div>
+        
+          
+         
   
             
           
         
-        <Footer />  
-      </>
-    );
-  }
-  
-  export default AboutUs;
+        
