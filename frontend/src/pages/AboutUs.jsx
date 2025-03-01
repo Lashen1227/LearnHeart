@@ -3,49 +3,52 @@ import Footer from "../components/Footer.jsx";
 import pictureOne from "../assets/images/about_us-img/abtus1.jpg";
 import pictureTwo from "../assets/images/about_us-img/abtus2.png";
 
+
 function AboutUs() {
+  
+
     return (
       <>
         <Navbar />
         <div className="flex flex-col items-center justify-center h-full py-20 bg-custom-page">
   
-          {/* Card 1 */}
-          <div className="flex items-center justify-center w-[1280px] m-6 rounded-2xl shadow-md bg-custom-orange p-4">
-            <p className="text-[28px] font-bold text-center text-custom-black max-w-7xl ">
-              &quot;Volunteering is the ultimate expression of compassion in action, making a difference <br/> one act at a time.&quot;
+          {/* Card 1 - Quote */}
+          <div className="flex items-center justify-center w-full max-w-[1280px] m-6 p-4 md:p-6 rounded-2xl shadow-md bg-custom-orange">
+            <p className="text-lg font-bold text-center text-custom-black md:text-2xl max-w-5xl">
+              &quot;Volunteering is the ultimate expression of compassion in action, making a difference <br className="hidden md:block"/> one act at a time.&quot;
             </p>
           </div>
   
-          {/* Card 2 */}
-          <div className="flex flex-row-reverse items-center h-auto gap-5 p-10 m-4 mt-16 max-w-7xl bg-custom-page">
+          {/* Card 2 - About Us*/}
+          <div className="flex flex-col md:flex-row-reverse items-center w-full h-auto gap-5 p-4 md:p-10 m-4 mt-16 max-w-7xl bg-custom-page">
             <img
-              className="h-auto max-w-md mb-2 rounded-lg"
+              className="w-full max-w-md rounded-lg"
               src={pictureOne}
               alt="About Us"
             />
-            <div className="flex flex-col items-center justify-center">
-              <h2 className="mb-8 text-2xl font-bold text-center text-custom-black ">About Us</h2>
-              <p className="text-lg leading-relaxed text-center text-custom-black">
+            <div className="flex flex-col items-center justify-center text-center">
+              <h1 className="pb-4 text-xl font-bold text-custom-black md:text-2xl">About Us</h1>
+              <p className="text-sm md:text-base text-custom-black">
               LearnHeart unites volunteers and organizations to bridge educational gaps in rural Sri Lanka.
               Through project matching and seamless collaboration, we’re creating equal learning opportunities
               and building brighter futures. We believe in the power of education to transform lives and build brighter futures.<br/>
-              Join us in creating a lasting impact on education!
+              <span className="font-semibold">Join us in creating a lasting impact on education!</span>
               </p>
             </div>
           </div>
   
-          {/* Card 3 */}
-          <div className="flex items-center gap-5 p-10 m-4 mt-16 border-2 shadow-md max-w-7xl border-custom-orange bg-custom-blue rounded-2xl">
+          {/* Card 3 - Our Vision */}
+          <div className="flex flex-col md:flex-row items-center w-full gap-5 p-4 md:p-10 m-4 mt-16 border-2 shadow-md max-w-7xl border-custom-orange bg-custom-blue rounded-2xl">
             <img
-              className="h-auto max-w-md mb-2 rounded-lg"
+              className="w-full max-w-md rounded-lg"
               src={pictureTwo}
               alt="Vision"
             />
-            <div className="flex flex-col items-center justify-center">
-              <h2 className="mb-8 text-2xl font-bold text-center text-custom-white">Our Vision</h2>
-              <p className="text-lg leading-relaxed text-center text-custom-white">
+            <div className="flex flex-col items-center justify-center text-center">
+              <h1 className="pb-4 text-xl font-bold text-custom-white md:text-2xl">Our Vision</h1>
+              <p className="text-sm md:text-base text-custom-white">
               Our vision is to create equal learning opportunities for every child, empowering communities
-              through education and meaningful connections. Together, we 𝘫𝘰𝘪𝘯 𝘩𝘢𝘯𝘥𝘴 𝘵𝘰 𝘪𝘨𝘯𝘪𝘵𝘦 𝘮𝘪𝘯𝘥𝘴  to uplift communities and create a more
+              through education and meaningful connections. Together, we <span className="italic">join hands to ignite minds</span> to uplift communities and create a more
               inclusive and equitable world to believe in the transformative power of education.
               </p>
             </div>
