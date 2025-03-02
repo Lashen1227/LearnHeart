@@ -181,6 +181,15 @@ export default function Navbar() {
               Past Events
             </Link>
             <Link
+              to="/past-share"
+              className={`text-base ${
+                isActive("/share-past-event") ? "text-custom-orange" : "text-white"
+              } hover:text-custom-orange transition duration-300`}
+              onClick={() => setIsOpen(false)}
+            >
+              Share Past Event
+            </Link>
+            <Link
               to="/contact-us"
               className={`text-base ${
                 isActive("/contact-us") ? "text-custom-orange" : "text-white"
