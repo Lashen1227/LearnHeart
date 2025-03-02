@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import pictureOne from "../assets/images/about_us-img/abtus1.jpg";
 import pictureTwo from "../assets/images/about_us-img/abtus2.png";
+import ChatbotIcon from "../components/home/ChatbotIcon.jsx";
 
 function AboutUs() {
     return (
@@ -124,7 +125,7 @@ function AboutUs() {
   
             
           
-        
+        <ChatbotIcon />
         <Footer />  
       </>
     );
