@@ -93,6 +93,20 @@ const RequestCard = ({ request, refreshRequests }) => {
   );
 };
 
-
+RequestCard.propTypes = {
+    refreshRequests: PropTypes.func.isRequired,
+  request: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    qualifications: PropTypes.string.isRequired,
+    cv: PropTypes.string.isRequired,
+    isPending: PropTypes.bool.isRequired,
+    isAccepted: PropTypes.bool.isRequired,
+    isRejected: PropTypes.bool.isRequired,
+    organizationDetails: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default RequestCard;
