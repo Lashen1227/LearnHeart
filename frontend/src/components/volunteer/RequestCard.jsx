@@ -40,7 +40,57 @@ const RequestCard = ({ request, refreshRequests }) => {
     return `${formattedDate} at ${formattedTime}`;
   };
 
-
+  return (
+    <>
+      <Card sx={{ p: 2, backgroundColor: "white", borderRadius: 2, minHeight: 'fit-content', position: 'relative' }}>
+        <CardContent>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <div>
+              <Typography variant="h8" sx={{ fontWeight: 600, top:15, position: 'absolute' }}>
+                {request.organizationDetails.name}
+              </Typography>
+              <Typography variant="body2" sx={{marginTop: 2}}color="text.secondary">
+                {formatDateTime(request.createdAt)}
+              </Typography>
+            </div>
+            <CloseIcon 
+                onClick={handleCloseRequest}
+                sx={{
+                    position: 'absolute', // Position it inside the Card
+                    top: 10,
+                    right: 8,
+                    cursor: 'pointer',
+                    color: '#3657ad',
+                }}
+            />
+          </Stack>
+          <Chip
+            sx={{ marginTop: 2 }}
+            size="small"
+            variant="contained"
+            label={
+                request.isPending
+                ? "Pending"
+                : request.isAccepted
+                ? "Accepted"
+                : request.isRejected
+                ? "Rejected"
+                : "Unknown"
+            }
+            color={
+                request.isPending
+                ? "warning"
+                : request.isAccepted
+                ? "success"
+                : request.isRejected
+                ? "error"
+                : "default"
+            }
+           />
+        </CardContent>
+      </Card>
+    </>
+  );
 };
 
 
