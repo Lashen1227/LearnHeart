@@ -28,8 +28,8 @@ function AboutUs() {
               alt="About Us"
             />
             <div className="flex flex-col items-center justify-center text-center">
-              <h1 className="pb-4 text-xl font-bold text-custom-black md:text-2xl">About Us</h1>
-              <p className="text-sm md:text-base text-custom-black">
+              <h1 className="mb-4 text-2xl font-bold text-center md:text-3xl text-custom-black">About Us</h1>
+              <p className="mb-4 text-base text-center md:text-lg md:mb-6 text-custom-black">
               LearnHeart unites volunteers and organizations to bridge educational gaps in rural Sri Lanka.
               Through project matching and seamless collaboration, we’re creating equal learning opportunities
               and building brighter futures. We believe in the power of education to transform lives and build brighter futures.<br/>
@@ -46,8 +46,8 @@ function AboutUs() {
               alt="Vision"
             />
             <div className="flex flex-col items-center justify-center text-center">
-              <h1 className="pb-4 text-xl font-bold text-custom-white md:text-2xl">Our Vision</h1>
-              <p className="text-sm md:text-base text-custom-white">
+              < h1 className="mb-4 text-2xl font-bold text-center md:text-3xl text-custom-white">Our Vision</h1>
+              <p className="mb-4 text-base text-center md:text-lg md:mb-6 text-custom-white">
               Our vision is to create equal learning opportunities for every child, empowering communities
               through education and meaningful connections. Together, we <span className="italic">join hands to ignite minds</span> to uplift communities and create a more
               inclusive and equitable world to believe in the transformative power of education.
@@ -57,7 +57,7 @@ function AboutUs() {
 
           {/* Card 4 - Why LearnHeart? */}
           <div className="relative w-full p-4 md:p-5 mt-16 text-center bg-custom-page">
-            <h1 className="mb-6 text-2xl font-bold text-black md:text-3xl">Why<br/>LearnHeart?</h1> 
+            <h1 className="mb-4 text-2xl font-bold text-center md:text-3xl text-custom-black">Why<br/>LearnHeart?</h1> 
 
             {/* Image with Clickable Areas */}
           <div className="relative w-full max-w-screen-lg mx-auto">
