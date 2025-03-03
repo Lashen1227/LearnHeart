@@ -6,7 +6,6 @@ import { Box, Button, Typography, Paper, Modal, IconButton } from "@mui/material
 import CloseIcon from "@mui/icons-material/Close";
 import AddResource from "../../pages/resourceBankPages/AddResource";
 import CreatePost from "../../components/communityForm/CreatePost";
-import PastEventShareForm from "../../pages/PastEventShareForm";
 
 const OrganizationInfo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,9 +70,11 @@ const OrganizationInfo = () => {
                                 bgcolor: "#EAEFFB",
                                 p: 3,
                                 borderRadius: 2,
-                                width: "50%",
-                                maxHeight: "80vh",
+                                width: { xs: "90%", sm: "70%", md: "50%" }, // Responsive width
+                                maxWidth: "800px", // Optional: Set a max-width for very large screens
                                 overflowY: "auto",
+                                scrollbarWidth: "none",
+                                "&::-webkit-scrollbar": { display: "none" },
                             }}
                         >
                             <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsPostModalOpen(false)}>
@@ -104,15 +105,17 @@ const OrganizationInfo = () => {
                                 bgcolor: "#EAEFFB",
                                 p: 3,
                                 borderRadius: 2,
-                                width: "50%",
-                                maxHeight: "80vh",
+                                width: { xs: "90%", sm: "70%", md: "50%" }, // Responsive width
+                                maxWidth: "800px", // Optional: Set a max-width for very large screens
                                 overflowY: "auto",
+                                scrollbarWidth: "none",
+                                "&::-webkit-scrollbar": { display: "none" },
                             }}
                         >
                             <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsEventModalOpen(false)}>
                                 <CloseIcon />
                             </IconButton>
-                            <PastEventShareForm />
+                            {/* Past event share form tag need to be import here */}
                         </Box>
                     </Modal>
                 </div>
@@ -134,12 +137,30 @@ const OrganizationInfo = () => {
             </Paper>
             
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-              <Box position="absolute" top="50%" left="50%" sx={{ transform: "translate(-50%, -50%)", bgcolor: "#EAEFFB", p: 3, borderRadius: 2, width: "50%" }}>
-                <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsModalOpen(false)}>
-                  <CloseIcon />
+                <Box
+                position="absolute"
+                top="50%"
+                left="50%"
+                sx={{
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "#EAEFFB",
+                    p: 3,
+                    borderRadius: 2,
+                    width: { xs: "90%", sm: "70%", md: "50%" }, // Responsive width
+                    maxWidth: "800px", // Optional: Set a max-width for very large screens
+                    overflowY: "auto",
+                    scrollbarWidth: "none",
+                    "&::-webkit-scrollbar": { display: "none" },
+                }}
+                >
+                <IconButton
+                    sx={{ position: "absolute", top: 8, right: 8 }}
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    <CloseIcon />
                 </IconButton>
                 <AddResource />
-              </Box>
+                </Box>
             </Modal>
         </div>
     </div>
