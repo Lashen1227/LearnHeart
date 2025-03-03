@@ -32,9 +32,6 @@ const ChatbotIcon = () => {
             borderRadius: 2,
             width: { xs: "90%", sm: "70%", md: "50%" }, // Responsive width
             maxWidth: "800px", // Optional: Set a max-width for very large screens
-            overflowY: "auto",
-            scrollbarWidth: "none",
-            "&::-webkit-scrollbar": { display: "none" },
           }}
         >
           <IconButton
