@@ -119,8 +119,26 @@ function VolLastbar() {
             </Paper>
             
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <Box position="absolute" top="50%" left="50%" sx={{ transform: "translate(-50%, -50%)", bgcolor: "#EAEFFB", p: 3, borderRadius: 2, width: "50%" }}>
-                <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsModalOpen(false)}>
+                <Box
+                position="absolute"
+                top="50%"
+                left="50%"
+                sx={{
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "#EAEFFB",
+                    p: 3,
+                    borderRadius: 2,
+                    width: { xs: "90%", sm: "70%", md: "50%" }, // Responsive width
+                    maxWidth: "800px", // Optional: Set a max-width for very large screens
+                    overflowY: "auto",
+                    scrollbarWidth: "none",
+                    "&::-webkit-scrollbar": { display: "none" },
+                }}
+                >
+                <IconButton
+                    sx={{ position: "absolute", top: 8, right: 8 }}
+                    onClick={() => setIsModalOpen(false)}
+                >
                     <CloseIcon />
                 </IconButton>
                 <AddResource />

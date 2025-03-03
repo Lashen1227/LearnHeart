@@ -19,14 +19,14 @@ const RequestCard = ({ request, refreshRequests }) => {
           if (response.ok) {
             const data = await response.json();
             console.log(data.message);
-            alert("Request closed successfully.");
+            console.log("Request closed successfully.");
             refreshRequests();
           } else {
-            alert("Failed to accept the request.");
+            console.log("Failed to accept the request.");
           }
         } catch (error) {
           console.error("Error accepting the request:", error);
-          alert("An error occurred while accepting the request.");
+          console.log("An error occurred while accepting the request.");
         }
       };
 
@@ -79,7 +79,7 @@ const RequestCard = ({ request, refreshRequests }) => {
             }
             color={
                 request.isPending
-                ? "warning"
+                ? "secondary"
                 : request.isAccepted
                 ? "success"
                 : request.isRejected
