@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const volunteerRequestSchema = new mongoose.Schema(
   {
@@ -9,7 +9,9 @@ const volunteerRequestSchema = new mongoose.Schema(
     availableDates: { type: [String], required: true },
     cv: { type: String }, // Store CV file path
     isPending: { type: Boolean, default: true },
-    isRejected: { type: Boolean, default: null },
+    isAccepted: { type: Boolean, default: false },
+    isRejected: { type: Boolean, default: false },
+    userId: { type: String, required: true },
   },
   { timestamps: true }
 );

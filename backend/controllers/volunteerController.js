@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
 const VolunteerRequest = require("../models/volunteerRequestModel");
+const Organization = require("../models/organizationModel"); 
 
 //get all volunteers
 const getAllVolunteers = async (req, res) => {
@@ -37,6 +38,8 @@ const createVolunteer = async (req, res) => {
     status,
     address,
     phoneNumber,  // Added phoneNumber
+    skills,
+    email,
     volunteerProfileImageAvailable,
     volunteerProfileColor,
     orgID
@@ -72,6 +75,8 @@ const createVolunteer = async (req, res) => {
       status,
       address,
       phoneNumber,  // Added phoneNumber to database creation
+      skills,
+      email,
       volunteerProfileImageAvailable,
       volunteerProfileColor,
       orgID
@@ -162,6 +167,7 @@ const createVolunteerRequest = async (req, res) => {
       organization,
       availableDates: JSON.parse(availableDates),
       cv: cvPath,
+      userId: req.body.userId,
     });
 
     await newRequest.save();
@@ -175,6 +181,108 @@ const createVolunteerRequest = async (req, res) => {
   }
 };
 
+const getVolunteerRequests = async (req, res) => {
+  const { isPending, organizationId } = req.body;
+
+  if (isPending === undefined || !organizationId) {
+    return res.status(400).json({ error: "isPending and organizationId are required" });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(organizationId)) {
+    return res.status(400).json({ error: "Invalid organization ID" });
+  }
+
+  try {
+    const volunteerRequests = await VolunteerRequest.aggregate([
+      {
+        $match: {
+          isPending: isPending,
+          organization: new mongoose.Types.ObjectId(organizationId), // Fixed with `new`
+        },
+      },
+      {
+        $lookup: {
+          from: "volunteers",
+          localField: "userId",
+          foreignField: "volunteerId",
+          as: "volunteerDetails",
+        },
+      },
+      { $unwind: "$volunteerDetails" },
+    ]);
+
+    res.status(200).json(volunteerRequests);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+// Accept volunteer request
+const acceptVolunteerRequest = async (req, res) => {
+  const { requestId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(requestId)) {
+    return res.status(400).json({ error: "Invalid request ID" });
+  }
+
+  try {
+    await VolunteerRequest.findByIdAndUpdate(requestId, {
+      isRejected: false, // Set isRejected to false
+      isAccepted: true,  // Set isAccepted to true
+      isPending: false   // Set isPending to false
+    });
+    res.status(200).json({ message: "Volunteer request accepted" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+// Reject volunteer request
+const rejectVolunteerRequest = async (req, res) => {
+  const { requestId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(requestId)) {
+    return res.status(400).json({ error: "Invalid request ID" });
+  }
+
+  try {
+    await VolunteerRequest.findByIdAndUpdate(requestId, {
+      isRejected: true,  // Set isRejected to true
+      isAccepted: false, // Set isAccepted to false
+      isPending: false   // Set isPending to false
+    });
+    res.status(200).json({ message: "Volunteer request rejected" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getAcceptedOrganizationsForVolunteer = async (req, res) => {
+  const { userId } = req.params; // Assuming userId is passed as a route parameter
+
+  try {
+    // Get all accepted requests for the volunteer
+    const acceptedRequests = await VolunteerRequest.find({
+      userId: userId,
+      isAccepted: true
+    }).select("organization"); // Only fetch organization field
+
+    // Extract organization IDs
+    const organizationIds = acceptedRequests.map(req => req.organization);
+
+    // Get organization names
+    const organizations = await Organization.find({ _id: { $in: organizationIds } }).select("name");
+
+    // Return the organization names
+    res.status(200).json(organizations.map(org => org.name));
+  } catch (error) {
+    console.error("Error fetching organizations:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getAllVolunteers,
   getVolunteer,
@@ -182,5 +290,9 @@ module.exports = {
   updateVolunteer,
   deleteVolunteer,
   createVolunteerRequest,
+  getVolunteerRequests,
+  acceptVolunteerRequest,
+  rejectVolunteerRequest,
+  getAcceptedOrganizationsForVolunteer,
   upload,
 };

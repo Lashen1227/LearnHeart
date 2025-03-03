@@ -57,7 +57,7 @@ export default function HomePage() {
           <div className="flex flex-col items-center gap-6 md:flex-row md:gap-8 lg:gap-12">
             <div className="w-full leading-relaxed text-gray-700 md:w-2/5">
               <p className="mb-4 text-base text-justify md:text-lg md:mb-6">
-                Our seminar volunteer program develops students' leadership,
+                Our seminar volunteer program develops students&apos; leadership,
                 collaboration, and communication abilities. Students gain
                 practical experience, boost their confidence, and refine their
                 problem-solving skills in a nurturing environment by taking on
@@ -75,7 +75,7 @@ export default function HomePage() {
               <img
                 src={ChooseUSImage}
                 alt="Why Choose Us"
-                className="object-cover w-full h-64 rounded-lg shadow-xl md:h-80 lg:h-96"
+                className="object-cover h-64 rounded-lg shadow-xl md:h-80 lg:h-96 w-100 md:w-100"
               />
             </div>
           </div>

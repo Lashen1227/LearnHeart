@@ -10,6 +10,7 @@ import CreatePost from "../../components/communityForm/CreatePost";
 const OrganizationInfo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+    const [isEventModalOpen, setIsEventModalOpen] = useState(false);
     
     const [organizations, setOrganizations] = useState([])
     const user = useUser().user;
@@ -82,11 +83,40 @@ const OrganizationInfo = () => {
                     </Modal>
 
                 </div>
+                
+                <div className="flex justify-center space-x-4">
+                    <button className="px-4 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue"  onClick={() => setIsEventModalOpen(true)}>
+                        Share Past Events
+                    </button>
+                    {/* Back to Home Button */}
+                    <button className="px-4 py-2 text-white duration-300 border rounded-xl hover:scale-105 bg-custom-orange hover:bg-orange-600">
+                        <Link to="/">Back to Home</Link>
+                    </button>
 
-                {/* Back to Home Button */}
-                <button className="w-3/4 py-2 text-white duration-300 border md:w-1/2 rounded-xl hover:scale-105 bg-custom-orange hover:bg-orange-600">
-                    <Link to="/"> Back to Home </Link>
-                </button>
+                    <Modal open={isEventModalOpen} onClose={() => setIsEventModalOpen(false)}>
+                        <Box
+                            position="absolute"
+                            top="50%"
+                            left="50%"
+                            sx={{
+                                transform: "translate(-50%, -50%)",
+                                bgcolor: "#EAEFFB",
+                                p: 3,
+                                borderRadius: 2,
+                                width: "50%",
+                                maxHeight: "80vh",
+                                overflowY: "auto",
+                            }}
+                        >
+                            <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsEventModalOpen(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                            {/* Past event share form tag need to be import here */}
+                        </Box>
+                    </Modal>
+                </div>
+
+                
             </div>
 
         </div>

@@ -65,7 +65,6 @@ export const RequestSession = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("Form Data:", formData);
     e.preventDefault();
     setStatus({ message: "", isError: false, loading: true });
 
@@ -96,12 +95,12 @@ export const RequestSession = () => {
       );
 
       if (response.status === 201) {
-        clearForm();
         setStatus({
-          message: "Successfully sent request",
+          message: "Request successfully sent",
           isError: false,
           loading: false,
         });
+        clearForm();
       }
     } catch (error) {
       setStatus({
@@ -142,7 +141,7 @@ export const RequestSession = () => {
       </Typography>
 
       {status.message && (
-        <Alert severity={status.isError ? "error" : "success"} sx={{ mb: 2 }}>
+        <Alert severity={status.isError ? "error" : "success"} sx={{ mb: 2, textAlign: "center" }}>
           {status.message}
         </Alert>
       )}

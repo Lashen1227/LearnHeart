@@ -11,7 +11,7 @@ import OrgSearchList from "../organization/OrgSearchList";
 export const SchoolProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [schoolProfiles, setSchoolProfiles] = useState([]); // Pluralized state name
-  const { user: curruntID, isLoaded } = useUser();
+  const { user: curruntID } = useUser();
   // Get school from Clerk's user object
   const matchingSchool = schoolProfiles.find(
     (sch) => sch.userID === curruntID?.id
@@ -28,15 +28,7 @@ export const SchoolProfile = () => {
     };
     fetchSchoolProfiles();
   }, []);
-
-  if (!isLoaded || schoolProfiles.length === 0) {
-    return <p>Loading...</p>;
-  }
-
-  if (!matchingSchool) {
-    return <p>No matching school profile found.</p>;
-  }
-
+  
   return (
     <Paper elevation={3} sx={{ p: 3, bgcolor: "#3657AD" }}>
       <Box
