@@ -111,7 +111,7 @@ const OrganizationInfo = () => {
                             <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsEventModalOpen(false)}>
                                 <CloseIcon />
                             </IconButton>
-                            <CreatePost />
+                            {/* Past event share form tag need to be import here */}
                         </Box>
                     </Modal>
                 </div>
