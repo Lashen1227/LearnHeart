@@ -16,13 +16,13 @@ function AboutUs() {
   
           {/* Card 1 - Quote */}
           <div className="flex items-center justify-center w-full max-w-[1280px] m-6 p-4 md:p-6 rounded-2xl shadow-md bg-custom-orange">
-            <p className="text-lg font-bold text-center text-custom-black md:text-2xl max-w-5xl">
+            <p className="max-w-5xl text-lg font-bold text-center text-custom-black md:text-2xl">
               &quot;Volunteering is the ultimate expression of compassion in action, making a difference <br className="hidden md:block"/> one act at a time.&quot;
             </p>
           </div>
   
           {/* Card 2 - About Us*/}
-          <div className="flex flex-col md:flex-row-reverse items-center w-full h-auto gap-5 p-4 md:p-10 m-4 mt-16 max-w-7xl bg-custom-page">
+          <div className="flex flex-col items-center w-full h-auto gap-5 p-4 m-4 mt-16 md:flex-row-reverse md:p-10 max-w-7xl bg-custom-page">
             <img
               className="w-full max-w-md rounded-lg"
               src={pictureOne}
@@ -40,7 +40,7 @@ function AboutUs() {
           </div>
   
           {/* Card 3 - Our Vision */}
-          <div className="flex flex-col md:flex-row items-center w-full gap-5 p-4 md:p-10 m-4 mt-16 border-2 shadow-md max-w-7xl border-custom-orange bg-custom-blue rounded-2xl">
+          <div className="flex flex-col items-center w-full gap-5 p-4 m-4 mt-16 border-2 shadow-md md:flex-row md:p-10 max-w-7xl border-custom-orange bg-custom-blue rounded-2xl">
             <img
               className="w-full max-w-md rounded-lg"
               src={pictureTwo}
@@ -57,7 +57,7 @@ function AboutUs() {
           </div>
 
           {/* Card 4 - Why LearnHeart? */}
-          <div className="relative w-full p-4 md:p-5 mt-16 text-center bg-custom-page">
+          <div className="relative w-full p-4 mt-16 text-center md:p-5 bg-custom-page">
             <h1 className="mb-4 text-2xl font-bold text-center md:text-3xl text-custom-black">Why<br/>LearnHeart?</h1> 
 
             {/* Image with Clickable Areas */}
@@ -73,28 +73,28 @@ function AboutUs() {
               
               {/* Circle 1 - Request School Seminars */}
               <div
-                className="absolute w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full cursor-pointer"
+                className="absolute w-12 h-12 rounded-full cursor-pointer md:w-16 md:h-16 lg:w-20 lg:h-20"
                 style={{ top: "15%", left: "5%" }}
-                onClick={() => navigate("/request-seminar")}
+                onClick={() => navigate("/sign-up")}
               ></div>
 
               {/* Circle 2 - Help Students */}
               <div
-                className="absolute w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full cursor-pointer"
+                className="absolute w-12 h-12 rounded-full cursor-pointer md:w-16 md:h-16 lg:w-20 lg:h-20"
                 style={{ top: "50%", left: "30%" }}
-                onClick={() => navigate("/help-students")}
+                onClick={() => navigate("/past-events")}
               ></div>
 
               {/* Circle 3 - Connect with Volunteers */}
               <div
-                className="absolute w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full cursor-pointer"
+                className="absolute w-12 h-12 rounded-full cursor-pointer md:w-16 md:h-16 lg:w-20 lg:h-20"
                 style={{ top: "15%", left: "57%" }}
-                onClick={() => navigate("/volunteers")}
+                onClick={() => navigate("/posts")}
               ></div>
 
               {/* Circle 4 - Access to Resources */}
               <div
-                className="absolute w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full cursor-pointer"
+                className="absolute w-12 h-12 rounded-full cursor-pointer md:w-16 md:h-16 lg:w-20 lg:h-20"
                 style={{ top: "50%", left: "85%" }}
                 onClick={() => navigate("/resource-bank")}
               ></div>

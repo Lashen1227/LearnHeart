@@ -78,16 +78,16 @@ const ChatWindow = () => {
       <Box
         sx={{
           width: '100%',
-          maxWidth: '800px',
+          maxWidth: { xs: '100%', sm: '600px', md: '800px' }, // Responsive maxWidth
           margin: 'auto',
           backgroundColor: '#ffffff',
           color: '#000000',
           borderRadius: '12px',
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-          padding: '24px',
+          padding: { xs: '16px', sm: '24px' }, // Responsive padding
           display: 'flex',
           flexDirection: 'column',
-          height: '80vh',
+          height: { xs: '90vh', sm: '80vh' }, // Responsive height
         }}
       >
         <Typography variant="body2" sx={{ textAlign: 'center', color: '#1976d2', marginBottom: '3px' }}>
@@ -118,7 +118,7 @@ const ChatWindow = () => {
               sx={{
                 padding: '12px',
                 marginBottom: '8px',
-                maxWidth: '75%',
+                maxWidth: { xs: '90%', sm: '75%' }, // Responsive maxWidth
                 borderRadius: '12px',
                 backgroundColor: msg.sender === "You" ? '#1976d2' : '#e0e0e0',
                 color: msg.sender === "You" ? '#ffffff' : '#000000',
@@ -144,6 +144,7 @@ const ChatWindow = () => {
               padding: '12px',
               borderRadius: '8px',
               marginBottom: '16px',
+              flexDirection: { xs: 'column', sm: 'row' }, // Responsive flexDirection
             }}
           >
             <TextField
@@ -172,6 +173,7 @@ const ChatWindow = () => {
                 '&:hover': {
                   backgroundColor: '#115293',
                 },
+                width: { xs: '100%', sm: 'auto' }, // Responsive width
               }}
             >
               Teach
@@ -185,6 +187,7 @@ const ChatWindow = () => {
             gap: '8px',
             borderTop: '1px solid #ddd',
             paddingTop: '16px',
+            flexDirection: { xs: 'column', sm: 'row' }, // Responsive flexDirection
           }}
         >
           <TextField
@@ -205,32 +208,36 @@ const ChatWindow = () => {
               },
             }}
           />
-          <IconButton
-            onClick={sendMessage}
-            disabled={loading}
-            sx={{
-              backgroundColor: '#1976d2',
-              color: '#ffffff',
-              '&:hover': {
-                backgroundColor: '#115293',
-              },
-            }}
-          >
-            {loading ? <CircularProgress size={24} color="inherit" /> : <Send />}
-          </IconButton>
-          <IconButton
-            onClick={clearChat}
-            sx={{
-              border: '1px solid #1976d2',
-              color: '#1976d2',
-              '&:hover': {
+          <Box sx={{ display: 'flex', gap: '8px', width: { xs: '100%', sm: 'auto' } }}> {/* Responsive width */}
+            <IconButton
+              onClick={sendMessage}
+              disabled={loading}
+              sx={{
                 backgroundColor: '#1976d2',
                 color: '#ffffff',
-              },
-            }}
-          >
-            <ClearAll />
-          </IconButton>
+                '&:hover': {
+                  backgroundColor: '#115293',
+                },
+                flex: { xs: 1, sm: 'none' }, // Responsive flex
+              }}
+            >
+              {loading ? <CircularProgress size={24} color="inherit" /> : <Send />}
+            </IconButton>
+            <IconButton
+              onClick={clearChat}
+              sx={{
+                border: '1px solid #1976d2',
+                color: '#1976d2',
+                '&:hover': {
+                  backgroundColor: '#1976d2',
+                  color: '#ffffff',
+                },
+                flex: { xs: 1, sm: 'none' }, // Responsive flex
+              }}
+            >
+              <ClearAll />
+            </IconButton>
+          </Box>
         </Box>
       </Box>
     </div>
