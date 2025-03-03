@@ -1,261 +1,151 @@
-import { useState, useEffect } from "react";
-import { Card, Typography, Box, Button, Paper, Modal, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import AddResource from "../../pages/resourceBankPages/AddResource";
+import { useState, useEffect } from 'react';
 import { useUser } from "@clerk/clerk-react";
-import axios from "axios";
+import axios from 'axios';
+import { Typography, Box, Button, Paper, Modal, IconButton, CircularProgress } from '@mui/material';
+import CloseIcon from "@mui/icons-material/Close";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import AddResource from "../../pages/resourceBankPages/AddResource";
+import RequestCard from './RequestCard';
 
 function VolLastbar() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useUser();
+    const [requests, setRequests] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-  async function fetchRequests() {
-    if (!user?.id) return;
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/volunteers/volunteer-requests",
-        { userId: user.id }
-      );
-      console.log("API Response:", response.data);
-      console.log("Sample request date:", response.data[0]?.requestedDate); // Debug line
-      setRequests(response.data);
-    } catch (error) {
-      console.error("Error fetching requests:", error);
-    } finally {
-      setLoading(false);
-    }
-  }
+    const user = useUser().user;
+    const clarkId = user?.id;  
+    console.log("Request Card Clark: ", clarkId);
 
-  useEffect(() => {
-    if (user?.id) {
-      fetchRequests();
-      // Removed the interval to prevent flickering
-    }
-  }, [user?.id]);
+    const fetchVolunteerRequestsByUserId = async () => {
+        setLoading(true); // Set loading to true before fetching data
+        try {
+          const response = await axios.post('http://localhost:3001/api/volunteers/volunteer-requestsByUser', {
+            userId: clarkId,
+            isClosed: false,
+          });
+          setRequests(response.data);
+        } catch (error) {
+          console.error("Error fetching volunteer requests:", error);
+        } finally {
+          setLoading(false); // Set loading to false after data is fetched or error occurs
+        }
+    };
 
-  const handleRemoveRequest = async (requestId, e) => {
-    if (e) {
-      e.stopPropagation(); // Prevent event bubbling
-    }
+    useEffect(() => {
+        fetchVolunteerRequestsByUserId();
     
-    try {
-      // Make API call to delete the request
-      const response = await axios.delete(`http://localhost:3001/api/volunteers/delete-request/${requestId}`);
-      
-      if (response.status === 200) {
-        // Update local state after successful deletion
-        setRequests(prevRequests => 
-          prevRequests.filter(request => request._id !== requestId)
-        );
-      }
-    } catch (error) {
-      console.error("Error deleting request:", error);
-    }
-  };
-
-  return (
-    <Box className="flex flex-col gap-6">
-      {/* Pending Requests Section */}
-      <Card
-        style={{
-          backgroundColor: "#2aaa94",
-          padding: "1.5rem",
-          borderRadius: "0.75rem",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-        }}
-        className="flex flex-col items-center"
-      >
-        <Typography
-          variant="h6"
-          className="font-semibold text-black"
-          style={{
-            fontSize: "1.2rem",
-            marginBottom: "1.5rem",
-          }}
-        >
-          Pending Requests
-        </Typography>
-
-        {/* Scrollable requests container */}
-        <div
-          className="w-full h-[400px] overflow-y-auto"
-          style={{
-            overflowY: "auto",
-            scrollbarWidth: "thin",
-            scrollbarColor: "#ccc transparent",
-            msOverflowStyle: "none",
-          }}
-        >
-          <style>
-            {`
-              div::-webkit-scrollbar {
-                width: 6px;
-              }
-              div::-webkit-scrollbar-thumb {
-                background-color: #ccc;
-                border-radius: 10px;
-              }
-              div::-webkit-scrollbar-track {
-                background: transparent;
-              }
-            `}
-          </style>
-          {loading ? (
-            <div className="py-4 text-center text-gray-100">Loading...</div>
-          ) : requests.length === 0 ? (
-            <div className="py-4 text-center">
-              <Typography variant="subtitle1">
-                No pending requests
-              </Typography>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {requests.map((request) => (
-                <div
-                  key={request._id}
-                  className="p-4 transition-all duration-200 bg-white border border-gray-200 rounded-lg shadow-lg hover:bg-gray-50"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "1rem",
-                    position: "relative",
-                  }}
+        // Set up an interval to fetch data every 5 minutes (300,000 milliseconds)
+        const intervalId = setInterval(fetchVolunteerRequestsByUserId, 300000);
+    
+        // Clean up the interval on component unmount
+        return () => clearInterval(intervalId);
+    }, [clarkId]);
+    
+    return (
+        <Box className="flex flex-col gap-4">
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    paddingY: 2,
+                    paddingX: 3,
+                    backgroundColor: '#4db6ac',
+                    borderRadius: 2,
+                    width: '100%',
+                }}
+            >
+                <Box
+                    sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'right',
+                    }}
                 >
-                  {/* Organization Details */}
-                  <div style={{ flex: 1 }}>
-                    <Typography
-                      variant="h6"
-                      className="font-medium text-gray-900"
-                    >
-                      {request.organizationName}
+                    <Typography variant="h6" sx={{ textAlign: 'center', color: 'black'}}>
+                        Pending Requests
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      className="mt-1 text-sm text-gray-600"
+                    <Box sx={{ flex: 1 }} />
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+                    <Button
+                        variant="text"
+                        color="black"
+                        onClick={fetchVolunteerRequestsByUserId}
+                        disabled={loading}
                     >
-                      {request.subjects}
-                    </Typography>
-                    <small className="text-gray-500">
-                      Requested on: {request.requestedDate ? new Date(request.requestedDate).toLocaleDateString() : 'Date not available'}
-                    </small>
-                  </div>
-
-                  {/* Status Tag */}
-                  <div style={{ marginRight: "50px" }}>
-                    <span
-                      className={`text-xs px-3 py-1 rounded-full ${
-                        request.isAccepted
-                          ? "bg-green-200 text-green-800"
-                          : request.isPending
-                          ? "bg-blue-200 text-blue-800"
-                          : "bg-red-200 text-red-800"
-                      }`}
-                      style={{
-                        fontWeight: "bold",
-                        border: "1px solid rgba(0, 0, 0, 0.2)",
-                      }}
+                        <RefreshIcon/>
+                    </Button>
+                    </Box>
+                </Box>
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+                        <CircularProgress color="primary" />
+                    </Box>
+                ): requests.length === 0 ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+                        <Typography variant="body1">No Requests Found</Typography>
+                    </Box>
+                ) : (
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 2,
+                            maxHeight: 400,
+                            maxWidth: 600,
+                            overflowY: "auto",
+                            '&::-webkit-scrollbar': {
+                                display: 'none',
+                            },
+                            msOverflowStyle: 'none',
+                            scrollbarWidth: 'none',
+                        }}
                     >
-                      {request.isAccepted
-                        ? "Approved"
-                        : request.isPending
-                        ? "Pending"
-                        : "Rejected"}
-                    </span>
-                  </div>
+                        {requests.map((request, index) => (
+                            <RequestCard key={index} request={request} refreshRequests={fetchVolunteerRequestsByUserId} />
+                        ))}
+                    </Box>
+                )}
+            </Box>
 
-                  {/* Remove Button - Fixed Positioning */}
-                  {!request.isPending && (
-                    <IconButton
-                      onClick={(e) => handleRemoveRequest(request._id, e)}
-                      style={{
-                        position: "absolute",
-                        top: "10px",
-                        right: "10px",
-                        backgroundColor: "rgba(255, 0, 0, 0.1)",
-                        color: "red",
-                        width: "30px",
-                        height: "30px",
-                        zIndex: 10,
-                      }}
-                      size="small"
-                    >
-                      <CloseIcon fontSize="small" />
-                    </IconButton>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </Card>
 
-      {/* Add Resources Section */}
-      <Paper
-        elevation={3}
-        style={{
-          padding: "1.5rem",
-          borderRadius: "0.5rem",
-          textAlign: "center",
-          backgroundColor: "#4db6ac",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        <Typography variant="h6" style={{ color: "white" }}>
-          Add Resources
-        </Typography>
-        <Typography
-          variant="body2"
-          mt={2}
-          style={{ fontStyle: "italic", fontSize: "1rem", color: "#f5f5f5" }}
-        >
-          Contribute educational resources to LearnHeart, enhancing access and
-          opportunities for students worldwide.
-        </Typography>
-        <Button
-          variant="contained"
-          color="warning"
-          sx={{ mt: 2 }}
-          onClick={() => setIsModalOpen(true)}
-          style={{
-            backgroundColor: "#FF9800",
-            color: "white",
-            fontWeight: "bold",
-            textTransform: "none",
-          }}
-        >
-          Publish
-        </Button>
-      </Paper>
-
-      {/* Modal for Adding Resources */}
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Box
-          position="absolute"
-          top="50%"
-          left="50%"
-          style={{
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "#EAEFFB",
-            padding: "1.5rem",
-            borderRadius: "0.5rem",
-            width: "50%",
-            boxShadow: "0px 4px 15px rgba(0,0,0,0.2)",
-          }}
-        >
-          <IconButton
-            style={{ position: "absolute", top: "0.5rem", right: "0.5rem" }}
-            onClick={() => setIsModalOpen(false)}
-          >
-            <CloseIcon />
-          </IconButton>
-          <AddResource />
+            <Paper elevation={3} sx={{ p: 3, borderRadius: 2, textAlign: "center", bgcolor: "#4db6ac" }}>
+                <Typography variant="h6">Add Resources</Typography>
+                <Typography variant="body2" mt={2} style={{ fontStyle: 'italic' }}>
+                Contribute educational resources to LearnHeart, enhancing access and opportunities for students worldwide.
+                </Typography>
+                <Button variant="contained" color="warning" sx={{ mt: 2 }} onClick={() => setIsModalOpen(true)}>
+                Publish
+                </Button>
+            </Paper>
+            
+            <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <Box
+                position="absolute"
+                top="50%"
+                left="50%"
+                sx={{
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "#EAEFFB",
+                    p: 3,
+                    borderRadius: 2,
+                    width: { xs: "90%", sm: "70%", md: "50%" }, // Responsive width
+                    maxWidth: "800px", // Optional: Set a max-width for very large screens
+                    overflowY: "auto",
+                    scrollbarWidth: "none",
+                    "&::-webkit-scrollbar": { display: "none" },
+                }}
+                >
+                <IconButton
+                    sx={{ position: "absolute", top: 8, right: 8 }}
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    <CloseIcon />
+                </IconButton>
+                <AddResource />
+                </Box>
+            </Modal>
         </Box>
-      </Modal>
-    </Box>
-  );
+    );
 }
 
 export default VolLastbar;
