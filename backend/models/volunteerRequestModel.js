@@ -11,6 +11,7 @@ const volunteerRequestSchema = new mongoose.Schema(
     isPending: { type: Boolean, default: true },
     isAccepted: { type: Boolean, default: false },
     isRejected: { type: Boolean, default: false },
+    isClosed: { type: Boolean, default: false },  
     userId: { type: String, required: true },
   },
   { timestamps: true }

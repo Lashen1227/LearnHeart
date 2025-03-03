@@ -217,6 +217,53 @@ const getVolunteerRequests = async (req, res) => {
   }
 };
 
+const getVolunteerRequestsByUserId = async (req, res) => {
+  const { userId, isClosed } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: "userId is required" });
+  }
+
+  if (isClosed === undefined) {
+    return res.status(400).json({ error: "isClosed is required" });
+  }
+
+  try {
+    const volunteerRequests = await VolunteerRequest.aggregate([
+      {
+        $match: { userId: userId, isClosed: isClosed },
+      },
+      {
+        $lookup: {
+          from: "organizations",
+          localField: "organization",
+          foreignField: "_id",
+          as: "organizationDetails",
+        },
+      },
+      { $unwind: "$organizationDetails" },
+    ]);
+
+    res.status(200).json(volunteerRequests);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const closeVolunteerRequest = async (req, res) => {
+  const { requestId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(requestId)) {
+    return res.status(400).json({ error: "Invalid request ID" });
+  }
+
+  try {
+    await VolunteerRequest.findByIdAndUpdate(requestId, { isClosed: true });
+    res.status(200).json({ message: "Volunteer request closed" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // Accept volunteer request
 const acceptVolunteerRequest = async (req, res) => {
@@ -291,6 +338,8 @@ module.exports = {
   deleteVolunteer,
   createVolunteerRequest,
   getVolunteerRequests,
+  getVolunteerRequestsByUserId,
+  closeVolunteerRequest,
   acceptVolunteerRequest,
   rejectVolunteerRequest,
   getAcceptedOrganizationsForVolunteer,
