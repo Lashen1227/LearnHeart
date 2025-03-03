@@ -4,6 +4,7 @@ import pictureOne from "../assets/images/about_us-img/abtus1.jpg";
 import pictureTwo from "../assets/images/about_us-img/abtus2.png";
 import pictureThree from "../assets/images/about_us-img/abtus3.png";
 import { useNavigate } from "react-router-dom";
+import ChatbotIcon from "../components/home/ChatbotIcon.jsx";
 
 function AboutUs() {
     const navigate = useNavigate();
@@ -100,20 +101,12 @@ function AboutUs() {
             </div>
           </div>
         </div>
-
-        <Footer />  
       </div>
-    </>
-  );
-}
-
-export default AboutUs;
-
-        
-          
-         
+        <ChatbotIcon />
+        <Footer />  
+      </>
+    );
+  }
   
-            
-          
-        
-        
+  export default AboutUs;
+
