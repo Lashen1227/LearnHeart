@@ -65,7 +65,7 @@ function ProfSelect() {
         </button>
 
         <h1 className="mt-10 text-lg font-bold text-center text-custom-blue sm:text-xl lg:text-2xl">
-          Join as Organization, School or Volunteer
+          Join as Organization, Volunteer or School
         </h1>
 
         <div className="flex flex-wrap justify-center gap-6 mt-6">
