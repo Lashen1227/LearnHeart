@@ -13,7 +13,7 @@ import CommunityPage from './pages/CommunityPage.jsx';
 import CreatePost from './components/communityForm/CreatePost.jsx';
 import EditPost from './components/communityForm/EditPost.jsx';
 import SinglePost from './components/communityForm/SinglePost.jsx';
-import PastEventPage from './pages/PastEventPage.jsx';
+import PastEventsPage from './pages/PastEventsPage.jsx';
 
 // Authorization Pages
 import Login from './pages/authorizationPages/Login.jsx';
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
   { path: "/volunteer/overview", element: <VolDashboard />, },
   { path: "/resource-bank", element: <ResourceBank />, },
   { path: "/resource-bank/add", element: <AddResource />, },
-  { path: "/past-events", element: <PastEventPage />, },
+  { path: "/past-events", element: <PastEventsPage />, },
 ]);
 
 
