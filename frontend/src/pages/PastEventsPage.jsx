@@ -87,6 +87,102 @@ const PastEventsPage = () => {
                                 transition: 'all 0.3s ease-in-out'
                             }
                         }}>
+                            <Box sx={{ 
+                                position: 'relative', 
+                                pt: '56.25%',
+                                overflow: 'hidden',
+                                borderRadius: '12px 12px 0 0'
+                            }}>
+                                {event.images && event.images.length > 0 && (
+                                    <Box sx={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        display: 'grid',
+                                        gap: '4px',
+                                        padding: '4px',
+                                        gridTemplateColumns: event.images.length === 1 ? '1fr' :
+                                            event.images.length === 2 ? '1fr 1fr' :
+                                            event.images.length === 3 ? '2fr 1fr' :
+                                            '1fr 1fr',
+                                        gridTemplateRows: event.images.length <= 2 ? '1fr' :
+                                            '1fr 1fr',
+                                        bgcolor: 'background.paper'
+                                    }}>
+                                        {event.images.slice(0, 4).map((image, index) => (
+                                            <Box
+                                                key={index}
+                                                sx={{
+                                                    position: 'relative',
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    gridColumn: event.images.length === 3 && index === 0 ? 'span 2' : 'span 1',
+                                                    overflow: 'hidden',
+                                                    borderRadius: '8px',
+                                                    cursor: 'pointer',
+                                                    '&:hover': {
+                                                        '& .MuiCardMedia-root': {
+                                                            transform: 'scale(1.1)',
+                                                            transition: 'transform 0.3s ease-in-out'
+                                                        },
+                                                        '&::after': {
+                                                            content: '""',
+                                                            position: 'absolute',
+                                                            top: 0,
+                                                            left: 0,
+                                                            right: 0,
+                                                            bottom: 0,
+                                                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                                                            transition: 'background-color 0.3s ease-in-out'
+                                                        }
+                                                    }
+                                                }}
+                                            >
+                                                <CardMedia
+                                                    component="img"
+                                                    image={image}
+                                                    alt={`${event.schoolName} - Image ${index + 1}`}
+                                                    sx={{
+                                                        position: 'absolute',
+                                                        top: 0,
+                                                        left: 0,
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        objectFit: 'cover',
+                                                        transition: 'transform 0.3s ease-in-out'
+                                                    }}
+                                                />
+                                                {index === 3 && event.images.length > 4 && (
+                                                    <Box
+                                                        sx={{
+                                                            position: 'absolute',
+                                                            top: 0,
+                                                            left: 0,
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                                            color: 'white',
+                                                            fontSize: '1.5rem',
+                                                            fontWeight: 'bold',
+                                                            cursor: 'pointer',
+                                                            '&:hover': {
+                                                                backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                                                            }
+                                                        }}
+                                                    >
+                                                        +{event.images.length - 4}
+                                                    </Box>
+                                                )}
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                )}
+                            </Box>
 
 
 
