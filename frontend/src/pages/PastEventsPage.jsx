@@ -183,7 +183,65 @@ const PastEventsPage = () => {
                                     </Box>
                                 )}
                             </Box>
+                            <CardContent sx={{ flexGrow: 1 }}>
+                                <Typography variant="h5" component="h2" gutterBottom>
+                                    {event.schoolName}
+                                </Typography>
 
+                                <Typography color="textSecondary" paragraph>
+                                    {event.location}
+                                </Typography>
+                                <Box sx={{ mb: 2 }}>
+                                    <Chip label={`Grade ${event.grade}`} sx={{ mr: 1 }} />
+                                    <Chip label={event.subject} />
+                                </Box>
+                                <Typography variant="subtitle1" color="primary" sx={{ mb: 2 }}>
+                                    Hosted by: {event.organizationName}
+                                </Typography>
+                                <Typography variant="body2" paragraph>
+                                    Date: {format(new Date(event.seminarDate), 'MMMM dd, yyyy')}
+                                </Typography>
+
+                                <Divider sx={{ my: 2 }} />
+
+                                <Box sx={{ mt: 2 }}>
+                                    <Typography variant="subtitle1" gutterBottom>
+                                        Average Rating:
+                                    </Typography>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                                        <Rating 
+                                            value={calculateAverageRating(event.reviews)} 
+                                            readOnly 
+                                            precision={0.5}
+                                        />
+                                        <Typography variant="body2" sx={{ ml: 1 }}>
+                                            ({event.reviews?.length || 0} reviews)
+                                        </Typography>
+                                    </Box>
+                                    <Button
+                                        variant="outlined"
+                                        startIcon={<CommentIcon />}
+                                        onClick={() => handleAddReview(event)}
+                                        sx={{ mt: 1 }}
+                                    >
+                                        Add Review
+                                    </Button>
+                                </Box>
+
+                                {event.reviews && event.reviews.length > 0 && (
+                                    <Box sx={{ mt: 2 }}>
+                                        <Typography variant="subtitle1" gutterBottom>
+                                            Recent Reviews:
+                                        </Typography>
+                                        {event.reviews.slice(0, 2).map((review, index) => (
+                                            <Box key={index} sx={{ mb: 1 }}>
+                                                <Rating value={review.rating} readOnly size="small" />
+                                                <Typography variant="body2">{review.comment}</Typography>
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                )}
+                            </CardContent>
 
 
 
