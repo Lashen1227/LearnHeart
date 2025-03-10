@@ -50,6 +50,19 @@ const PastEventsPage = () => {
     };
 
 
+    const handleSubmitReview = async () => {
+        try {
+            await axios.post(`http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`, {
+                ...newReview,
+                userId: user.id
+            });
+            setReviewDialog(false);
+            setNewReview({ rating: 0, comment: '' });
+            fetchEvents();
+        } catch (error) {
+            console.error('Error submitting review:', error);
+        }
+    };
 
 };
 
