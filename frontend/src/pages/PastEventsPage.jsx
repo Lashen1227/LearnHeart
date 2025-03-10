@@ -74,7 +74,58 @@ const PastEventsPage = () => {
         <div>
         <Navbar />
         <Container maxWidth="lg" sx={{ py: 12 }}>
+        <Grid container spacing={3}>
+                {events.map((event) => (
+                    <Grid item xs={12} md={6} key={event._id}>
+                        <Card sx={{ 
+                            height: '100%', 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            '&:hover': {
+                                transform: 'translateY(-4px)',
+                                boxShadow: 6,
+                                transition: 'all 0.3s ease-in-out'
+                            }
+                        }}>
 
+
+
+
+           </Card> 
+                    </Grid>
+                ))}
+            </Grid>
+
+
+            {/* Review Dialog */}
+            <Dialog open={reviewDialog} onClose={() => setReviewDialog(false)}>
+                <DialogTitle>Add Review</DialogTitle>
+                <DialogContent>
+                    <Box sx={{ pt: 2 }}>
+                        <Typography component="legend">Rating</Typography>
+                        <Rating
+                            value={newReview.rating}
+                            onChange={(_, value) => setNewReview({ ...newReview, rating: value })}
+                            size="large"
+                        />
+                        <TextField
+                            fullWidth
+                            multiline
+                            rows={4}
+                            label="Your Review"
+                            value={newReview.comment}
+                            onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                            sx={{ mt: 2 }}
+                        />
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setReviewDialog(false)}>Cancel</Button>
+                    <Button onClick={handleSubmitReview} variant="contained">
+                        Submit Review
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
         </Container>
         <Footer />
