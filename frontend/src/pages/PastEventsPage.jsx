@@ -30,6 +30,18 @@ const PastEventsPage = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [reviewDialog, setReviewDialog] = useState(false);
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
+
+
+
+    
+    const fetchEvents = async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/api/past-events');
+            setEvents(response.data);
+        } catch (error) {
+            console.error('Error fetching events:', error);
+        }
+    };
 };
 
 export default PastEventsPage; 
