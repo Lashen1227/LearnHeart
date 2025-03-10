@@ -70,6 +70,17 @@ const PastEventsPage = () => {
         return sum / reviews.length;
     };
 
+    return (
+        <div>
+        <Navbar />
+        <Container maxWidth="lg" sx={{ py: 12 }}>
+
+
+        </Container>
+        <Footer />
+        </div>
+    );
+
 };
 
 export default PastEventsPage; 
