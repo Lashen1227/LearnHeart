@@ -49,7 +49,6 @@ const PastEventsPage = () => {
         setReviewDialog(true);
     };
 
-
     const handleSubmitReview = async () => {
         try {
             await axios.post(`http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`, {
@@ -74,7 +73,7 @@ const PastEventsPage = () => {
         <div>
         <Navbar />
         <Container maxWidth="lg" sx={{ py: 12 }}>
-        <Grid container spacing={3}>
+            <Grid container spacing={3}>
                 {events.map((event) => (
                     <Grid item xs={12} md={6} key={event._id}>
                         <Card sx={{ 
@@ -242,14 +241,10 @@ const PastEventsPage = () => {
                                     </Box>
                                 )}
                             </CardContent>
-
-
-
-           </Card> 
+                        </Card> 
                     </Grid>
                 ))}
             </Grid>
-
 
             {/* Review Dialog */}
             <Dialog open={reviewDialog} onClose={() => setReviewDialog(false)}>
@@ -280,12 +275,10 @@ const PastEventsPage = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-
         </Container>
         <Footer />
         </div>
     );
-
 };
 
 export default PastEventsPage; 
