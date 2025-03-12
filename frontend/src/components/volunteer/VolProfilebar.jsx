@@ -6,12 +6,14 @@ import { Box, Modal, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from '@mui/icons-material/Search';
 import OrgSearchList from "../organization/OrgSearchList";
+import CVUpload from "./CVUpload";
 
 function VolProfilebar() {
     const [volunteers, setVolunteers] = useState([]);
     const [organizations, setOrganizations] = useState([]);
     const user = useUser().user;
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
 
     const clarkId = volunteers.find((vol) => vol.userID === user?.id);
 
@@ -59,7 +61,7 @@ function VolProfilebar() {
                     {clarkId?.email} <br />
                 </p>
                 <div className="mt-10">
-                    <h3 className="text-md font-semibold text-center md:text-lg">Joined Organizations</h3>
+                    <h3 className="font-semibold text-center text-md md:text-lg">Joined Organizations</h3>
                     <ul className="list-disc list-inside">
                         {organizations.map((org, index) => (
                             <li key={index}>{org}</li>
@@ -72,7 +74,7 @@ function VolProfilebar() {
                 <button className="px-2 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsModalOpen(true)}>
                     <SearchIcon />Find Organizations
                 </button>
-                <button className="w-3/4 py-2 duration-300 bg-white border md:w-1/2 rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue">
+                <button className="w-3/4 py-2 duration-300 bg-white border md:w-1/2 rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsSkillModalOpen(true)}>
                     Verify Skills
                 </button>
                 <button className="w-3/4 py-2 text-white duration-300 border md:w-1/2 rounded-xl hover:scale-105 bg-custom-orange hover:bg-orange-600">
@@ -105,6 +107,34 @@ function VolProfilebar() {
                     <CloseIcon />
                 </IconButton>
                 <OrgSearchList />
+                </Box>
+            </Modal>
+            <Modal open={isSkillModalOpen} onClose={() => setIsSkillModalOpen(false)}>
+                <Box 
+                position="absolute" 
+                top="50%" 
+                left="50%" 
+                sx={{
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "#EAEFFB", 
+                    p: 3, 
+                    borderRadius: 2,
+                    width: {
+                    xs: '90%',
+                    sm: '75%',
+                    md: '60%',
+                    lg: '50%',
+                    xl: '35%'
+                    },
+                    maxHeight: "80vh", 
+                    overflowY: "auto",
+                    scrollbarWidth: "none",
+                }}
+                >
+                <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsSkillModalOpen(false)}>
+                    <CloseIcon />
+                </IconButton>
+                <CVUpload />
                 </Box>
             </Modal>
         </div>
