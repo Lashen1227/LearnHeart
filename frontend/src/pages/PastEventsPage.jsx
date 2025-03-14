@@ -94,7 +94,7 @@ const PastEventsPage = () => {
                 ) : (
                     <Grid container spacing={3}>
                         {events.map((event) => (
-                            <Grid item xs={12} md={6} key={event._id}>
+                            <Grid item xs={12} sm={6} md={3} key={event._id}>
                                 <Card sx={{ 
                                     height: '100%', 
                                     display: 'flex', 
