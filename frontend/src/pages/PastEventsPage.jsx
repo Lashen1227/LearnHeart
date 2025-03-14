@@ -91,9 +91,21 @@ const PastEventsPage = () => {
             );
         }
         if (searchParams.grade) {
-            filtered = filtered.filter((event) => event.grade.toLowerCase().includes(searchParams.grade.toLowerCase()));
+            filtered = filtered.filter((event) =>
+                event.grade.toLowerCase().includes(searchParams.grade.toLowerCase())
+            );
         }
         setFilteredEvents(filtered);
+    };
+
+    const handleClearSearch = () => {
+        setSearchParams({
+            date: '',
+            location: '',
+            host: '',
+            grade: ''
+        });
+        setFilteredEvents(events); // Reset to show all events
     };
 
     const handleAddReview = (event) => {
@@ -109,7 +121,7 @@ const PastEventsPage = () => {
             });
             setReviewDialog(false);
             setNewReview({ rating: 0, comment: '' });
-            fetchEvents();
+            fetchEvents(); // Refresh events to show the new review
         } catch (error) {
             console.error('Error submitting review:', error);
         }
@@ -121,8 +133,8 @@ const PastEventsPage = () => {
         return sum / reviews.length;
     };
 
-     // New handler to open the image preview dialog
-     const handleImageClick = (image) => {
+        // New handler to open the image preview dialog
+    const handleImageClick = (image) => {
         setSelectedImage(image);
         setImagePreviewOpen(true);
     };
@@ -159,10 +171,10 @@ const PastEventsPage = () => {
                                         onChange={handleSearchChange}
                                         InputLabelProps={{
                                             shrink: true
-                                        }}
-                                        InputProps={{
+                                        }}                                      
+                                          InputProps={{
                                             endAdornment: (
-                                                <InputAdornment position="end">📅</InputAdornment>
+                                             <InputAdornment position="end">📅</InputAdornment>
                                             )
                                         }}
                                     />
@@ -177,8 +189,8 @@ const PastEventsPage = () => {
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">📍</InputAdornment>
-                                            )
-                                        }}
+                                            )                                      
+                                          }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
@@ -191,7 +203,7 @@ const PastEventsPage = () => {
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">🏢</InputAdornment>
-                                            )
+                                            )                                        
                                         }}
                                     />
                                 </Grid>
@@ -205,8 +217,21 @@ const PastEventsPage = () => {
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
-                                    <Button variant="contained" onClick={handleSearch} sx={{ height: '100%' }}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleSearch}
+                                        sx={{ height: '100%' }}
+                                    >
                                         Search
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleClearSearch}
+                                        sx={{ height: '100%' }}
+                                    >
+                                        Clear Search
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -289,34 +314,34 @@ const PastEventsPage = () => {
                                                                     width: '100%',
                                                                     height: '100%',
                                                                     objectFit: 'cover',
-                                                                transition: 'transform 0.3s ease-in-out'
+                                                                    transition: 'transform 0.3s ease-in-out'
                                                                 }}
                                                             />
 
-{index === 3 && event.images.length > 4 && (
-                                                            <Box
-                                                                sx={{
-                                                                    position: 'absolute',
-                                                                    top: 0,
-                                                                    left: 0,
-                                                                    width: '100%',
-                                                                    height: '100%',
-                                                                    display: 'flex',
-                                                                    alignItems: 'center',
-                                                                    justifyContent: 'center',
-                                                                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                                                                    color: 'white',
-                                                                    fontSize: '1.5rem',
-                                                                    fontWeight: 'bold',
-                                                                    cursor: 'pointer',
-                                                                    '&:hover': {
-                                                                        backgroundColor: 'rgba(0, 0, 0, 0.8)'
-                                                                    }
-                                                                }}
-                                                            >
-                                                                +{event.images.length - 4}
-                                                            </Box>
-                                                        )}
+                                                            {index === 3 && event.images.length > 4 && (
+                                                                <Box
+                                                                    sx={{
+                                                                        position: 'absolute',
+                                                                        top: 0,
+                                                                        left: 0,
+                                                                        width: '100%',
+                                                                        height: '100%',
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center',
+                                                                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                                                        color: 'white',
+                                                                        fontSize: '1.5rem',
+                                                                        fontWeight: 'bold',
+                                                                        cursor: 'pointer',
+                                                                        '&:hover': {
+                                                                            backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    +{event.images.length - 4}
+                                                                </Box>
+                                                            )}
                                                         </Box>
                                                     ))}
                                                 </Box>
@@ -466,5 +491,3 @@ const PastEventsPage = () => {
 };
 
 export default PastEventsPage;
-
-
