@@ -18,11 +18,12 @@ import {
     DialogActions,
     Chip,
     Divider,
-    IconButton
+    IconButton,
+    InputAdornment
 } from '@mui/material';
 import { format } from 'date-fns';
 import CommentIcon from '@mui/icons-material/Comment';
-import CloseIcon from '@mui/icons-material/Close'; // <-- Added Close Icon
+import CloseIcon from '@mui/icons-material/Close';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
@@ -30,6 +31,7 @@ import Spinner from '../components/Spinner';
 const PastEventsPage = () => {
     const { user } = useUser();
     const [events, setEvents] = useState([]);
+    const [filteredEvents, setFilteredEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [reviewDialog, setReviewDialog] = useState(false);
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
@@ -38,6 +40,13 @@ const PastEventsPage = () => {
     // New states for image preview
     const [imagePreviewOpen, setImagePreviewOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState('');
+
+    const [searchParams, setSearchParams] = useState({
+        date: '',
+        location: '',
+        host: '',
+        grade: ''
+    });
 
     useEffect(() => {
         fetchEvents();
@@ -48,11 +57,43 @@ const PastEventsPage = () => {
         try {
             const response = await axios.get('http://localhost:3001/api/past-events');
             setEvents(response.data);
+            setFilteredEvents(response.data); // Initially set all events
         } catch (error) {
             console.error('Error fetching events:', error);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleSearchChange = (e) => {
+        const { name, value } = e.target;
+        setSearchParams((prev) => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSearch = () => {
+        let filtered = events;
+        if (searchParams.date) {
+            filtered = filtered.filter((event) =>
+                format(new Date(event.seminarDate), 'yyyy-MM-dd').includes(searchParams.date)
+            );
+        }
+        if (searchParams.location) {
+            filtered = filtered.filter((event) =>
+                event.location.toLowerCase().includes(searchParams.location.toLowerCase())
+            );
+        }
+        if (searchParams.host) {
+            filtered = filtered.filter((event) =>
+                event.organizationName.toLowerCase().includes(searchParams.host.toLowerCase())
+            );
+        }
+        if (searchParams.grade) {
+            filtered = filtered.filter((event) => event.grade.toLowerCase().includes(searchParams.grade.toLowerCase()));
+        }
+        setFilteredEvents(filtered);
     };
 
     const handleAddReview = (event) => {
@@ -80,8 +121,8 @@ const PastEventsPage = () => {
         return sum / reviews.length;
     };
 
-    // New handler to open the image preview dialog
-    const handleImageClick = (image) => {
+     // New handler to open the image preview dialog
+     const handleImageClick = (image) => {
         setSelectedImage(image);
         setImagePreviewOpen(true);
     };
@@ -97,94 +138,162 @@ const PastEventsPage = () => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        minHeight: 'calc(100vh - 64px - 96px)' // Subtracting navbar and padding heights
+                        minHeight: 'calc(100vh - 64px - 96px)'
                     })
                 }}
             >
                 {loading ? (
                     <Spinner />
                 ) : (
-                    <Grid container spacing={3}>
-                        {events.map((event) => (
-                            <Grid item xs={12} sm={6} md={3} key={event._id}>
-                                <Card sx={{
-                                    height: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    '&:hover': {
-                                        transform: 'translateY(-4px)',
-                                        boxShadow: 6,
-                                        transition: 'all 0.3s ease-in-out'
-                                    }
-                                }}>
-                                    <Box sx={{
-                                        position: 'relative',
-                                        pt: '56.25%',
-                                        overflow: 'hidden',
-                                        borderRadius: '12px 12px 0 0'
+                    <>
+                        <Box sx={{ mb: 4 }}>
+                            {/* Search Bar */}
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={3}>
+                                    <TextField
+                                        fullWidth
+                                        label="Date"
+                                        name="date"
+                                        type="date"
+                                        value={searchParams.date}
+                                        onChange={handleSearchChange}
+                                        InputLabelProps={{
+                                            shrink: true
+                                        }}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">📅</InputAdornment>
+                                            )
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <TextField
+                                        fullWidth
+                                        label="Location"
+                                        name="location"
+                                        value={searchParams.location}
+                                        onChange={handleSearchChange}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">📍</InputAdornment>
+                                            )
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <TextField
+                                        fullWidth
+                                        label="Host"
+                                        name="host"
+                                        value={searchParams.host}
+                                        onChange={handleSearchChange}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">🏢</InputAdornment>
+                                            )
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <TextField
+                                        fullWidth
+                                        label="Grade"
+                                        name="grade"
+                                        value={searchParams.grade}
+                                        onChange={handleSearchChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <Button variant="contained" onClick={handleSearch} sx={{ height: '100%' }}>
+                                        Search
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                        <Grid container spacing={3}>
+                            {filteredEvents.map((event) => (
+                                <Grid item xs={12} sm={6} md={3} key={event._id}>
+                                    <Card sx={{
+                                        height: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        '&:hover': {
+                                            transform: 'translateY(-4px)',
+                                            boxShadow: 6,
+                                            transition: 'all 0.3s ease-in-out'
+                                        }
                                     }}>
-                                        {event.images && event.images.length > 0 && (
-                                            <Box sx={{
-                                                position: 'absolute',
-                                                top: 0,
-                                                left: 0,
-                                                width: '100%',
-                                                height: '100%',
-                                                display: 'grid',
-                                                gap: '4px',
-                                                padding: '4px',
-                                                gridTemplateColumns: event.images.length === 1 ? '1fr' :
-                                                    event.images.length === 2 ? '1fr 1fr' :
-                                                        event.images.length === 3 ? '2fr 1fr' :
-                                                            '1fr 1fr',
-                                                gridTemplateRows: event.images.length <= 2 ? '1fr' : '1fr 1fr',
-                                                bgcolor: 'background.paper'
-                                            }}>
-                                                {event.images.slice(0, 4).map((image, index) => (
-                                                    <Box
-                                                        key={index}
-                                                        sx={{
-                                                            position: 'relative',
-                                                            width: '100%',
-                                                            height: '100%',
-                                                            gridColumn: event.images.length === 3 && index === 0 ? 'span 2' : 'span 1',
-                                                            overflow: 'hidden',
-                                                            borderRadius: '8px',
-                                                            cursor: 'pointer',
-                                                            '&:hover': {
-                                                                '& .MuiCardMedia-root': {
-                                                                    transform: 'scale(1.1)',
-                                                                    transition: 'transform 0.3s ease-in-out'
-                                                                },
-                                                                '&::after': {
-                                                                    content: '""',
+                                        <Box sx={{
+                                            position: 'relative',
+                                            pt: '56.25%',
+                                            overflow: 'hidden',
+                                            borderRadius: '12px 12px 0 0'
+                                        }}>
+                                            {event.images && event.images.length > 0 && (
+                                                <Box sx={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    display: 'grid',
+                                                    gap: '4px',
+                                                    padding: '4px',
+                                                    gridTemplateColumns: event.images.length === 1 ? '1fr' :
+                                                        event.images.length === 2 ? '1fr 1fr' :
+                                                            event.images.length === 3 ? '2fr 1fr' :
+                                                                '1fr 1fr',
+                                                    gridTemplateRows: event.images.length <= 2 ? '1fr' : '1fr 1fr',
+                                                    bgcolor: 'background.paper'
+                                                }}>
+                                                    {event.images.slice(0, 4).map((image, index) => (
+                                                        <Box
+                                                            key={index}
+                                                            sx={{
+                                                                position: 'relative',
+                                                                width: '100%',
+                                                                height: '100%',
+                                                                gridColumn: event.images.length === 3 && index === 0 ? 'span 2' : 'span 1',
+                                                                overflow: 'hidden',
+                                                                borderRadius: '8px',
+                                                                cursor: 'pointer',
+                                                                '&:hover': {
+                                                                    '& .MuiCardMedia-root': {
+                                                                        transform: 'scale(1.1)',
+                                                                        transition: 'transform 0.3s ease-in-out'
+                                                                    },
+                                                                    '&::after': {
+                                                                        content: '""',
+                                                                        position: 'absolute',
+                                                                        top: 0,
+                                                                        left: 0,
+                                                                        right: 0,
+                                                                        bottom: 0,
+                                                                        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                                                                        transition: 'background-color 0.3s ease-in-out'
+                                                                    }
+                                                                }
+                                                            }}
+                                                            onClick={() => handleImageClick(image)}
+                                                        >
+                                                            <CardMedia
+                                                                component="img"
+                                                                image={image}
+                                                                alt={`${event.schoolName} - Image ${index + 1}`}
+                                                                sx={{
                                                                     position: 'absolute',
                                                                     top: 0,
                                                                     left: 0,
-                                                                    right: 0,
-                                                                    bottom: 0,
-                                                                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                                                                    transition: 'background-color 0.3s ease-in-out'
-                                                                }
-                                                            }
-                                                        }}
-                                                        onClick={() => handleImageClick(image)} // <-- Added click handler here
-                                                    >
-                                                        <CardMedia
-                                                            component="img"
-                                                            image={image}
-                                                            alt={`${event.schoolName} - Image ${index + 1}`}
-                                                            sx={{
-                                                                position: 'absolute',
-                                                                top: 0,
-                                                                left: 0,
-                                                                width: '100%',
-                                                                height: '100%',
-                                                                objectFit: 'cover',
+                                                                    width: '100%',
+                                                                    height: '100%',
+                                                                    objectFit: 'cover',
                                                                 transition: 'transform 0.3s ease-in-out'
-                                                            }}
-                                                        />
-                                                        {index === 3 && event.images.length > 4 && (
+                                                                }}
+                                                            />
+
+{index === 3 && event.images.length > 4 && (
                                                             <Box
                                                                 sx={{
                                                                     position: 'absolute',
@@ -208,73 +317,74 @@ const PastEventsPage = () => {
                                                                 +{event.images.length - 4}
                                                             </Box>
                                                         )}
-                                                    </Box>
-                                                ))}
-                                            </Box>
-                                        )}
-                                    </Box>
-                                    <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography variant="h5" component="h2" gutterBottom>
-                                            {event.schoolName}
-                                        </Typography>
-                                        <Typography color="textSecondary" paragraph>
-                                            {event.location}
-                                        </Typography>
-                                        <Box sx={{ mb: 2 }}>
-                                            <Chip label={`Grade ${event.grade}`} sx={{ mr: 1 }} />
-                                            <Chip label={event.subject} />
+                                                        </Box>
+                                                    ))}
+                                                </Box>
+                                            )}
                                         </Box>
-                                        <Typography variant="subtitle1" color="primary" sx={{ mb: 2 }}>
-                                            Hosted by: {event.organizationName}
-                                        </Typography>
-                                        <Typography variant="body2" paragraph>
-                                            Date: {format(new Date(event.seminarDate), 'MMMM dd, yyyy')}
-                                        </Typography>
-
-                                        <Divider sx={{ my: 2 }} />
-
-                                        <Box sx={{ mt: 2 }}>
-                                            <Typography variant="subtitle1" gutterBottom>
-                                                Average Rating:
+                                        <CardContent sx={{ flexGrow: 1 }}>
+                                            <Typography variant="h5" component="h2" gutterBottom>
+                                                {event.schoolName}
                                             </Typography>
-                                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                                                <Rating
-                                                    value={calculateAverageRating(event.reviews)}
-                                                    readOnly
-                                                    precision={0.5}
-                                                />
-                                                <Typography variant="body2" sx={{ ml: 1 }}>
-                                                    ({event.reviews?.length || 0} reviews)
-                                                </Typography>
+                                            <Typography color="textSecondary" paragraph>
+                                                {event.location}
+                                            </Typography>
+                                            <Box sx={{ mb: 2 }}>
+                                                <Chip label={`Grade ${event.grade}`} sx={{ mr: 1 }} />
+                                                <Chip label={event.subject} />
                                             </Box>
-                                            <Button
-                                                variant="outlined"
-                                                startIcon={<CommentIcon />}
-                                                onClick={() => handleAddReview(event)}
-                                                sx={{ mt: 1 }}
-                                            >
-                                                Add Review
-                                            </Button>
-                                        </Box>
+                                            <Typography variant="subtitle1" color="primary" sx={{ mb: 2 }}>
+                                                Hosted by: {event.organizationName}
+                                            </Typography>
+                                            <Typography variant="body2" paragraph>
+                                                Date: {format(new Date(event.seminarDate), 'MMMM dd, yyyy')}
+                                            </Typography>
 
-                                        {event.reviews && event.reviews.length > 0 && (
+                                            <Divider sx={{ my: 2 }} />
+
                                             <Box sx={{ mt: 2 }}>
                                                 <Typography variant="subtitle1" gutterBottom>
-                                                    Recent Reviews:
+                                                    Average Rating:
                                                 </Typography>
-                                                {event.reviews.slice(0, 2).map((review, index) => (
-                                                    <Box key={index} sx={{ mb: 1 }}>
-                                                        <Rating value={review.rating} readOnly size="small" />
-                                                        <Typography variant="body2">{review.comment}</Typography>
-                                                    </Box>
-                                                ))}
+                                                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                                                    <Rating
+                                                        value={calculateAverageRating(event.reviews)}
+                                                        readOnly
+                                                        precision={0.5}
+                                                    />
+                                                    <Typography variant="body2" sx={{ ml: 1 }}>
+                                                        ({event.reviews?.length || 0} reviews)
+                                                    </Typography>
+                                                </Box>
+                                                <Button
+                                                    variant="outlined"
+                                                    startIcon={<CommentIcon />}
+                                                    onClick={() => handleAddReview(event)}
+                                                    sx={{ mt: 1 }}
+                                                >
+                                                    Add Review
+                                                </Button>
                                             </Box>
-                                        )}
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
+
+                                            {event.reviews && event.reviews.length > 0 && (
+                                                <Box sx={{ mt: 2 }}>
+                                                    <Typography variant="subtitle1" gutterBottom>
+                                                        Recent Reviews:
+                                                    </Typography>
+                                                    {event.reviews.slice(0, 2).map((review, index) => (
+                                                        <Box key={index} sx={{ mb: 1 }}>
+                                                            <Rating value={review.rating} readOnly size="small" />
+                                                            <Typography variant="body2">{review.comment}</Typography>
+                                                        </Box>
+                                                    ))}
+                                                </Box>
+                                            )}
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </>
                 )}
 
                 {/* Review Dialog */}
@@ -356,3 +466,5 @@ const PastEventsPage = () => {
 };
 
 export default PastEventsPage;
+
+
