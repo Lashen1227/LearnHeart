@@ -17,10 +17,12 @@ import {
     DialogContent,
     DialogActions,
     Chip,
-    Divider
+    Divider,
+    IconButton
 } from '@mui/material';
 import { format } from 'date-fns';
 import CommentIcon from '@mui/icons-material/Comment';
+import CloseIcon from '@mui/icons-material/Close'; // <-- Added Close Icon
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
@@ -32,6 +34,10 @@ const PastEventsPage = () => {
     const [reviewDialog, setReviewDialog] = useState(false);
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
     const [loading, setLoading] = useState(true);
+
+    // New states for image preview
+    const [imagePreviewOpen, setImagePreviewOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState('');
 
     useEffect(() => {
         fetchEvents();
@@ -74,12 +80,18 @@ const PastEventsPage = () => {
         return sum / reviews.length;
     };
 
+    // New handler to open the image preview dialog
+    const handleImageClick = (image) => {
+        setSelectedImage(image);
+        setImagePreviewOpen(true);
+    };
+
     return (
         <div>
             <Navbar />
-            <Container 
-                maxWidth="lg" 
-                sx={{ 
+            <Container
+                maxWidth="lg"
+                sx={{
                     py: 12,
                     ...(loading && {
                         display: 'flex',
@@ -95,9 +107,9 @@ const PastEventsPage = () => {
                     <Grid container spacing={3}>
                         {events.map((event) => (
                             <Grid item xs={12} sm={6} md={3} key={event._id}>
-                                <Card sx={{ 
-                                    height: '100%', 
-                                    display: 'flex', 
+                                <Card sx={{
+                                    height: '100%',
+                                    display: 'flex',
                                     flexDirection: 'column',
                                     '&:hover': {
                                         transform: 'translateY(-4px)',
@@ -105,8 +117,8 @@ const PastEventsPage = () => {
                                         transition: 'all 0.3s ease-in-out'
                                     }
                                 }}>
-                                    <Box sx={{ 
-                                        position: 'relative', 
+                                    <Box sx={{
+                                        position: 'relative',
                                         pt: '56.25%',
                                         overflow: 'hidden',
                                         borderRadius: '12px 12px 0 0'
@@ -123,10 +135,9 @@ const PastEventsPage = () => {
                                                 padding: '4px',
                                                 gridTemplateColumns: event.images.length === 1 ? '1fr' :
                                                     event.images.length === 2 ? '1fr 1fr' :
-                                                    event.images.length === 3 ? '2fr 1fr' :
-                                                    '1fr 1fr',
-                                                gridTemplateRows: event.images.length <= 2 ? '1fr' :
-                                                    '1fr 1fr',
+                                                        event.images.length === 3 ? '2fr 1fr' :
+                                                            '1fr 1fr',
+                                                gridTemplateRows: event.images.length <= 2 ? '1fr' : '1fr 1fr',
                                                 bgcolor: 'background.paper'
                                             }}>
                                                 {event.images.slice(0, 4).map((image, index) => (
@@ -157,6 +168,7 @@ const PastEventsPage = () => {
                                                                 }
                                                             }
                                                         }}
+                                                        onClick={() => handleImageClick(image)} // <-- Added click handler here
                                                     >
                                                         <CardMedia
                                                             component="img"
@@ -205,7 +217,6 @@ const PastEventsPage = () => {
                                         <Typography variant="h5" component="h2" gutterBottom>
                                             {event.schoolName}
                                         </Typography>
-
                                         <Typography color="textSecondary" paragraph>
                                             {event.location}
                                         </Typography>
@@ -227,9 +238,9 @@ const PastEventsPage = () => {
                                                 Average Rating:
                                             </Typography>
                                             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                                                <Rating 
-                                                    value={calculateAverageRating(event.reviews)} 
-                                                    readOnly 
+                                                <Rating
+                                                    value={calculateAverageRating(event.reviews)}
+                                                    readOnly
                                                     precision={0.5}
                                                 />
                                                 <Typography variant="body2" sx={{ ml: 1 }}>
@@ -260,7 +271,7 @@ const PastEventsPage = () => {
                                             </Box>
                                         )}
                                     </CardContent>
-                                </Card> 
+                                </Card>
                             </Grid>
                         ))}
                     </Grid>
@@ -295,10 +306,53 @@ const PastEventsPage = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
+
+                {/* Image Preview Dialog */}
+                <Dialog
+                    open={imagePreviewOpen}
+                    onClose={() => setImagePreviewOpen(false)}
+                    fullScreen
+                    PaperProps={{
+                        sx: { backgroundColor: 'rgba(0,0,0,0.9)' }
+                    }}
+                >
+                    <IconButton
+                        onClick={() => setImagePreviewOpen(false)}
+                        sx={{
+                            position: 'absolute',
+                            top: 16,
+                            right: 16,
+                            color: 'white',
+                            zIndex: 1000
+                        }}
+                    >
+                        <CloseIcon fontSize="large" />
+                    </IconButton>
+                    <Box
+                        sx={{
+                            height: '100%',
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            p: 2
+                        }}
+                    >
+                        <img
+                            src={selectedImage}
+                            alt="Preview"
+                            style={{
+                                maxWidth: '100%',
+                                maxHeight: '100%',
+                                objectFit: 'contain'
+                            }}
+                        />
+                    </Box>
+                </Dialog>
             </Container>
             <Footer />
         </div>
     );
 };
 
-export default PastEventsPage; 
+export default PastEventsPage;
