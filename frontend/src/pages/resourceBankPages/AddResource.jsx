@@ -9,10 +9,49 @@ const AddResource = () => {
   const [subject, setSubject] = useState("");
   const [pdf, setPdf] = useState(null);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const validateGrade = (value) => {
+    const gradeValue = parseInt(value, 10);
+    if (isNaN(gradeValue) || gradeValue <= 0 || !Number.isInteger(gradeValue)) {
+      setError("Grade must be a positive integer.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return false;
+    }
+    return true;
+  };
+
+  const handleGradeChange = (e) => {
+    const value = e.target.value;
+    setGrade(value);
+    if (value === "") {
+      setError("");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateGrade(grade)) {
+      return;
+    }
+    if (type === "Note" && !pdf) {
+      setError("Please upload a PDF.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
+    }
+    if (type !== "Note" && !url) {
+      setError("Please provide a URL.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
+    }
+    setError("");
     setLoading(true);
 
     const formData = new FormData();
@@ -37,11 +76,21 @@ const AddResource = () => {
       if (response.ok) {
         resetForm();
         setError("");
+        setSuccess("Resource added successfully.");
+        setTimeout(() => {
+          setSuccess("");
+        }, 2000);
       } else {
         setError("Failed to add resource. Please try again.");
+        setTimeout(() => {
+          setError("");
+        }, 3000);
       }
     } catch {
       setError("Error adding resource. Please check your connection.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     } finally {
       setLoading(false);
     }
@@ -55,6 +104,7 @@ const AddResource = () => {
     setUrl("");
     setSubject("");
     setPdf(null);
+    setSuccess("");
   };
 
   return (
@@ -66,6 +116,12 @@ const AddResource = () => {
             <div className="p-3 mb-4 text-red-700 bg-red-100 border-l-4 border-red-500" role="alert">
               <p className="font-bold">Error</p>
               <p>{error}</p>
+            </div>
+          )}
+          {success && (
+            <div className="p-3 mb-4 text-green-700 bg-green-100 border-l-4 border-green-500" role="alert">
+              <p className="font-bold">Success</p>
+              <p>{success}</p>
             </div>
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -92,9 +148,10 @@ const AddResource = () => {
                   type="number"
                   id="grade"
                   value={grade}
-                  onChange={(e) => setGrade(e.target.value)}
+                  onChange={handleGradeChange}
                   required
                   placeholder="Enter grade"
+                  min="1"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-blue"
                 />
               </div>
