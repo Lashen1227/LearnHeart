@@ -120,13 +120,13 @@ function VolProfilebar() {
                     p: 3, 
                     borderRadius: 2,
                     width: {
-                    xs: '90%',
-                    sm: '75%',
-                    md: '60%',
-                    lg: '50%',
-                    xl: '35%'
+                    xs: '100%',
+                    sm: '95%',
+                    md: '80%',
+                    lg: '70%',
+                    xl: '55%'
                     },
-                    maxHeight: "80vh", 
+                    maxHeight: "90vh", 
                     overflowY: "auto",
                     scrollbarWidth: "none",
                 }}

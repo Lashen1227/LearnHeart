@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { 
-    Button, 
-    CircularProgress, 
-    Container, 
-    Typography, 
-    Box, 
-    Paper, 
-    List, 
-    ListItem, 
-    ListItemText 
+import {
+  Button,
+  CircularProgress,
+  Container,
+  Typography,
+  Box,
+  Paper,
+  Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -24,45 +22,60 @@ const CVUpload = () => {
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
-    setError(null); // Reset error on new file selection
+    setError(null);
   };
 
   const handleUpload = async () => {
     if (!file) return;
+
     setLoading(true);
-    setError(null); // Reset error on new upload attempt
+    setError(null);
     const formData = new FormData();
     formData.append("cv", file);
-    
+
+    // Local API = http://127.0.0.1:5000/upload
     try {
-      const response = await fetch("http://localhost:5000/upload", {
+      const response = await fetch("https://cv-skill-extractor.onrender.com/upload", {
         method: "POST",
         body: formData,
       });
-      
-      if (!response.ok) throw new Error("Failed to extract skills");
+
       const data = await response.json();
-      setSkills(data.skills);
-    } catch (error) {
-      console.error(error);
-      setError("Failed to extract skills. Please try again.");
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to extract skills");
+      }
+
+      if (data.skills && data.skills.length > 0) {
+        setSkills(data.skills);
+      } else {
+        throw new Error("No skills found in the CV.");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      setError(err.message || "Failed to extract skills. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4, textAlign: "center" }}>
+    <Container maxWidth="md" sx={{ mt: 2, textAlign: "center" }}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           Upload Your CV
         </Typography>
         <Typography variant="body1" color="textSecondary" gutterBottom>
-          Please upload your CV to extract relevant skills.
+          Please upload CV to extract relevant skills.
         </Typography>
         <Box sx={{ mt: 3 }}>
           <label htmlFor="upload-cv">
-            <Input id="upload-cv" type="file" onChange={handleFileChange} accept=".pdf,.doc,.docx" />
+            <Input
+              id="upload-cv"
+              type="file"
+              onChange={handleFileChange}
+              accept=".pdf,.doc,.docx"
+            />
             <Button variant="contained" component="span" sx={{ mr: 2 }}>
               Choose File
             </Button>
@@ -93,13 +106,15 @@ const CVUpload = () => {
             <Typography variant="h6" gutterBottom>
               Extracted Skills:
             </Typography>
-            <List dense>
+            <Grid container spacing={2}>
               {skills.map((skill, index) => (
-                <ListItem key={index}>
-                  <ListItemText primary={skill} />
-                </ListItem>
+                <Grid item xs={6} sm={4} md={3} key={index}>
+                  <Paper elevation={1} sx={{ p: 1, textAlign: "center" }}>
+                    {skill}
+                  </Paper>
+                </Grid>
               ))}
-            </List>
+            </Grid>
           </Box>
         )}
       </Paper>
