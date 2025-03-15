@@ -18,8 +18,8 @@ LearnHeart aligns with **United Nations Sustainable Development Goal 4** (Qualit
 - **Backend:** Node.js + Express.js
 - **Database:** MongoDB (Mongoose)
 - **Authentication:** Clerk
-- **Machine Learning:** Python (Skill verification from CVs)
-- **Deployment:** Vercel (Frontend) & Railway (Backend)
+- **Machine Learning:** Python + Flask (LangChain Integration)
+- **Deployment:** Vercel (Frontend) & Render (Backend)
 
 ## 🎯 Key Features
 
@@ -40,12 +40,12 @@ LearnHeart aligns with **United Nations Sustainable Development Goal 4** (Qualit
 ```bash
 cd backend
 npm install
-npm start
+npm run dev
 ```
 
 ### Frontend Setup
 ```bash
-cd client
+cd frontend
 npm install
 npm run dev
 ```
