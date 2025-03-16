@@ -70,7 +70,7 @@ const VolunteerRequest = ({ clarkUser }) => {
       ) : requests.length === 0 ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
           <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
-            No Volunteer Requests Found
+            No volunteer requests found.
           </Typography>
         </Box>
       ) : (

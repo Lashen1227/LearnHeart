@@ -55,7 +55,9 @@ function VolProfilebar() {
                         } 
                     }} 
                 />
-                <h2 className="mt-4 text-3xl font-semibold text-center md:text-xl">{clarkId?.name}</h2>
+                <h2 className="mt-4 text-3xl font-semibold text-center md:text-xl">
+                    <strong>{user?.fullName}</strong>
+                </h2>
                 <p className="px-4 mt-2 text-sm text-center md:text-base md:px-6">
                     {clarkId?.description} <br />
                     {clarkId?.email} <br />

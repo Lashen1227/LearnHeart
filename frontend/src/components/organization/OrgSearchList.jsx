@@ -1,5 +1,6 @@
 import OrgProfileCard from "./OrgSearchCard";
 import axios from "axios";
+import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 
 export default function OrgSearchList() {
@@ -55,6 +56,9 @@ export default function OrgSearchList() {
   return (
     <div>
       <div className="flex items-center justify-between px-4 py-2 mb-2 border-b">
+        <Typography variant="h7" gutterBottom>
+          Search Organizations
+        </Typography>
         <input
           type="text"
           placeholder="Search For Organizations"

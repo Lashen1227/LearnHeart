@@ -14,8 +14,7 @@ const ChatbotIcon = () => {
         data-aos-duration="300"
         onClick={() => setIsModalOpen(true)}
         data-aos-once="true"
-        className={`${"fixed bottom-5 right-5 z-50"
-        } p-1 rounded-full text-white shadow-lg transition duration-900 bg-custom-blue hover:bg-blue-900 border border-white`}
+        className={"fixed bottom-5 right-5 z-50 p-2.5 rounded-full text-white shadow-xl bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 transition-all duration-300 ease-in-out"}
       >
         <TbMessageChatbotFilled className="h-9 w-9 lg:w-11 lg:h-10" />
       </button>
