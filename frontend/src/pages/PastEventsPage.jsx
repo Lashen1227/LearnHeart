@@ -27,6 +27,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
+import ReviewList from '../components/ReviewList';
+import ImageGallery from '../components/ImageGallery';
 
 const PastEventsPage = () => {
     const { user } = useUser();
@@ -34,12 +36,14 @@ const PastEventsPage = () => {
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [reviewDialog, setReviewDialog] = useState(false);
+    const [allReviewsDialog, setAllReviewsDialog] = useState(false);
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
     const [loading, setLoading] = useState(true);
 
     // New states for image preview
-    const [imagePreviewOpen, setImagePreviewOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState('');
+    const [galleryOpen, setGalleryOpen] = useState(false);
+    const [selectedEventImages, setSelectedEventImages] = useState([]);
+    const [initialImageIndex, setInitialImageIndex] = useState(0);
 
     const [searchParams, setSearchParams] = useState({
         date: '',
@@ -115,10 +119,17 @@ const PastEventsPage = () => {
 
     const handleSubmitReview = async () => {
         try {
-            await axios.post(`http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`, {
+            // Get user information from Clerk
+            const userFullName = user.fullName || `${user.firstName} ${user.lastName}`.trim();
+            const reviewData = {
                 ...newReview,
-                userId: user.id
-            });
+                userId: user.id,
+                userName: user.username || userFullName,
+                userImage: user.imageUrl || user.profileImageUrl,
+                createdAt: new Date().toISOString()
+            };
+
+            await axios.post(`http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`, reviewData);
             setReviewDialog(false);
             setNewReview({ rating: 0, comment: '' });
             fetchEvents(); // Refresh events to show the new review
@@ -133,10 +144,16 @@ const PastEventsPage = () => {
         return sum / reviews.length;
     };
 
-        // New handler to open the image preview dialog
-    const handleImageClick = (image) => {
-        setSelectedImage(image);
-        setImagePreviewOpen(true);
+    // Update the handleImageClick function
+    const handleImageClick = (images, clickedImageIndex) => {
+        setSelectedEventImages(images);
+        setInitialImageIndex(clickedImageIndex);
+        setGalleryOpen(true);
+    };
+
+    const handleViewAllReviews = (event) => {
+        setSelectedEvent(event);
+        setAllReviewsDialog(true);
     };
 
     return (
@@ -301,7 +318,7 @@ const PastEventsPage = () => {
                                                                     }
                                                                 }
                                                             }}
-                                                            onClick={() => handleImageClick(image)}
+                                                            onClick={() => handleImageClick(event.images, index)}
                                                         >
                                                             <CardMedia
                                                                 component="img"
@@ -393,15 +410,20 @@ const PastEventsPage = () => {
 
                                             {event.reviews && event.reviews.length > 0 && (
                                                 <Box sx={{ mt: 2 }}>
-                                                    <Typography variant="subtitle1" gutterBottom>
-                                                        Recent Reviews:
-                                                    </Typography>
-                                                    {event.reviews.slice(0, 2).map((review, index) => (
-                                                        <Box key={index} sx={{ mb: 1 }}>
-                                                            <Rating value={review.rating} readOnly size="small" />
-                                                            <Typography variant="body2">{review.comment}</Typography>
-                                                        </Box>
-                                                    ))}
+                                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                                                        <Typography variant="subtitle1">
+                                                            Recent Reviews:
+                                                        </Typography>
+                                                        <Button
+                                                            variant="text"
+                                                            size="small"
+                                                            onClick={() => handleViewAllReviews(event)}
+                                                            sx={{ textTransform: 'none' }}
+                                                        >
+                                                            View All ({event.reviews.length})
+                                                        </Button>
+                                                    </Box>
+                                                    <ReviewList reviews={event.reviews.slice(0, 2)} />
                                                 </Box>
                                             )}
                                         </CardContent>
@@ -442,47 +464,47 @@ const PastEventsPage = () => {
                     </DialogActions>
                 </Dialog>
 
-                {/* Image Preview Dialog */}
-                <Dialog
-                    open={imagePreviewOpen}
-                    onClose={() => setImagePreviewOpen(false)}
-                    fullScreen
-                    PaperProps={{
-                        sx: { backgroundColor: 'rgba(0,0,0,0.9)' }
-                    }}
+                {/* Image Gallery */}
+                <ImageGallery
+                    images={selectedEventImages}
+                    open={galleryOpen}
+                    onClose={() => setGalleryOpen(false)}
+                    initialImageIndex={initialImageIndex}
+                />
+
+                {/* All Reviews Dialog */}
+                <Dialog 
+                    open={allReviewsDialog} 
+                    onClose={() => setAllReviewsDialog(false)}
+                    maxWidth="md"
+                    fullWidth
                 >
-                    <IconButton
-                        onClick={() => setImagePreviewOpen(false)}
-                        sx={{
-                            position: 'absolute',
-                            top: 16,
-                            right: 16,
-                            color: 'white',
-                            zIndex: 1000
-                        }}
-                    >
-                        <CloseIcon fontSize="large" />
-                    </IconButton>
-                    <Box
-                        sx={{
-                            height: '100%',
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            p: 2
-                        }}
-                    >
-                        <img
-                            src={selectedImage}
-                            alt="Preview"
-                            style={{
-                                maxWidth: '100%',
-                                maxHeight: '100%',
-                                objectFit: 'contain'
-                            }}
-                        />
-                    </Box>
+                    <DialogTitle>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Typography variant="h6">
+                                All Reviews for {selectedEvent?.schoolName}
+                            </Typography>
+                            <IconButton onClick={() => setAllReviewsDialog(false)}>
+                                <CloseIcon />
+                            </IconButton>
+                        </Box>
+                    </DialogTitle>
+                    <DialogContent>
+                        <Box sx={{ mt: 2 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                                <Rating
+                                    value={calculateAverageRating(selectedEvent?.reviews)}
+                                    readOnly
+                                    precision={0.5}
+                                    size="large"
+                                />
+                                <Typography variant="h6" sx={{ ml: 2 }}>
+                                    {calculateAverageRating(selectedEvent?.reviews).toFixed(1)} ({selectedEvent?.reviews?.length || 0} reviews)
+                                </Typography>
+                            </Box>
+                            <ReviewList reviews={selectedEvent?.reviews} />
+                        </Box>
+                    </DialogContent>
                 </Dialog>
             </Container>
             <Footer />
