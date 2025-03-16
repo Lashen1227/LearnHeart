@@ -2,7 +2,7 @@ import { UserButton, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Box, Modal, IconButton } from "@mui/material";
+import { Box, Modal, IconButton, Chip, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from '@mui/icons-material/Search';
 import OrgSearchList from "../organization/OrgSearchList";
@@ -44,6 +44,26 @@ function VolProfilebar() {
         }
     }, [user]);
 
+    const renderSkills = () => {
+        if (!clarkId?.skills || clarkId.skills.length === 0) {
+            return <Typography variant="body2" color="textSecondary"></Typography>;
+        }
+
+        return (
+            <div className="flex flex-wrap justify-center gap-2 mt-4 sm:justify-start">
+                {clarkId.skills.map((skill, index) => (
+                    <Chip 
+                        key={index} 
+                        label={skill} 
+                        color="secondary" 
+                        size="small"
+                        className="transition duration-300 ease-in-out hover:scale-110"
+                    />
+                ))}
+            </div>
+        );
+    };
+
     return (
         <div className="relative flex flex-col items-center p-6 text-white rounded-lg bg-custom-blue w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto shadow-lg min-h-[400px] flex-grow">
             <div className="flex flex-col items-center justify-center flex-grow pointer-events-none">
@@ -60,7 +80,7 @@ function VolProfilebar() {
                 </h2>
                 <p className="px-4 mt-2 text-sm text-center md:text-base md:px-6">
                     {clarkId?.description} <br />
-                    {clarkId?.email} <br />
+                    {renderSkills()}
                 </p>
                 <div className="mt-10">
                     <h3 className="font-semibold text-center text-md md:text-lg">Joined Organizations</h3>
@@ -72,6 +92,7 @@ function VolProfilebar() {
                 </div>
             </div>
             
+            <br />
             <div className="flex flex-col items-center w-full pb-6 mt-4 space-y-3">
                 <button className="px-2 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsModalOpen(true)}>
                     <SearchIcon />Find Organizations

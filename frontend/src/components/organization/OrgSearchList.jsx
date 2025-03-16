@@ -56,8 +56,8 @@ export default function OrgSearchList() {
   return (
     <div>
       <div className="flex items-center justify-between px-4 py-2 mb-2 border-b">
-        <Typography variant="h7" gutterBottom>
-          Search Organizations
+        <Typography variant="h8" gutterBottom color="textPrimary">
+          Explore Available Organizations
         </Typography>
         <input
           type="text"

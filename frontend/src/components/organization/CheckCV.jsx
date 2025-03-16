@@ -9,20 +9,16 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { useUser } from '@clerk/clerk-react';
-import axios from "axios";
 
 const Input = styled("input")({
   display: "none",
 });
 
-const CVUpload = () => {
+const CheckCV = () => {
   const [file, setFile] = useState(null);
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { user } = useUser();
-  const userId = user?.id;
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -39,14 +35,19 @@ const CVUpload = () => {
 
     // Local API = http://127.0.0.1:5000/upload
     try {
-      const response = await axios.post("https://cv-skill-extractor.onrender.com/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await fetch("https://cv-skill-extractor.onrender.com/upload", {
+        method: "POST",
+        body: formData,
       });
 
-      if (response.data.skills && response.data.skills.length > 0) {
-        setSkills(response.data.skills);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to extract skills");
+      }
+
+      if (data.skills && data.skills.length > 0) {
+        setSkills(data.skills);
       } else {
         throw new Error("No skills found in the CV.");
       }
@@ -55,42 +56,6 @@ const CVUpload = () => {
       setError(err.message || "Failed to extract skills. Please try again.");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleSaveToProfile = async () => {
-    if (!userId || skills.length === 0) return;
-
-    console.log("Skills to be saved:", skills);
-
-    try {
-      // Fetch the volunteer by userId to get the corresponding _id
-      const userResponse = await axios.get(`http://localhost:3001/api/volunteers?userID=${userId}`);
-      
-      if (userResponse.data && userResponse.data.length > 0) {
-        const volunteer = userResponse.data[0];
-        const volunteerId = volunteer._id; 
-
-        const updateResponse = await axios.put(
-          `http://localhost:3001/api/volunteers/${volunteerId}`,
-          { skills },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (updateResponse.status === 200) {
-          console.log("Skills successfully saved to your profile!");
-        } else {
-          throw new Error("Failed to save skills to profile");
-        }
-      } else {
-        throw new Error("Volunteer not found.");
-      }
-    } catch (err) {
-      console.error("Error:", err);
     }
   };
 
@@ -150,14 +115,6 @@ const CVUpload = () => {
                 </Grid>
               ))}
             </Grid>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ mt: 3 }}
-              onClick={handleSaveToProfile}
-            >
-              Save to Profile
-            </Button>
           </Box>
         )}
       </Paper>
@@ -165,4 +122,4 @@ const CVUpload = () => {
   );
 };
 
-export default CVUpload;
+export default CheckCV;

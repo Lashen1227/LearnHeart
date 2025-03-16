@@ -130,7 +130,7 @@ function VolMidbar() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="p-6 text-center rounded-lg shadow-md bg-[#4db6ac]">
+      <div className="p-10 text-center rounded-lg shadow-md bg-[#4db6ac]">
         <h2 className="text-xl">Join with Organizations</h2>
         <p className="mt-2 text-gray-900">Select an organization to submit your request.</p>
 
