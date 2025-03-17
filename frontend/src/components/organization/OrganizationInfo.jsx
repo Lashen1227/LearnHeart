@@ -54,9 +54,9 @@ const OrganizationInfo = () => {
                 
                 <div className="flex flex-col items-center w-full pb-6 mt-4 space-y-3">
                     {/* Button Group - Placed in a Flex Row */}
-                    <div className="flex justify-center space-x-4 width-full">
+                    <div className="grid justify-center grid-cols-2 gap-4 width-full">
                         <button className="px-3 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue">
-                            Verify Skills
+                            Verify CV Skills
                         </button>
                         <button className="px-3 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsPostModalOpen(true)}>
                             Share Announcements
@@ -68,6 +68,7 @@ const OrganizationInfo = () => {
                             View Reviews
                         </button>
                     </div>
+
                     
                     <div className="flex justify-center space-x-4">
                         <button className="px-4 py-2 text-white duration-300 border rounded-xl hover:scale-105 bg-custom-orange hover:bg-orange-600">
@@ -146,7 +147,7 @@ const OrganizationInfo = () => {
                     sx={{
                         transform: "translate(-50%, -50%)",
                         bgcolor: "#EAEFFB",
-                        p: 3,
+                        p: 5,
                         borderRadius: 2,
                         width: { xs: "90%", sm: "70%", md: "50%" },
                         maxWidth: "800px",
@@ -168,7 +169,7 @@ const OrganizationInfo = () => {
                 open={isReviewsOpen}
                 onClose={() => setIsReviewsOpen(false)}
                 PaperProps={{
-                    sx: { width: { xs: '100%', sm: '50%' } }
+                    sx: { width: { xs: '100%', sm: '30%' } }
                 }}
             >
                 {user && <PastEventList organizationId={user.id} onClose={() => setIsReviewsOpen(false)} />}

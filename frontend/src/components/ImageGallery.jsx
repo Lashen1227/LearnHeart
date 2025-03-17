@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
     Dialog,
     DialogContent,
     IconButton,
     Box,
-    MobileStepper,
-    Button,
 } from '@mui/material';
 import {
     Close as CloseIcon,
@@ -217,5 +216,11 @@ const ImageGallery = ({ images, open, onClose, initialImageIndex = 0 }) => {
         </Dialog>
     );
 };
+ImageGallery.propTypes = {
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    initialImageIndex: PropTypes.number,
+};
 
-export default ImageGallery; 
+export default ImageGallery;

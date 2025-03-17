@@ -71,7 +71,7 @@ const PastEventList = ({ organizationId, onClose }) => {
     };
 
     return (
-        <Box sx={{ p: 3, height: '100%', overflowY: 'auto' }}>
+        <Box sx={{ p: 3, height: '100%', overflowY: 'auto', backgroundColor: '#EAEFFB' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h5">Past Events</Typography>
                 <IconButton onClick={onClose}>×</IconButton>

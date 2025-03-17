@@ -157,7 +157,7 @@ const PastEventsPage = () => {
     };
 
     return (
-        <div>
+        <div className='bg-custom-page'>
             <Navbar />
             <Container
                 maxWidth="lg"
@@ -175,84 +175,69 @@ const PastEventsPage = () => {
                     <Spinner />
                 ) : (
                     <>
-                        <Box sx={{ mb: 4 }}>
-                            {/* Search Bar */}
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} sm={3}>
-                                    <TextField
-                                        fullWidth
-                                        label="Date"
-                                        name="date"
-                                        type="date"
-                                        value={searchParams.date}
-                                        onChange={handleSearchChange}
-                                        InputLabelProps={{
-                                            shrink: true
-                                        }}                                      
-                                          InputProps={{
-                                            endAdornment: (
-                                             <InputAdornment position="end">📅</InputAdornment>
-                                            )
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={3}>
-                                    <TextField
-                                        fullWidth
-                                        label="Location"
-                                        name="location"
-                                        value={searchParams.location}
-                                        onChange={handleSearchChange}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">📍</InputAdornment>
-                                            )                                      
-                                          }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={3}>
-                                    <TextField
-                                        fullWidth
-                                        label="Host"
-                                        name="host"
-                                        value={searchParams.host}
-                                        onChange={handleSearchChange}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">🏢</InputAdornment>
-                                            )                                        
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={3}>
-                                    <TextField
-                                        fullWidth
-                                        label="Grade"
-                                        name="grade"
-                                        value={searchParams.grade}
-                                        onChange={handleSearchChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={3}>
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleSearch}
-                                        sx={{ height: '100%' }}
-                                    >
-                                        Search
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={12} sm={3}>
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleClearSearch}
-                                        sx={{ height: '100%' }}
-                                    >
-                                        Clear Search
-                                    </Button>
-                                </Grid>
-                            </Grid>
+                        <Box
+                            sx={{
+                                mb: 4,
+                                display: 'flex',
+                                gap: 2,
+                                flexWrap: 'nowrap',
+                                justifyContent: 'space-between',
+                                overflowX: 'auto', // Handle smaller screens with horizontal scroll
+                                '& > *': { minWidth: '150px' } // Minimum width for all items
+                            }}
+                        >
+                            <TextField
+                                label="Date"
+                                name="date"
+                                type="date"
+                                value={searchParams.date}
+                                onChange={handleSearchChange}
+                                InputLabelProps={{ shrink: true }}
+                                sx={{ flex: 1 }}
+                            />
+                            <TextField
+                                label="Location"
+                                name="location"
+                                value={searchParams.location}
+                                onChange={handleSearchChange}
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="end">📍</InputAdornment>,
+                                }}
+                                sx={{ flex: 1 }}
+                            />
+                            <TextField
+                                label="Host"
+                                name="host"
+                                value={searchParams.host}
+                                onChange={handleSearchChange}
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="end">🏢</InputAdornment>,
+                                }}
+                                sx={{ flex: 1 }}
+                            />
+                            <TextField
+                                label="Grade"
+                                name="grade"
+                                value={searchParams.grade}
+                                onChange={handleSearchChange}
+                                sx={{ flex: 1 }}
+                            />
+                            <Button
+                                variant="contained"
+                                onClick={handleSearch}
+                                sx={{ height: '50px', borderRadius: '20px' }}
+                            >
+                                Search
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={handleClearSearch}
+                                sx={{ height: '50px', borderRadius: '20px' }}
+                            >
+                                Clear Search
+                            </Button>
                         </Box>
+
 
                         <Grid container spacing={3}>
                             {filteredEvents.map((event) => (

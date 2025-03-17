@@ -61,7 +61,7 @@ const PastEventForm = ({ onClose }) => {
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ p: 3, backgroundColor: 'white' }}>
             <Typography variant="h6" gutterBottom>
                 Share Past Event
             </Typography>
