@@ -30,6 +30,7 @@ import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
 import ReviewList from '../components/ReviewList';
 import ImageGallery from '../components/ImageGallery';
+import { LocationOn, Event, School, Group } from '@mui/icons-material';
 
 const PastEventsPage = () => {
     const { user } = useUser();
@@ -174,18 +175,18 @@ const PastEventsPage = () => {
             <Navbar />
             <Container
                         maxWidth="xl"  // Increase to 'xl' for larger screens (extra-large)
-                        sx={{
-                            py: 12,
-                            ...(loading && {
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                sx={{
+                    py: 12,
+                    ...(loading && {
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                             minHeight: 'calc(100vh - 64px - 96px)',
                             }),
                             width: '95%', // Set a custom width
                             maxWidth: '1200px', // Or, use a specific maxWidth
-                        }}
-                        >
+                }}
+            >
                 {loading ? (
                     <Spinner />
                 ) : (
@@ -210,8 +211,8 @@ const PastEventsPage = () => {
                                         onChange={handleSearchChange}
                                         InputLabelProps={{
                                         shrink: true,
-                                        }}
-                                        InputProps={{
+                                        }}                                      
+                                          InputProps={{
                                         endAdornment: <InputAdornment position="end">📅</InputAdornment>,
                                         }}
                                         sx={{
@@ -226,9 +227,9 @@ const PastEventsPage = () => {
                                             '& .MuiInputBase-input': {
                                               padding: '10px', // Adjust padding if needed
                                             },
-                                          }}
+                                        }}
                                     />
-                                    </Grid>
+                                </Grid>
 
                                    {/* Location Input */}
                                     <Grid item xs={12} sm={2} md={2}>
@@ -255,7 +256,7 @@ const PastEventsPage = () => {
                                             },
                                           }}
                                     />
-                                    </Grid>
+                                </Grid>
 
                                     {/* Host Input */}
                                     <Grid item xs={12} sm={2} md={2}>
@@ -280,9 +281,9 @@ const PastEventsPage = () => {
                                             '& .MuiInputBase-input': {
                                               padding: '10px', // Adjust padding if needed
                                             },
-                                          }}
+                                        }}
                                     />
-                                    </Grid>
+                                </Grid>
 
                                     {/* Grade Input */}
                                     <Grid item xs={12} sm={2} md={2}>
@@ -306,7 +307,7 @@ const PastEventsPage = () => {
                                             },
                                           }}
                                     />
-                                    </Grid>
+                                </Grid>
 
                                     {/* Buttons in Same Row */}
                                     <Grid item xs={12} sm={2} md={4} display="flex" justifyContent="space-between">
@@ -342,9 +343,9 @@ const PastEventsPage = () => {
                                     >
                                         Clear
                                     </Button>
-                                    </Grid>
                                 </Grid>
-                                </Box>
+                            </Grid>
+                        </Box>
 
 
                         {/* Display no results message if no events match */}
@@ -354,27 +355,34 @@ const PastEventsPage = () => {
                             </Box>
                         )}
 
-                        <Grid container spacing={3}>
+                        <Grid container spacing={4} sx={{ mt: 2 }}>
                             {filteredEvents.map((event) => (
                                 <Grid item xs={12} sm={6} md={4} key={event._id}>
-                                    <Card sx={{
+                                    <Card 
+                                        sx={{ 
                                         height: '100%',
                                         display: 'flex',
                                         flexDirection: 'column',
+                                            transition: 'transform 0.2s, box-shadow 0.2s',
                                         '&:hover': {
                                             transform: 'translateY(-4px)',
-                                            boxShadow: 6,
-                                            transition: 'all 0.3s ease-in-out'
-                                        }
-                                    }}>
-                                        <Box sx={{
-                                            position: 'relative',
-                                            pt: '56.25%',
+                                                boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+                                            },
+                                            borderRadius: '16px',
                                             overflow: 'hidden',
-                                            borderRadius: '12px 12px 0 0'
-                                        }}>
-                                            {event.images && event.images.length > 0 && (
-                                                <Box sx={{
+                                        }}
+                                    >
+                                        <Box 
+                                            sx={{ 
+                                                position: 'relative',
+                                                paddingTop: '56.25%',
+                                                cursor: 'pointer',
+                                                overflow: 'hidden',
+                                                backgroundColor: '#ffffff'
+                                            }}
+                                        >
+                                            <Box
+                                                sx={{
                                                     position: 'absolute',
                                                     top: 0,
                                                     left: 0,
@@ -383,126 +391,169 @@ const PastEventsPage = () => {
                                                     display: 'grid',
                                                     gap: '4px',
                                                     padding: '4px',
-                                                    gridTemplateColumns: event.images.length === 1 ? '1fr' :
-                                                        event.images.length === 2 ? '1fr 1fr' :
-                                                            event.images.length === 3 ? '2fr 1fr' :
-                                                                '1fr 1fr',
-                                                    gridTemplateRows: event.images.length <= 2 ? '1fr' : '1fr 1fr',
-                                                    bgcolor: 'background.paper'
-                                                }}>
-                                                    {event.images.slice(0, 4).map((image, index) => (
-                                                        <Box
-                                                            key={index}
-                                                            sx={{
-                                                                position: 'relative',
+                                                    gridTemplateColumns: event.images.length === 1 
+                                                        ? '1fr' 
+                                                        : event.images.length === 2 
+                                                        ? '2fr 1fr' 
+                                                        : event.images.length === 3 
+                                                        ? '2fr 1fr' 
+                                                        : '2fr 1fr',
+                                                    gridTemplateRows: event.images.length <= 2 
+                                                        ? '1fr' 
+                                                        : event.images.length === 3 
+                                                        ? '1fr 1fr' 
+                                                        : '1fr 1fr',
+                                                    gridAutoFlow: 'dense'
+                                                }}
+                                                onClick={() => handleImageClick(event.images, 0)}
+                                            >
+                                                {/* Main large image */}
+                                                <Box
+                                                    sx={{
+                                                        position: 'relative',
+                                                        gridColumn: '1 / 2',
+                                                        gridRow: '1 / 3',
+                                                        overflow: 'hidden',
+                                                        borderRadius: '4px',
+                                                        '&:hover img': {
+                                                            transform: 'scale(1.05)'
+                                                        }
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={event.images[0]}
+                                                        alt={`Event main`}
+                                                        style={{
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            objectFit: 'cover',
+                                                            transition: 'transform 0.3s ease-in-out'
+                                                        }}
+                                                    />
+                                                </Box>
+
+                                                {/* Side images */}
+                                                {event.images.slice(1, 3).map((image, index) => (
+                                                    <Box
+                                                        key={index}
+                                                        sx={{
+                                                            position: 'relative',
+                                                            gridColumn: '2 / 3',
+                                                            gridRow: index === 0 ? '1 / 2' : '2 / 3',
+                                                            overflow: 'hidden',
+                                                            borderRadius: '4px',
+                                                            '&:hover img': {
+                                                                transform: 'scale(1.05)'
+                                                            }
+                                                        }}
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            alt={`Event ${index + 2}`}
+                                                            style={{
                                                                 width: '100%',
                                                                 height: '100%',
-                                                                gridColumn: event.images.length === 3 && index === 0 ? 'span 2' : 'span 1',
-                                                                overflow: 'hidden',
-                                                                borderRadius: '8px',
-                                                                cursor: 'pointer',
-                                                                '&:hover': {
-                                                                    '& .MuiCardMedia-root': {
-                                                                        transform: 'scale(1.1)',
-                                                                        transition: 'transform 0.3s ease-in-out'
-                                                                    },
-                                                                    '&::after': {
-                                                                        content: '""',
-                                                                        position: 'absolute',
-                                                                        top: 0,
-                                                                        left: 0,
-                                                                        right: 0,
-                                                                        bottom: 0,
-                                                                        backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                                                                        transition: 'background-color 0.3s ease-in-out'
-                                                                    }
-                                                                }
+                                                                objectFit: 'cover',
+                                                                transition: 'transform 0.3s ease-in-out'
                                                             }}
-                                                            onClick={() => handleImageClick(event.images, index)}
-                                                        >
-                                                            <CardMedia
-                                                                component="img"
-                                                                image={image}
-                                                                alt={`${event.schoolName} - Image ${index + 1}`}
+                                                        />
+                                                        {index === 1 && event.images.length > 3 && (
+                                                            <Box
                                                                 sx={{
                                                                     position: 'absolute',
                                                                     top: 0,
                                                                     left: 0,
-                                                                    width: '100%',
-                                                                    height: '100%',
-                                                                    objectFit: 'cover',
-                                                                    transition: 'transform 0.3s ease-in-out'
+                                                                    right: 0,
+                                                                    bottom: 0,
+                                                                    bgcolor: 'rgba(0, 0, 0, 0.5)',
+                                                                    color: 'white',
+                                                                    display: 'flex',
+                                                                    alignItems: 'center',
+                                                                    justifyContent: 'center',
+                                                                    fontSize: '1.25rem',
+                                                                    fontWeight: 'bold',
+                                                                    cursor: 'pointer',
+                                                                    '&:hover': {
+                                                                        bgcolor: 'rgba(0, 0, 0, 0.6)'
+                                                                    }
                                                                 }}
-                                                            />
-
-                                                            {index === 3 && event.images.length > 4 && (
-                                                                <Box
-                                                                    sx={{
-                                                                        position: 'absolute',
-                                                                        top: 0,
-                                                                        left: 0,
-                                                                        width: '100%',
-                                                                        height: '100%',
-                                                                        display: 'flex',
-                                                                        alignItems: 'center',
-                                                                        justifyContent: 'center',
-                                                                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                                                                        color: 'white',
-                                                                        fontSize: '1.5rem',
-                                                                        fontWeight: 'bold',
-                                                                        cursor: 'pointer',
-                                                                        '&:hover': {
-                                                                            backgroundColor: 'rgba(0, 0, 0, 0.8)'
-                                                                        }
-                                                                    }}
-                                                                >
-                                                                    +{event.images.length - 4}
-                                                                </Box>
-                                                            )}
-                                                        </Box>
-                                                    ))}
-                                                </Box>
-                                            )}
+                                                            >
+                                                                +{event.images.length - 3}
+                                                            </Box>
+                                                        )}
+                                                    </Box>
+                                                ))}
+                                            </Box>
                                         </Box>
-                                        <CardContent sx={{ flexGrow: 1 }}>
-                                            <Typography variant="h5" component="h2" gutterBottom>
+
+                                        <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                                            <Typography 
+                                                variant="h5" 
+                                                component="h2" 
+                                                gutterBottom 
+                                                sx={{ 
+                                                    fontWeight: 'bold',
+                                                    mb: 1,
+                                                    color: 'text.primary'
+                                                }}
+                                            >
                                                 {event.schoolName}
                                             </Typography>
-                                            <Typography color="textSecondary" paragraph>
-                                                {event.location}
-                                            </Typography>
-                                            <Box sx={{ mb: 2 }}>
-                                                <Chip label={`Grade ${event.grade}`} sx={{ mr: 1 }} />
-                                                <Chip label={event.subject} />
-                                            </Box>
-                                            <Typography variant="subtitle1" color="primary" sx={{ mb: 2 }}>
+
+                                            <Typography 
+                                                variant="subtitle1" 
+                                                sx={{ 
+                                                    mb: 2,
+                                                    color: '#0277bd', // Blue color for organization
+                                                    fontWeight: 500,
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: 1
+                                                }}
+                                            >
+                                                <Group sx={{ fontSize: 20 }} />
                                                 Hosted by: {event.organizationName}
-                                            </Typography>
-                                            <Typography variant="body2" paragraph>
-                                                Date: {format(new Date(event.seminarDate), 'MMMM dd, yyyy')}
                                             </Typography>
 
                                             <Divider sx={{ my: 2 }} />
 
-                                            <Box sx={{ mt: 2 }}>
-                                                <Typography variant="subtitle1" gutterBottom>
-                                                    Average Rating:
-                                                </Typography>
-                                                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                                                    <Rating
-                                                        value={calculateAverageRating(event.reviews)}
-                                                        readOnly
-                                                        precision={0.5}
-                                                    />
-                                                    <Typography variant="body2" sx={{ ml: 1 }}>
-                                                        ({event.reviews?.length || 0} reviews)
+                                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <Event sx={{ color: 'primary.main' }} />
+                                                    <Typography variant="body2">
+                                                        {format(new Date(event.seminarDate), 'MMMM dd, yyyy')}
+                                                    </Typography>
+                                                </Box>
+
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <LocationOn sx={{ color: 'primary.main' }} />
+                                                    <Typography variant="body2">
+                                                        {event.location}
+                                                    </Typography>
+                                                </Box>
+
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <School sx={{ color: 'primary.main' }} />
+                                                    <Typography variant="body2">
+                                                        Grade {event.grade}
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+
+                                            <Divider sx={{ my: 2 }} />
+
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <Rating value={calculateAverageRating(event.reviews)} precision={0.5} readOnly size="small" />
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        ({event.reviews?.length || 0})
                                                     </Typography>
                                                 </Box>
                                                 <Button
                                                     variant="outlined"
+                                                    size="small"
                                                     startIcon={<CommentIcon />}
                                                     onClick={() => handleAddReview(event)}
-                                                    sx={{ mt: 1 }}
                                                 >
                                                     Add Review
                                                 </Button>
@@ -511,16 +562,15 @@ const PastEventsPage = () => {
                                             {event.reviews && event.reviews.length > 0 && (
                                                 <Box sx={{ mt: 2 }}>
                                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                                                        <Typography variant="subtitle1">
-                                                            Recent Reviews:
+                                                        <Typography variant="subtitle2" color="text.secondary">
+                                                            Recent Reviews
                                                         </Typography>
                                                         <Button
-                                                            variant="text"
                                                             size="small"
                                                             onClick={() => handleViewAllReviews(event)}
                                                             sx={{ textTransform: 'none' }}
                                                         >
-                                                            View All ({event.reviews.length})
+                                                            View All
                                                         </Button>
                                                     </Box>
                                                     <ReviewList reviews={event.reviews.slice(0, 2)} />
@@ -586,7 +636,7 @@ const PastEventsPage = () => {
                             </Typography>
                             <IconButton onClick={() => setAllReviewsDialog(false)}>
                                 <CloseIcon />
-                            </IconButton>
+                    </IconButton>
                         </Box>
                     </DialogTitle>
                     <DialogContent>
@@ -603,7 +653,7 @@ const PastEventsPage = () => {
                                 </Typography>
                             </Box>
                             <ReviewList reviews={selectedEvent?.reviews} />
-                        </Box>
+                    </Box>
                     </DialogContent>
                 </Dialog>
             </Container>
