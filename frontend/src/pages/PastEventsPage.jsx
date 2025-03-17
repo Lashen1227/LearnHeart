@@ -43,23 +43,18 @@ const PastEventsPage = () => {
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
     const [loading, setLoading] = useState(true);
     const [noResults, setNoResults] = useState(false);
-
-    // New states for image preview
     const [galleryOpen, setGalleryOpen] = useState(false);
     const [selectedEventImages, setSelectedEventImages] = useState([]);
     const [initialImageIndex, setInitialImageIndex] = useState(0);
-
-    // State for success message
     const [successMessage, setSuccessMessage] = useState(false);
-
-    // Add new state for reviews dialog
     const [reviewsDialog, setReviewsDialog] = useState(false);
+    const [warningMessage, setWarningMessage] = useState(false); // New state for warning message
 
     const [searchParams, setSearchParams] = useState({
         date: '',
         location: '',
         host: '',
-        grade: ''
+        grade: '',
     });
 
     useEffect(() => {
@@ -88,6 +83,12 @@ const PastEventsPage = () => {
     };
 
     const handleSearch = () => {
+        // Check if all search fields are empty
+        if (!searchParams.date && !searchParams.location && !searchParams.host && !searchParams.grade) {
+            setWarningMessage(true); // Show warning message
+            return; // Exit the function early
+        }
+
         let filtered = events;
 
         if (searchParams.date) {
@@ -123,7 +124,7 @@ const PastEventsPage = () => {
             date: '',
             location: '',
             host: '',
-            grade: ''
+            grade: '',
         });
         setFilteredEvents(events);
         setNoResults(false);
@@ -136,7 +137,6 @@ const PastEventsPage = () => {
 
     const handleSubmitReview = async () => {
         try {
-            // Get user information from Clerk
             const userFullName = user.fullName || `${user.firstName} ${user.lastName}`.trim();
             const reviewData = {
                 ...newReview,
@@ -153,7 +153,7 @@ const PastEventsPage = () => {
             setReviewDialog(false);
             setNewReview({ rating: 0, comment: '' });
             setSuccessMessage(true);
-            fetchEvents(); // Refresh events
+            fetchEvents();
         } catch (error) {
             console.error('Error submitting review:', error);
         }
@@ -165,7 +165,6 @@ const PastEventsPage = () => {
         return sum / reviews.length;
     };
 
-    // Update the handleImageClick function
     const handleImageClick = (images, clickedImageIndex) => {
         setSelectedEventImages(images);
         setInitialImageIndex(clickedImageIndex);
@@ -210,6 +209,22 @@ const PastEventsPage = () => {
                     </Alert>
                 </Snackbar>
 
+                {/* Warning Message Snackbar */}
+                <Snackbar
+                    open={warningMessage}
+                    autoHideDuration={3000}
+                    onClose={() => setWarningMessage(false)}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert
+                        onClose={() => setWarningMessage(false)}
+                        severity="warning"
+                        sx={{ width: '100%' }}
+                    >
+                        Please fill at least one search field before searching.
+                    </Alert>
+                </Snackbar>
+
                 {loading ? (
                     <Spinner />
                 ) : (
@@ -217,11 +232,11 @@ const PastEventsPage = () => {
                         <Box
                             sx={{
                                 mb: 4,
-                                backgroundColor: '#f8f9ff',
+                                backgroundColor: '#5EA9A9',
                                 p: 3,
                                 borderRadius: '16px',
                                 boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                                border: '1px solid #e0e7ff'
+                                border: '1px solid #e0e7ff',
                             }}
                         >
                             <Typography variant="h6" sx={{ mb: 3, color: '#1a237e', fontWeight: 600 }}>
@@ -230,9 +245,11 @@ const PastEventsPage = () => {
                             <Grid container spacing={3} alignItems="center">
                                 {/* Date Input */}
                                 <Grid item xs={12} sm={6} md={3}>
+                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1a237e', fontWeight: 600 }}>
+                                        Date
+                                    </Typography>
                                     <TextField
                                         fullWidth
-                                        label="Date"
                                         name="date"
                                         type="date"
                                         value={searchParams.date}
@@ -254,16 +271,18 @@ const PastEventsPage = () => {
                                                 '&:hover fieldset': {
                                                     borderColor: '#1a237e',
                                                 },
-                                            }
+                                            },
                                         }}
                                     />
                                 </Grid>
 
                                 {/* Location Input */}
                                 <Grid item xs={12} sm={6} md={3}>
+                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1a237e', fontWeight: 600 }}>
+                                        Location
+                                    </Typography>
                                     <TextField
                                         fullWidth
-                                        label="Location"
                                         name="location"
                                         value={searchParams.location}
                                         onChange={handleSearchChange}
@@ -281,16 +300,18 @@ const PastEventsPage = () => {
                                                 '&:hover fieldset': {
                                                     borderColor: '#1a237e',
                                                 },
-                                            }
+                                            },
                                         }}
                                     />
                                 </Grid>
 
                                 {/* Host Input */}
                                 <Grid item xs={12} sm={6} md={3}>
+                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1a237e', fontWeight: 600 }}>
+                                        Host Organization
+                                    </Typography>
                                     <TextField
                                         fullWidth
-                                        label="Host Organization"
                                         name="host"
                                         value={searchParams.host}
                                         onChange={handleSearchChange}
@@ -308,16 +329,18 @@ const PastEventsPage = () => {
                                                 '&:hover fieldset': {
                                                     borderColor: '#1a237e',
                                                 },
-                                            }
+                                            },
                                         }}
                                     />
                                 </Grid>
 
                                 {/* Grade Input */}
                                 <Grid item xs={12} sm={6} md={3}>
+                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1a237e', fontWeight: 600 }}>
+                                        Grade
+                                    </Typography>
                                     <TextField
                                         fullWidth
-                                        label="Grade"
                                         name="grade"
                                         value={searchParams.grade}
                                         onChange={handleSearchChange}
@@ -335,7 +358,7 @@ const PastEventsPage = () => {
                                                 '&:hover fieldset': {
                                                     borderColor: '#1a237e',
                                                 },
-                                            }
+                                            },
                                         }}
                                     />
                                 </Grid>
@@ -353,8 +376,8 @@ const PastEventsPage = () => {
                                                 px: 4,
                                                 '&:hover': {
                                                     borderColor: '#0d47a1',
-                                                    backgroundColor: 'rgba(26, 35, 126, 0.04)'
-                                                }
+                                                    backgroundColor: 'rgba(26, 35, 126, 0.04)',
+                                                },
                                             }}
                                         >
                                             Clear
@@ -364,11 +387,11 @@ const PastEventsPage = () => {
                                             onClick={handleSearch}
                                             sx={{
                                                 borderRadius: '10px',
-                                                backgroundColor: '#1a237e',
+                                                backgroundColor: '#F97316',
                                                 px: 4,
                                                 '&:hover': {
-                                                    backgroundColor: '#0d47a1'
-                                                }
+                                                    backgroundColor: '#ea580c',
+                                                },
                                             }}
                                         >
                                             Search
