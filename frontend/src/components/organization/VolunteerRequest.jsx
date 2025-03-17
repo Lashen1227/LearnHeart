@@ -65,11 +65,13 @@ const VolunteerRequest = ({ clarkUser }) => {
       </Box>
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-          <CircularProgress color="primary" />
+          <CircularProgress size={40} />
         </Box>
       ) : requests.length === 0 ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-          <Typography variant="body1">No Requests Found</Typography>
+          <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
+            No volunteer requests found.
+          </Typography>
         </Box>
       ) : (
         <Box
