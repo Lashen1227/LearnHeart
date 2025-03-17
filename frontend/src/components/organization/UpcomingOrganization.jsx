@@ -7,7 +7,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 const SessionsList = ({ title, sessions, handleComplete, isLoading, onRefresh }) => {
   return (
-    <Paper elevation={3} sx={{ bgcolor: "#4db6ac", p: 3, borderRadius: 2, maxHeight: 610, overflowY: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
+    <Paper elevation={3} sx={{ bgcolor: "#4db6ac", p: 3, borderRadius: 2, maxHeight: 800, overflowY: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={0}>
         <Typography variant="h6" sx={{ textAlign: "center", color: "black" }}>
           {title}
@@ -66,7 +66,7 @@ const SessionsList = ({ title, sessions, handleComplete, isLoading, onRefresh })
               </Card>
             ))
           ) : (
-            <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold">
+            <Typography variant="body2" color="text.secondary" textAlign="center" fontWeight="bold" sx={{ height: 215, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               No upcoming seminars found.
             </Typography>
           )}

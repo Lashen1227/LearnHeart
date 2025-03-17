@@ -1,5 +1,6 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Link } from "react-router-dom";
 import CardSliderImage1 from "../../assets/images/home-img/CardSliderImage1.jpg";
 import CardSliderImage2 from "../../assets/images/home-img/CardSliderImage2.jpeg";
 import CardSliderImage3 from "../../assets/images/home-img/CardSliderImage3.jpg";
@@ -36,17 +37,25 @@ function CardSlider() {
         className="mt-4"
       >
         {/* Carousel Items */}
-        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
-          <img src={CardSliderImage1} alt="Feature 1" className="w-full h-64" />
+        <div className="p-6 mx-2 transition-transform duration-300 border rounded-lg shadow-lg hover:scale-105 h-80 border-custom-blue">
+          <Link to={"/past-events"}>
+            <img src={CardSliderImage1} alt="Feature 1" className="w-full h-64" />
+          </Link>
         </div>
-        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
-          <img src={CardSliderImage2} alt="Feature 2" className="w-full h-64" />
+        <div className="p-6 mx-2 transition-transform duration-300 border rounded-lg shadow-lg hover:scale-105 h-80 border-custom-blue">
+          <Link to={"/past-events"}>
+            <img src={CardSliderImage2} alt="Feature 2" className="w-full h-64" />
+          </Link>
         </div>
-        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
-          <img src={CardSliderImage3} alt="Feature 3" className="w-full h-64" />
+        <div className="p-6 mx-2 transition-transform duration-300 border rounded-lg shadow-lg hover:scale-105 h-80 border-custom-blue">
+          <Link to={"/past-events"}>
+            <img src={CardSliderImage3} alt="Feature 3" className="w-full h-64" />
+          </Link>
         </div>
-        <div className="p-6 mx-2 transition-transform duration-300 rounded-lg shadow-lg hover:scale-105 h-80">
-          <img src={CardSliderImage4} alt="Feature 4" className="w-full h-64" />
+        <div className="p-6 mx-2 transition-transform duration-300 border rounded-lg shadow-lg hover:scale-105 h-80 border-custom-blue">
+          <Link to={"/past-events"}>
+            <img src={CardSliderImage4} alt="Feature 4" className="w-full h-64" />
+          </Link>
         </div>
       </Carousel>
     </div>

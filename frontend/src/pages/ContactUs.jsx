@@ -5,6 +5,11 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import image6 from "../assets/images/contactUs-img/image6.png"; // Adjust the path if necessary
 
+// Load environment variables
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
 function ContactUs() {
   const [formData, setFormData] = useState({
     name: "",
@@ -27,15 +32,15 @@ function ContactUs() {
 
     emailjs
       .send(
-        "service_y7zh56b", // EmailJS Service ID
-        "template_d4enkg4", // EmailJS Template ID
+        EMAILJS_SERVICE_ID, // Service ID from env
+        EMAILJS_TEMPLATE_ID, // Template ID from env
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
           reply_to: formData.email,
         },
-        "CPJT6lQkVb1cmkQYj" // EmailJS Public Key
+        EMAILJS_PUBLIC_KEY // Public Key from env
       )
       .then(
         (response) => {
