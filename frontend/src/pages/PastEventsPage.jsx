@@ -191,114 +191,109 @@ const PastEventsPage = () => {
                 ) : (
                     <>
                        <Box
-                            sx={{
-                                mb: 4,
-                                backgroundColor: '#5EA9A9',
-                                p: 2,
-                                borderRadius: '8px',
-                            }}
-                            >
-                            <Grid container spacing={2} alignItems="center">
-                                {/* Date Input */}
-                                <Grid item xs={12} sm={3} md={3}>
-                                <TextField
-                                    fullWidth
-                                    label="Date"
-                                    name="date"
-                                    type="date"
-                                    value={searchParams.date}
-                                    onChange={handleSearchChange}
-                                    InputLabelProps={{
-                                    shrink: true
-                                    }}
-                                    InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">📅</InputAdornment>
-                                    )
-                                    }}
-                                />
-                                </Grid>
-
-                                {/* Location Input */}
-                                <Grid item xs={12} sm={3} md={3}>
-                                <TextField
-                                    fullWidth
-                                    label="Location"
-                                    name="location"
-                                    value={searchParams.location}
-                                    onChange={handleSearchChange}
-                                    InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">📍</InputAdornment>
-                                    )
-                                    }}
-                                />
-                                </Grid>
-
-                                {/* Host Input */}
-                                <Grid item xs={12} sm={3} md={3}>
-                                <TextField
-                                    fullWidth
-                                    label="Host"
-                                    name="host"
-                                    value={searchParams.host}
-                                    onChange={handleSearchChange}
-                                    InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">🏢</InputAdornment>
-                                    )
-                                    }}
-                                />
-                                </Grid>
-
-                                {/* Grade Input */}
-                                <Grid item xs={12} sm={3} md={3}>
-                                <TextField
-                                    fullWidth
-                                    label="Grade"
-                                    name="grade"
-                                    value={searchParams.grade}
-                                    onChange={handleSearchChange}
-                                />
-                                </Grid>
-
-                                {/* Buttons in Same Row */}
-                                <Grid item xs={12} sm={3} md={3} display="flex" justifyContent="space-between">
-                                <Button
-                                    variant="contained"
-                                    onClick={handleSearch}
-                                    sx={{
-                                    width: '48%',
-                                    backgroundColor: '#F97316',
-                                    '&:hover': {
-                                        backgroundColor: '#ea580c',
-                                    },
-                                    borderRadius: '5px',
-                                    }}
-                                    aria-label="Search events"
+                                sx={{
+                                    mb: 4,
+                                    backgroundColor: '#5EA9A9',
+                                    p: 2,
+                                    borderRadius: '8px',
+                                }}
                                 >
-                                    🔍
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    onClick={handleClearSearch}
-                                    sx={{
-                                    width: '48%',
-                                    color: '#fff',
-                                    borderColor: '#fff',
-                                    '&:hover': {
-                                        backgroundColor: '#e0e0e0',
-                                        color: '#000',
-                                    },
-                                    borderRadius: '5px',
-                                    }}
-                                    aria-label="Clear search"
-                                >
-                                    Clear
-                                </Button>
+                                <Grid container spacing={5} alignItems="center">
+                                    {/* Date Input */}
+                                    <Grid item xs={12} sm={2} md={2}>
+                                    <TextField
+                                        fullWidth
+                                        label="Date"
+                                        name="date"
+                                        type="date"
+                                        value={searchParams.date}
+                                        onChange={handleSearchChange}
+                                        InputLabelProps={{
+                                        shrink: true,
+                                        }}
+                                        InputProps={{
+                                        endAdornment: <InputAdornment position="end">📅</InputAdornment>,
+                                        }}
+                                    />
+                                    </Grid>
+
+                                    {/* Location Input */}
+                                    <Grid item xs={12} sm={2} md={2}>
+                                    <TextField
+                                        fullWidth
+                                        label="Location"
+                                        name="location"
+                                        value={searchParams.location}
+                                        onChange={handleSearchChange}
+                                        InputProps={{
+                                        endAdornment: <InputAdornment position="end">📍</InputAdornment>,
+                                        }}
+                                    />
+                                    </Grid>
+
+                                    {/* Host Input */}
+                                    <Grid item xs={12} sm={2} md={2}>
+                                    <TextField
+                                        fullWidth
+                                        label="Host"
+                                        name="host"
+                                        value={searchParams.host}
+                                        onChange={handleSearchChange}
+                                        InputProps={{
+                                        endAdornment: <InputAdornment position="end">🏢</InputAdornment>,
+                                        }}
+                                    />
+                                    </Grid>
+
+                                    {/* Grade Input */}
+                                    <Grid item xs={12} sm={2} md={2}>
+                                    <TextField
+                                        fullWidth
+                                        label="Grade"
+                                        name="grade"
+                                        value={searchParams.grade}
+                                        onChange={handleSearchChange}
+                                    />
+                                    </Grid>
+
+                                    {/* Buttons in Same Row */}
+                                    <Grid item xs={12} sm={2} md={4} display="flex" justifyContent="space-between">
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleSearch}
+                                        sx={{
+                                        width: '48%',
+                                        backgroundColor: '#F97316',
+                                        '&:hover': {
+                                            backgroundColor: '#ea580c',
+                                        },
+                                        borderRadius: '5px',
+                                        }}
+                                        aria-label="Search events"
+                                    >
+                                        🔍
+                                    </Button>
+                                    <Button
+                                        variant="outlined"
+                                        onClick={handleClearSearch}
+                                        sx={{
+                                        width: '48%',
+                                        color: '#fff',
+                                        borderColor: '#fff',
+                                        '&:hover': {
+                                            backgroundColor: '#e0e0e0',
+                                            color: '#000',
+                                        },
+                                        borderRadius: '5px',
+                                        }}
+                                        aria-label="Clear search"
+                                    >
+                                        Clear
+                                    </Button>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                            </Box>
+                                </Box>
+
 
                         {/* Display no results message if no events match */}
                         {noResults && (
