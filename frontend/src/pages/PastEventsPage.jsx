@@ -176,6 +176,7 @@ const PastEventsPage = () => {
                 ) : (
                     <>
                         <Box sx={{ mb: 4 }}>
+                            
                             {/* Search Bar */}
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={3}>
@@ -188,10 +189,10 @@ const PastEventsPage = () => {
                                         onChange={handleSearchChange}
                                         InputLabelProps={{
                                             shrink: true
-                                        }}                                      
-                                          InputProps={{
+                                        }}
+                                        InputProps={{
                                             endAdornment: (
-                                             <InputAdornment position="end">📅</InputAdornment>
+                                                <InputAdornment position="end">📅</InputAdornment>
                                             )
                                         }}
                                     />
@@ -206,8 +207,8 @@ const PastEventsPage = () => {
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">📍</InputAdornment>
-                                            )                                      
-                                          }}
+                                            )
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
@@ -220,7 +221,7 @@ const PastEventsPage = () => {
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">🏢</InputAdornment>
-                                            )                                        
+                                            )
                                         }}
                                     />
                                 </Grid>
@@ -256,7 +257,7 @@ const PastEventsPage = () => {
 
                         <Grid container spacing={3}>
                             {filteredEvents.map((event) => (
-                                <Grid item xs={12} sm={6} md={3} key={event._id}>
+                                <Grid item xs={12} sm={6} md={4} key={event._id}>
                                     <Card sx={{
                                         height: '100%',
                                         display: 'flex',
@@ -473,8 +474,8 @@ const PastEventsPage = () => {
                 />
 
                 {/* All Reviews Dialog */}
-                <Dialog 
-                    open={allReviewsDialog} 
+                <Dialog
+                    open={allReviewsDialog}
                     onClose={() => setAllReviewsDialog(false)}
                     maxWidth="md"
                     fullWidth
