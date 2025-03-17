@@ -19,7 +19,8 @@ import {
     Chip,
     Divider,
     IconButton,
-    InputAdornment
+    InputAdornment,
+    Alert
 } from '@mui/material';
 import { format } from 'date-fns';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -39,6 +40,7 @@ const PastEventsPage = () => {
     const [allReviewsDialog, setAllReviewsDialog] = useState(false);
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
     const [loading, setLoading] = useState(true);
+    const [noResults, setNoResults] = useState(false); // New state for no results message
 
     // New states for image preview
     const [galleryOpen, setGalleryOpen] = useState(false);
@@ -79,6 +81,8 @@ const PastEventsPage = () => {
 
     const handleSearch = () => {
         let filtered = events;
+
+        // Apply filters only if the search parameter is not empty
         if (searchParams.date) {
             filtered = filtered.filter((event) =>
                 format(new Date(event.seminarDate), 'yyyy-MM-dd').includes(searchParams.date)
@@ -99,6 +103,14 @@ const PastEventsPage = () => {
                 event.grade.toLowerCase().includes(searchParams.grade.toLowerCase())
             );
         }
+
+        // Check if no events match the search criteria
+        if (filtered.length === 0) {
+            setNoResults(true); // Show no results message
+        } else {
+            setNoResults(false); // Hide no results message
+        }
+
         setFilteredEvents(filtered);
     };
 
@@ -110,6 +122,7 @@ const PastEventsPage = () => {
             grade: ''
         });
         setFilteredEvents(events); // Reset to show all events
+        setNoResults(false); // Hide no results message
     };
 
     const handleAddReview = (event) => {
@@ -157,7 +170,7 @@ const PastEventsPage = () => {
     };
 
     return (
-        <div className='bg-custom-page'>
+        <div>
             <Navbar />
             <Container
                 maxWidth="lg"
@@ -176,6 +189,7 @@ const PastEventsPage = () => {
                 ) : (
                     <>
                         <Box sx={{ mb: 4 }}>
+                            
                             {/* Search Bar */}
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={3}>
@@ -188,10 +202,10 @@ const PastEventsPage = () => {
                                         onChange={handleSearchChange}
                                         InputLabelProps={{
                                             shrink: true
-                                        }}                                      
-                                          InputProps={{
+                                        }}
+                                        InputProps={{
                                             endAdornment: (
-                                             <InputAdornment position="end"></InputAdornment>
+                                                <InputAdornment position="end">📅</InputAdornment>
                                             )
                                         }}
                                     />
@@ -206,8 +220,8 @@ const PastEventsPage = () => {
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">📍</InputAdornment>
-                                            )                                      
-                                          }}
+                                            )
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
@@ -220,7 +234,7 @@ const PastEventsPage = () => {
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">🏢</InputAdornment>
-                                            )                                        
+                                            )
                                         }}
                                     />
                                 </Grid>
@@ -254,9 +268,16 @@ const PastEventsPage = () => {
                             </Grid>
                         </Box>
 
+                        {/* Display no results message if no events match */}
+                        {noResults && (
+                            <Box sx={{ mb: 4 }}>
+                                <Alert severity="info">No events match your search criteria.</Alert>
+                            </Box>
+                        )}
+
                         <Grid container spacing={3}>
                             {filteredEvents.map((event) => (
-                                <Grid item xs={12} sm={6} md={3} key={event._id}>
+                                <Grid item xs={12} sm={6} md={4} key={event._id}>
                                     <Card sx={{
                                         height: '100%',
                                         display: 'flex',
@@ -473,8 +494,8 @@ const PastEventsPage = () => {
                 />
 
                 {/* All Reviews Dialog */}
-                <Dialog 
-                    open={allReviewsDialog} 
+                <Dialog
+                    open={allReviewsDialog}
                     onClose={() => setAllReviewsDialog(false)}
                     maxWidth="md"
                     fullWidth
