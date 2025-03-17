@@ -19,7 +19,8 @@ import {
     Chip,
     Divider,
     IconButton,
-    InputAdornment
+    InputAdornment,
+    Alert
 } from '@mui/material';
 import { format } from 'date-fns';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -39,6 +40,7 @@ const PastEventsPage = () => {
     const [allReviewsDialog, setAllReviewsDialog] = useState(false);
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
     const [loading, setLoading] = useState(true);
+    const [noResults, setNoResults] = useState(false); // New state for no results message
 
     // New states for image preview
     const [galleryOpen, setGalleryOpen] = useState(false);
@@ -79,6 +81,8 @@ const PastEventsPage = () => {
 
     const handleSearch = () => {
         let filtered = events;
+
+        // Apply filters only if the search parameter is not empty
         if (searchParams.date) {
             filtered = filtered.filter((event) =>
                 format(new Date(event.seminarDate), 'yyyy-MM-dd').includes(searchParams.date)
@@ -99,6 +103,14 @@ const PastEventsPage = () => {
                 event.grade.toLowerCase().includes(searchParams.grade.toLowerCase())
             );
         }
+
+        // Check if no events match the search criteria
+        if (filtered.length === 0) {
+            setNoResults(true); // Show no results message
+        } else {
+            setNoResults(false); // Hide no results message
+        }
+
         setFilteredEvents(filtered);
     };
 
@@ -110,6 +122,7 @@ const PastEventsPage = () => {
             grade: ''
         });
         setFilteredEvents(events); // Reset to show all events
+        setNoResults(false); // Hide no results message
     };
 
     const handleAddReview = (event) => {
@@ -254,6 +267,13 @@ const PastEventsPage = () => {
                                 </Grid>
                             </Grid>
                         </Box>
+
+                        {/* Display no results message if no events match */}
+                        {noResults && (
+                            <Box sx={{ mb: 4 }}>
+                                <Alert severity="info">No events match your search criteria.</Alert>
+                            </Box>
+                        )}
 
                         <Grid container spacing={3}>
                             {filteredEvents.map((event) => (
