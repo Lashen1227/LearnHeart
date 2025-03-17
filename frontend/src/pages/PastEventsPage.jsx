@@ -204,7 +204,6 @@ const PastEventsPage = () => {
                                     <Grid item xs={12} sm={2} md={2}>
                                     <TextField
                                         fullWidth
-                                        label="Date"
                                         name="date"
                                         type="date"
                                         value={searchParams.date}
