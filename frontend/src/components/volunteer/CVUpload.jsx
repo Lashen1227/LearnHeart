@@ -21,6 +21,7 @@ const CVUpload = () => {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [saveMessage, setSaveMessage] = useState(null);
   const { user } = useUser();
   const userId = user?.id;
 
@@ -61,28 +62,20 @@ const CVUpload = () => {
   const handleSaveToProfile = async () => {
     if (!userId || skills.length === 0) return;
 
-    console.log("Skills to be saved:", skills);
-
     try {
-      // Fetch the volunteer by userId to get the corresponding _id
       const userResponse = await axios.get(`http://localhost:3001/api/volunteers?userID=${userId}`);
-      
+
       if (userResponse.data && userResponse.data.length > 0) {
-        const volunteer = userResponse.data[0];
-        const volunteerId = volunteer._id; 
+        const volunteerId = userResponse.data[0]._id;
 
         const updateResponse = await axios.put(
           `http://localhost:3001/api/volunteers/${volunteerId}`,
           { skills },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
+          { headers: { "Content-Type": "application/json" } }
         );
 
         if (updateResponse.status === 200) {
-          console.log("Skills successfully saved to your profile!");
+          setSaveMessage("Skills successfully saved to your profile!");
         } else {
           throw new Error("Failed to save skills to profile");
         }
@@ -91,6 +84,7 @@ const CVUpload = () => {
       }
     } catch (err) {
       console.error("Error:", err);
+      setSaveMessage("Failed to save skills to profile.");
     }
   };
 
@@ -150,13 +144,22 @@ const CVUpload = () => {
                 </Grid>
               ))}
             </Grid>
+            {saveMessage && (
+              <Typography
+                variant="body2"
+                color={saveMessage.includes("successfully") ? "green" : "error"}
+                sx={{ mt: 2 }}
+              >
+                {saveMessage}
+              </Typography>
+            )}
             <Button
               variant="contained"
               color="success"
               sx={{ mt: 3 }}
               onClick={handleSaveToProfile}
             >
-              Save to Profile
+              SAVE TO PROFILE
             </Button>
           </Box>
         )}
