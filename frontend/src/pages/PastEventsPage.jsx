@@ -214,10 +214,23 @@ const PastEventsPage = () => {
                                         InputProps={{
                                         endAdornment: <InputAdornment position="end">📅</InputAdornment>,
                                         }}
+                                        sx={{
+                                            backgroundColor: 'white', // Set background color to white
+                                            borderRadius: '10px', // Round corners
+                                            '& .MuiOutlinedInput-root': {
+                                              border: 'none', // Remove the default border
+                                              '&:focus': {
+                                                border: 'none', // Remove border when focused
+                                              },
+                                            },
+                                            '& .MuiInputBase-input': {
+                                              padding: '10px', // Adjust padding if needed
+                                            },
+                                          }}
                                     />
                                     </Grid>
 
-                                    {/* Location Input */}
+                                   {/* Location Input */}
                                     <Grid item xs={12} sm={2} md={2}>
                                     <TextField
                                         fullWidth
@@ -228,6 +241,19 @@ const PastEventsPage = () => {
                                         InputProps={{
                                         endAdornment: <InputAdornment position="end">📍</InputAdornment>,
                                         }}
+                                        sx={{
+                                            backgroundColor: 'white', // Set background color to white
+                                            borderRadius: '10px', // Round corners
+                                            '& .MuiOutlinedInput-root': {
+                                              border: 'none', // Remove the default border
+                                              '&:focus': {
+                                                border: 'none', // Remove border when focused
+                                              },
+                                            },
+                                            '& .MuiInputBase-input': {
+                                              padding: '10px', // Adjust padding if needed
+                                            },
+                                          }}
                                     />
                                     </Grid>
 
@@ -242,6 +268,19 @@ const PastEventsPage = () => {
                                         InputProps={{
                                         endAdornment: <InputAdornment position="end">🏢</InputAdornment>,
                                         }}
+                                        sx={{
+                                            backgroundColor: 'white', // Set background color to white
+                                            borderRadius: '10px', // Round corners
+                                            '& .MuiOutlinedInput-root': {
+                                              border: 'none', // Remove the default border
+                                              '&:focus': {
+                                                border: 'none', // Remove border when focused
+                                              },
+                                            },
+                                            '& .MuiInputBase-input': {
+                                              padding: '10px', // Adjust padding if needed
+                                            },
+                                          }}
                                     />
                                     </Grid>
 
@@ -253,6 +292,19 @@ const PastEventsPage = () => {
                                         name="grade"
                                         value={searchParams.grade}
                                         onChange={handleSearchChange}
+                                        sx={{
+                                            backgroundColor: 'white', 
+                                            borderRadius: '10px', 
+                                            '& .MuiOutlinedInput-root': {
+                                              border: 'none', // Remove the default border
+                                              '&:focus': {
+                                                border: 'none', // Remove border when focused
+                                              },
+                                            },
+                                            '& .MuiInputBase-input': {
+                                              padding: '10px', // Adjust padding if needed
+                                            },
+                                          }}
                                     />
                                     </Grid>
 
