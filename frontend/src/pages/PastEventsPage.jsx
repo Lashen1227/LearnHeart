@@ -21,7 +21,7 @@ import {
     IconButton,
     InputAdornment,
     Alert,
-    Snackbar // Added Snackbar
+    Snackbar,
 } from '@mui/material';
 import { format } from 'date-fns';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -56,7 +56,7 @@ const PastEventsPage = () => {
         date: '',
         location: '',
         host: '',
-        grade: ''
+        grade: '',
     });
 
     useEffect(() => {
@@ -80,7 +80,7 @@ const PastEventsPage = () => {
         const { name, value } = e.target;
         setSearchParams((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value,
         }));
     };
 
@@ -124,7 +124,7 @@ const PastEventsPage = () => {
             date: '',
             location: '',
             host: '',
-            grade: ''
+            grade: '',
         });
         setFilteredEvents(events);
         setNoResults(false);
@@ -137,20 +137,23 @@ const PastEventsPage = () => {
 
     const handleSubmitReview = async () => {
         try {
-             // Get user information from Clerk
+            // Get user information from Clerk
             const userFullName = user.fullName || `${user.firstName} ${user.lastName}`.trim();
             const reviewData = {
                 ...newReview,
                 userId: user.id,
                 userName: user.username || userFullName,
                 userImage: user.imageUrl || user.profileImageUrl,
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
             };
 
-            await axios.post(`http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`, reviewData);
+            await axios.post(
+                `http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`,
+                reviewData
+            );
             setReviewDialog(false);
             setNewReview({ rating: 0, comment: '' });
-            setSuccessMessage(true); // Show success message
+            setSuccessMessage(true);
             fetchEvents(); // Refresh events
         } catch (error) {
             console.error('Error submitting review:', error);
@@ -195,13 +198,13 @@ const PastEventsPage = () => {
                 {/* Success Message Snackbar */}
                 <Snackbar
                     open={successMessage}
-                    autoHideDuration={3000} // Auto-close after 3 seconds
-                    onClose={() => setSuccessMessage(false)} // Close handler
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Position
+                    autoHideDuration={3000}
+                    onClose={() => setSuccessMessage(false)}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 >
                     <Alert
                         onClose={() => setSuccessMessage(false)}
-                        severity="success" // Success styling
+                        severity="success"
                         sx={{ width: '100%' }}
                     >
                         Review added successfully!
@@ -225,6 +228,7 @@ const PastEventsPage = () => {
                                 <Grid item xs={12} sm={2} md={2}>
                                     <TextField
                                         fullWidth
+                                        label="Date"
                                         name="date"
                                         type="date"
                                         value={searchParams.date}
@@ -233,7 +237,10 @@ const PastEventsPage = () => {
                                             shrink: true,
                                         }}
                                         InputProps={{
-                                            endAdornment: <InputAdornment position="end">📅</InputAdornment>,
+                                            
+                                            endAdornment: (
+                                                <InputAdornment position="end">📅</InputAdornment>
+                                            ),
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
@@ -247,6 +254,9 @@ const PastEventsPage = () => {
                                             '& .MuiInputBase-input': {
                                                 padding: '10px',
                                             },
+                                            input: {
+                                                textAlign: 'center'
+                                              }
                                         }}
                                     />
                                 </Grid>
@@ -260,7 +270,9 @@ const PastEventsPage = () => {
                                         value={searchParams.location}
                                         onChange={handleSearchChange}
                                         InputProps={{
-                                            endAdornment: <InputAdornment position="end">📍</InputAdornment>,
+                                            endAdornment: (
+                                                <InputAdornment position="end">📍</InputAdornment>
+                                            ),
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
@@ -274,6 +286,10 @@ const PastEventsPage = () => {
                                             '& .MuiInputBase-input': {
                                                 padding: '10px',
                                             },
+                                            input: {
+                                                textAlign: 'center'
+                                              }
+                                              
                                         }}
                                     />
                                 </Grid>
@@ -287,7 +303,9 @@ const PastEventsPage = () => {
                                         value={searchParams.host}
                                         onChange={handleSearchChange}
                                         InputProps={{
-                                            endAdornment: <InputAdornment position="end">🏢</InputAdornment>,
+                                            endAdornment: (
+                                                <InputAdornment position="end">🏢</InputAdornment>
+                                            ),
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
@@ -301,6 +319,9 @@ const PastEventsPage = () => {
                                             '& .MuiInputBase-input': {
                                                 padding: '10px',
                                             },
+                                            input: {
+                                                textAlign: 'center'
+                                              }
                                         }}
                                     />
                                 </Grid>
@@ -325,6 +346,9 @@ const PastEventsPage = () => {
                                             '& .MuiInputBase-input': {
                                                 padding: '10px',
                                             },
+                                            input: {
+                                                textAlign: 'center'
+                                              }
                                         }}
                                     />
                                 </Grid>
@@ -392,14 +416,13 @@ const PastEventsPage = () => {
                                         }}
                                     >
                                         {/* Card Content */}
-
-                                        <Box 
-                                            sx={{ 
+                                        <Box
+                                            sx={{
                                                 position: 'relative',
                                                 paddingTop: '56.25%',
                                                 cursor: 'pointer',
                                                 overflow: 'hidden',
-                                                backgroundColor: '#ffffff'
+                                                backgroundColor: '#ffffff',
                                             }}
                                         >
                                             <Box
@@ -412,19 +435,21 @@ const PastEventsPage = () => {
                                                     display: 'grid',
                                                     gap: '4px',
                                                     padding: '4px',
-                                                    gridTemplateColumns: event.images.length === 1 
-                                                        ? '1fr' 
-                                                        : event.images.length === 2 
-                                                        ? '2fr 1fr' 
-                                                        : event.images.length === 3 
-                                                        ? '2fr 1fr' 
-                                                        : '2fr 1fr',
-                                                    gridTemplateRows: event.images.length <= 2 
-                                                        ? '1fr' 
-                                                        : event.images.length === 3 
-                                                        ? '1fr 1fr' 
-                                                        : '1fr 1fr',
-                                                    gridAutoFlow: 'dense'
+                                                    gridTemplateColumns:
+                                                        event.images.length === 1
+                                                            ? '1fr'
+                                                            : event.images.length === 2
+                                                            ? '2fr 1fr'
+                                                            : event.images.length === 3
+                                                            ? '2fr 1fr'
+                                                            : '2fr 1fr',
+                                                    gridTemplateRows:
+                                                        event.images.length <= 2
+                                                            ? '1fr'
+                                                            : event.images.length === 3
+                                                            ? '1fr 1fr'
+                                                            : '1fr 1fr',
+                                                    gridAutoFlow: 'dense',
                                                 }}
                                                 onClick={() => handleImageClick(event.images, 0)}
                                             >
@@ -437,8 +462,8 @@ const PastEventsPage = () => {
                                                         overflow: 'hidden',
                                                         borderRadius: '4px',
                                                         '&:hover img': {
-                                                            transform: 'scale(1.05)'
-                                                        }
+                                                            transform: 'scale(1.05)',
+                                                        },
                                                     }}
                                                 >
                                                     <img
@@ -448,7 +473,7 @@ const PastEventsPage = () => {
                                                             width: '100%',
                                                             height: '100%',
                                                             objectFit: 'cover',
-                                                            transition: 'transform 0.3s ease-in-out'
+                                                            transition: 'transform 0.3s ease-in-out',
                                                         }}
                                                     />
                                                 </Box>
@@ -464,8 +489,8 @@ const PastEventsPage = () => {
                                                             overflow: 'hidden',
                                                             borderRadius: '4px',
                                                             '&:hover img': {
-                                                                transform: 'scale(1.05)'
-                                                            }
+                                                                transform: 'scale(1.05)',
+                                                            },
                                                         }}
                                                     >
                                                         <img
@@ -475,7 +500,7 @@ const PastEventsPage = () => {
                                                                 width: '100%',
                                                                 height: '100%',
                                                                 objectFit: 'cover',
-                                                                transition: 'transform 0.3s ease-in-out'
+                                                                transition: 'transform 0.3s ease-in-out',
                                                             }}
                                                         />
                                                         {index === 1 && event.images.length > 3 && (
@@ -495,8 +520,8 @@ const PastEventsPage = () => {
                                                                     fontWeight: 'bold',
                                                                     cursor: 'pointer',
                                                                     '&:hover': {
-                                                                        bgcolor: 'rgba(0, 0, 0, 0.6)'
-                                                                    }
+                                                                        bgcolor: 'rgba(0, 0, 0, 0.6)',
+                                                                    },
                                                                 }}
                                                             >
                                                                 +{event.images.length - 3}
@@ -507,7 +532,6 @@ const PastEventsPage = () => {
                                             </Box>
                                         </Box>
 
-                                        
                                         <CardContent sx={{ flexGrow: 1, p: 3 }}>
                                             {/* Event Details */}
                                             <Typography
@@ -517,7 +541,7 @@ const PastEventsPage = () => {
                                                 sx={{
                                                     fontWeight: 'bold',
                                                     mb: 1,
-                                                    color: 'text.primary'
+                                                    color: 'text.primary',
                                                 }}
                                             >
                                                 {event.schoolName}
@@ -531,7 +555,7 @@ const PastEventsPage = () => {
                                                     fontWeight: 500,
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    gap: 1
+                                                    gap: 1,
                                                 }}
                                             >
                                                 <Group sx={{ fontSize: 20 }} />
@@ -567,7 +591,12 @@ const PastEventsPage = () => {
 
                                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                    <Rating value={calculateAverageRating(event.reviews)} precision={0.5} readOnly size="small" />
+                                                    <Rating
+                                                        value={calculateAverageRating(event.reviews)}
+                                                        precision={0.5}
+                                                        readOnly
+                                                        size="small"
+                                                    />
                                                     <Typography variant="body2" color="text.secondary">
                                                         ({event.reviews?.length || 0})
                                                     </Typography>
