@@ -173,17 +173,19 @@ const PastEventsPage = () => {
         <div>
             <Navbar />
             <Container
-                maxWidth="lg"
-                sx={{
-                    py: 12,
-                    ...(loading && {
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        minHeight: 'calc(100vh - 64px - 96px)'
-                    })
-                }}
-            >
+                        maxWidth="xl"  // Increase to 'xl' for larger screens (extra-large)
+                        sx={{
+                            py: 12,
+                            ...(loading && {
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            minHeight: 'calc(100vh - 64px - 96px)',
+                            }),
+                            width: '95%', // Set a custom width
+                            maxWidth: '1200px', // Or, use a specific maxWidth
+                        }}
+                        >
                 {loading ? (
                     <Spinner />
                 ) : (
