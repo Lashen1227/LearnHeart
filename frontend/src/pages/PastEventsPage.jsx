@@ -52,11 +52,14 @@ const PastEventsPage = () => {
     // State for success message
     const [successMessage, setSuccessMessage] = useState(false);
 
+    // Add new state for reviews dialog
+    const [reviewsDialog, setReviewsDialog] = useState(false);
+
     const [searchParams, setSearchParams] = useState({
         date: '',
         location: '',
         host: '',
-        grade: '',
+        grade: ''
     });
 
     useEffect(() => {
@@ -87,36 +90,32 @@ const PastEventsPage = () => {
     const handleSearch = () => {
         let filtered = events;
 
-        // Apply filters only if the search parameter is not empty
         if (searchParams.date) {
             filtered = filtered.filter((event) =>
                 format(new Date(event.seminarDate), 'yyyy-MM-dd').includes(searchParams.date)
             );
         }
+
         if (searchParams.location) {
             filtered = filtered.filter((event) =>
                 event.location.toLowerCase().includes(searchParams.location.toLowerCase())
             );
         }
+
         if (searchParams.host) {
             filtered = filtered.filter((event) =>
                 event.organizationName.toLowerCase().includes(searchParams.host.toLowerCase())
             );
         }
+
         if (searchParams.grade) {
             filtered = filtered.filter((event) =>
                 event.grade.toLowerCase().includes(searchParams.grade.toLowerCase())
             );
         }
 
-        // Check if no events match the search criteria
-        if (filtered.length === 0) {
-            setNoResults(true);
-        } else {
-            setNoResults(false);
-        }
-
         setFilteredEvents(filtered);
+        setNoResults(filtered.length === 0);
     };
 
     const handleClearSearch = () => {
@@ -124,7 +123,7 @@ const PastEventsPage = () => {
             date: '',
             location: '',
             host: '',
-            grade: '',
+            grade: ''
         });
         setFilteredEvents(events);
         setNoResults(false);
@@ -173,9 +172,9 @@ const PastEventsPage = () => {
         setGalleryOpen(true);
     };
 
-    const handleViewAllReviews = (event) => {
+    const handleViewMore = (event) => {
         setSelectedEvent(event);
-        setAllReviewsDialog(true);
+        setReviewsDialog(true);
     };
 
     return (
@@ -218,14 +217,19 @@ const PastEventsPage = () => {
                         <Box
                             sx={{
                                 mb: 4,
-                                backgroundColor: '#5EA9A9',
-                                p: 2,
-                                borderRadius: '8px',
+                                backgroundColor: '#f8f9ff',
+                                p: 3,
+                                borderRadius: '16px',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                                border: '1px solid #e0e7ff'
                             }}
                         >
-                            <Grid container spacing={5} alignItems="center">
+                            <Typography variant="h6" sx={{ mb: 3, color: '#1a237e', fontWeight: 600 }}>
+                                Find Past Events
+                            </Typography>
+                            <Grid container spacing={3} alignItems="center">
                                 {/* Date Input */}
-                                <Grid item xs={12} sm={2} md={2}>
+                                <Grid item xs={12} sm={6} md={3}>
                                     <TextField
                                         fullWidth
                                         label="Date"
@@ -237,32 +241,26 @@ const PastEventsPage = () => {
                                             shrink: true,
                                         }}
                                         InputProps={{
-                                            
-                                            endAdornment: (
-                                                <InputAdornment position="end">📅</InputAdornment>
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Event color="primary" />
+                                                </InputAdornment>
                                             ),
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
-                                            borderRadius: '10px',
                                             '& .MuiOutlinedInput-root': {
-                                                border: 'none',
-                                                '&:focus': {
-                                                    border: 'none',
+                                                borderRadius: '12px',
+                                                '&:hover fieldset': {
+                                                    borderColor: '#1a237e',
                                                 },
-                                            },
-                                            '& .MuiInputBase-input': {
-                                                padding: '10px',
-                                            },
-                                            input: {
-                                                textAlign: 'center'
-                                              }
+                                            }
                                         }}
                                     />
                                 </Grid>
 
                                 {/* Location Input */}
-                                <Grid item xs={12} sm={2} md={2}>
+                                <Grid item xs={12} sm={6} md={3}>
                                     <TextField
                                         fullWidth
                                         label="Location"
@@ -270,133 +268,122 @@ const PastEventsPage = () => {
                                         value={searchParams.location}
                                         onChange={handleSearchChange}
                                         InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">📍</InputAdornment>
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <LocationOn color="primary" />
+                                                </InputAdornment>
                                             ),
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
-                                            borderRadius: '10px',
                                             '& .MuiOutlinedInput-root': {
-                                                border: 'none',
-                                                '&:focus': {
-                                                    border: 'none',
+                                                borderRadius: '12px',
+                                                '&:hover fieldset': {
+                                                    borderColor: '#1a237e',
                                                 },
-                                            },
-                                            '& .MuiInputBase-input': {
-                                                padding: '10px',
-                                            },
-                                            input: {
-                                                textAlign: 'center'
-                                              }
-                                              
+                                            }
                                         }}
                                     />
                                 </Grid>
 
                                 {/* Host Input */}
-                                <Grid item xs={12} sm={2} md={2}>
+                                <Grid item xs={12} sm={6} md={3}>
                                     <TextField
                                         fullWidth
-                                        label="Host"
+                                        label="Host Organization"
                                         name="host"
                                         value={searchParams.host}
                                         onChange={handleSearchChange}
                                         InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">🏢</InputAdornment>
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Group color="primary" />
+                                                </InputAdornment>
                                             ),
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
-                                            borderRadius: '10px',
                                             '& .MuiOutlinedInput-root': {
-                                                border: 'none',
-                                                '&:focus': {
-                                                    border: 'none',
+                                                borderRadius: '12px',
+                                                '&:hover fieldset': {
+                                                    borderColor: '#1a237e',
                                                 },
-                                            },
-                                            '& .MuiInputBase-input': {
-                                                padding: '10px',
-                                            },
-                                            input: {
-                                                textAlign: 'center'
-                                              }
+                                            }
                                         }}
                                     />
                                 </Grid>
 
                                 {/* Grade Input */}
-                                <Grid item xs={12} sm={2} md={2}>
+                                <Grid item xs={12} sm={6} md={3}>
                                     <TextField
                                         fullWidth
                                         label="Grade"
                                         name="grade"
                                         value={searchParams.grade}
                                         onChange={handleSearchChange}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <School color="primary" />
+                                                </InputAdornment>
+                                            ),
+                                        }}
                                         sx={{
                                             backgroundColor: 'white',
-                                            borderRadius: '10px',
                                             '& .MuiOutlinedInput-root': {
-                                                border: 'none',
-                                                '&:focus': {
-                                                    border: 'none',
+                                                borderRadius: '12px',
+                                                '&:hover fieldset': {
+                                                    borderColor: '#1a237e',
                                                 },
-                                            },
-                                            '& .MuiInputBase-input': {
-                                                padding: '10px',
-                                            },
-                                            input: {
-                                                textAlign: 'center'
-                                              }
+                                            }
                                         }}
                                     />
                                 </Grid>
 
-                                {/* Buttons in Same Row */}
-                                <Grid item xs={12} sm={2} md={4} display="flex" justifyContent="space-between">
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleSearch}
-                                        sx={{
-                                            width: '48%',
-                                            backgroundColor: '#F97316',
-                                            '&:hover': {
-                                                backgroundColor: '#ea580c',
-                                            },
-                                            borderRadius: '5px',
-                                        }}
-                                        aria-label="Search events"
-                                    >
-                                        🔍
-                                    </Button>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={handleClearSearch}
-                                        sx={{
-                                            width: '48%',
-                                            color: '#fff',
-                                            borderColor: '#fff',
-                                            '&:hover': {
-                                                backgroundColor: '#e0e0e0',
-                                                color: '#000',
-                                            },
-                                            borderRadius: '5px',
-                                        }}
-                                        aria-label="Clear search"
-                                    >
-                                        Clear
-                                    </Button>
+                                {/* Action Buttons */}
+                                <Grid item xs={12} sx={{ mt: 1 }}>
+                                    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+                                        <Button
+                                            variant="outlined"
+                                            onClick={handleClearSearch}
+                                            sx={{
+                                                borderRadius: '10px',
+                                                borderColor: '#1a237e',
+                                                color: '#1a237e',
+                                                px: 4,
+                                                '&:hover': {
+                                                    borderColor: '#0d47a1',
+                                                    backgroundColor: 'rgba(26, 35, 126, 0.04)'
+                                                }
+                                            }}
+                                        >
+                                            Clear
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleSearch}
+                                            sx={{
+                                                borderRadius: '10px',
+                                                backgroundColor: '#1a237e',
+                                                px: 4,
+                                                '&:hover': {
+                                                    backgroundColor: '#0d47a1'
+                                                }
+                                            }}
+                                        >
+                                            Search
+                                        </Button>
+                                    </Box>
                                 </Grid>
                             </Grid>
-                        </Box>
 
-                        {/* Display no results message if no events match */}
-                        {noResults && (
-                            <Box sx={{ mb: 4 }}>
-                                <Alert severity="info">No events match your search criteria.</Alert>
-                            </Box>
-                        )}
+                            {/* No Results Message */}
+                            {noResults && (
+                                <Alert severity="info" sx={{ mt: 3, borderRadius: '10px' }}>
+                                    No events found matching your search criteria.
+                                </Alert>
+                            )}
+                        </Box>
 
                         <Grid container spacing={4} sx={{ mt: 2 }}>
                             {filteredEvents.map((event) => (
@@ -587,9 +574,7 @@ const PastEventsPage = () => {
                                                 </Box>
                                             </Box>
 
-                                            <Divider sx={{ my: 2 }} />
-
-                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                                     <Rating
                                                         value={calculateAverageRating(event.reviews)}
@@ -602,32 +587,19 @@ const PastEventsPage = () => {
                                                     </Typography>
                                                 </Box>
                                                 <Button
-                                                    variant="outlined"
+                                                    variant="text"
                                                     size="small"
-                                                    startIcon={<CommentIcon />}
-                                                    onClick={() => handleAddReview(event)}
+                                                    onClick={() => handleViewMore(event)}
+                                                    sx={{
+                                                        color: '#1a237e',
+                                                        '&:hover': {
+                                                            backgroundColor: 'rgba(26, 35, 126, 0.04)'
+                                                        }
+                                                    }}
                                                 >
-                                                    Add Review
+                                                    View More
                                                 </Button>
                                             </Box>
-
-                                            {event.reviews && event.reviews.length > 0 && (
-                                                <Box sx={{ mt: 2 }}>
-                                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                                                        <Typography variant="subtitle2" color="text.secondary">
-                                                            Recent Reviews
-                                                        </Typography>
-                                                        <Button
-                                                            size="small"
-                                                            onClick={() => handleViewAllReviews(event)}
-                                                            sx={{ textTransform: 'none' }}
-                                                        >
-                                                            View All
-                                                        </Button>
-                                                    </Box>
-                                                    <ReviewList reviews={event.reviews.slice(0, 2)} />
-                                                </Box>
-                                            )}
                                         </CardContent>
                                     </Card>
                                 </Grid>
@@ -674,37 +646,60 @@ const PastEventsPage = () => {
                     initialImageIndex={initialImageIndex}
                 />
 
-                {/* All Reviews Dialog */}
+                {/* Reviews Dialog */}
                 <Dialog
-                    open={allReviewsDialog}
-                    onClose={() => setAllReviewsDialog(false)}
+                    open={reviewsDialog}
+                    onClose={() => setReviewsDialog(false)}
                     maxWidth="md"
                     fullWidth
                 >
                     <DialogTitle>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Typography variant="h6">
-                                All Reviews for {selectedEvent?.schoolName}
+                                Reviews & Ratings for {selectedEvent?.schoolName}
                             </Typography>
-                            <IconButton onClick={() => setAllReviewsDialog(false)}>
+                            <IconButton onClick={() => setReviewsDialog(false)}>
                                 <CloseIcon />
                             </IconButton>
                         </Box>
                     </DialogTitle>
                     <DialogContent>
                         <Box sx={{ mt: 2 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                                <Rating
-                                    value={calculateAverageRating(selectedEvent?.reviews)}
-                                    readOnly
-                                    precision={0.5}
-                                    size="large"
-                                />
-                                <Typography variant="h6" sx={{ ml: 2 }}>
-                                    {calculateAverageRating(selectedEvent?.reviews).toFixed(1)} ({selectedEvent?.reviews?.length || 0} reviews)
-                                </Typography>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                    <Rating
+                                        value={calculateAverageRating(selectedEvent?.reviews)}
+                                        readOnly
+                                        precision={0.5}
+                                        size="large"
+                                    />
+                                    <Typography variant="h6" sx={{ ml: 2 }}>
+                                        {calculateAverageRating(selectedEvent?.reviews).toFixed(1)} ({selectedEvent?.reviews?.length || 0} reviews)
+                                    </Typography>
+                                </Box>
+                                <Button
+                                    variant="outlined"
+                                    startIcon={<CommentIcon />}
+                                    onClick={() => handleAddReview(selectedEvent)}
+                                    sx={{
+                                        borderColor: '#1a237e',
+                                        color: '#1a237e',
+                                        '&:hover': {
+                                            borderColor: '#0d47a1',
+                                            backgroundColor: 'rgba(26, 35, 126, 0.04)'
+                                        }
+                                    }}
+                                >
+                                    Add Review
+                                </Button>
                             </Box>
-                            <ReviewList reviews={selectedEvent?.reviews} />
+                            {selectedEvent?.reviews && selectedEvent.reviews.length > 0 ? (
+                                <ReviewList reviews={selectedEvent.reviews} />
+                            ) : (
+                                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 2 }}>
+                                    No reviews yet. Be the first to review!
+                                </Typography>
+                            )}
                         </Box>
                     </DialogContent>
                 </Dialog>
