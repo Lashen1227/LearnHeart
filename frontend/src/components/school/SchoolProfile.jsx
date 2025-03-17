@@ -11,10 +11,12 @@ import OrgSearchList from "../organization/OrgSearchList";
 export const SchoolProfile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [schoolProfiles, setSchoolProfiles] = useState([]); // Pluralized state name
-  const { user: curruntID } = useUser();
+  const { user } = useUser();
+  const curruntID = user?.id;
+
   // Get school from Clerk's user object
   const matchingSchool = schoolProfiles.find(
-    (sch) => sch.userID === curruntID?.id
+    (sch) => sch.userID === curruntID
   ); // Find the specific school
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export const SchoolProfile = () => {
           />
           <br />
           <Typography variant="h6" sx={{ mb: 1, color: "white" }}>
-            <strong>{matchingSchool?.schoolName}</strong>
+            <strong>{user?.fullName}</strong>
           </Typography>
           <br />
           <Typography variant="body" sx={{ mb: 2, color: "white" }}>

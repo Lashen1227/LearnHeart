@@ -14,11 +14,9 @@ import { Building } from "lucide-react";
 export default function OrgSearchCard({
   organization,
   allSeminars,
-  allVolunteers,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [seminars, setSeminars] = useState([]);
-  const [volunteers, setVolunteers] = useState([]);
 
   useEffect(() => {
     if (allSeminars.length > 0) {
@@ -31,15 +29,6 @@ export default function OrgSearchCard({
       setSeminars(pastSeminars);
     }
   }, [allSeminars, organization._id]);
-
-  useEffect(() => {
-    if (allVolunteers.length > 0) {
-      const filteredVolunteers = allVolunteers.filter(
-        (volunteer) => volunteer.orgID === organization._id
-      );
-      setVolunteers(filteredVolunteers);
-    }
-  }, [allVolunteers, organization._id]);
 
   return (
     <Card
@@ -74,9 +63,6 @@ export default function OrgSearchCard({
             </Typography>
             <Typography variant="body2">
               <strong>Website:</strong> {organization.website}
-            </Typography>
-            <Typography variant="body2">
-              <strong>Volunteer Count:</strong> {volunteers.length}
             </Typography>
             <Typography variant="body2">
               <strong>Completed Seminars:</strong> {seminars.length}

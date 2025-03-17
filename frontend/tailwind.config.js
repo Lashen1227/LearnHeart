@@ -17,7 +17,7 @@ export default {
         'custom-page': '#EAEFFB',
         'custom-white': '#ffffff',
         'starColor': '#6ee7b7',
-        'custom-green': '#2AAA94',
+        'custom-green': '#57A6A1',
         'custom-black': '#1B2336',
         'custom-lightb': '#4A4A4A',
         'selectBorder' : '#D9D9D9',

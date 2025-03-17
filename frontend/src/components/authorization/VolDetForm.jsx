@@ -53,7 +53,7 @@ function VolDetForm() {
       "address": Address,
       "phoneNumber": PhoneNumber,
       "email": email,
-      "skills": "Volunteer",
+      "skills": null,
       "volunteerProfileImageAvailable": VolunteerProfileImageAvailable,
       "volunteerProfileColor": VolunteerProfileColor,
     });
