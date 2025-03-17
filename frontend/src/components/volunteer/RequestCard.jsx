@@ -42,7 +42,7 @@ const RequestCard = ({ request, refreshRequests }) => {
 
   return (
     <>
-      <Card sx={{ p: 2, backgroundColor: "white", borderRadius: 2, minHeight: 'fit-content', position: 'relative' }}>
+      <Card sx={{ p: 1, backgroundColor: "white", borderRadius: 2, minHeight: 'fit-content', position: 'relative' }}>
         <CardContent>
           <Stack direction="row" spacing={2} alignItems="center">
             <div>
@@ -51,6 +51,9 @@ const RequestCard = ({ request, refreshRequests }) => {
               </Typography>
               <Typography variant="body2" sx={{marginTop: 2}}color="text.secondary">
                 {formatDateTime(request.createdAt)}
+              </Typography>
+              <Typography variant="body2" sx={{marginTop: 1}}color="text.secondary">
+                Language: {request.language} | Subjects: {request.subjects}
               </Typography>
             </div>
             <CloseIcon 
@@ -65,7 +68,7 @@ const RequestCard = ({ request, refreshRequests }) => {
             />
           </Stack>
           <Chip
-            sx={{ marginTop: 2 }}
+            sx={{ marginTop: 1 }}
             size="small"
             variant="contained"
             label={
@@ -106,6 +109,8 @@ RequestCard.propTypes = {
     organizationDetails: PropTypes.shape({
       name: PropTypes.string.isRequired,
     }).isRequired,
+    language: PropTypes.string.isRequired,
+    subjects: PropTypes.string.isRequired,
   }).isRequired,
 };
 

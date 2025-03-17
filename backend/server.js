@@ -21,6 +21,7 @@ const seminarRoutes = require('./routes/seminarRoutes');
 const schoolRoutes = require('./routes/schoolRoutes');
 const postRoutes = require('./routes/postRoute');
 const resourceRoutes = require('./routes/resourceRoutes');
+const pastEventRoutes = require('./routes/pastEventRoutes');
 
 
 cloudinary.config({
@@ -58,3 +59,4 @@ app.use('/api/seminars', seminarRoutes);
 app.use('/api/schools', schoolRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/resources', resourceRoutes);
+app.use('/api/past-events', pastEventRoutes);

@@ -84,13 +84,13 @@ const ChatWindow = () => {
           color: '#000000',
           borderRadius: '12px',
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-          padding: { xs: '16px', sm: '24px' }, // Responsive padding
+          padding: { xs: '16px', sm: '24px' },
           display: 'flex',
           flexDirection: 'column',
-          height: { xs: '90vh', sm: '80vh' }, // Responsive height
+          height: { xs: '90vh', sm: '80vh' },
         }}
       >
-        <Typography variant="body2" sx={{ textAlign: 'center', color: '#1976d2', marginBottom: '3px' }}>
+        <Typography variant="body1" sx={{ textAlign: 'center', color: '#1976d2', marginBottom: '3px' }}>
           Feel free to ask any questions you have about LearnHeart.
         </Typography>
 

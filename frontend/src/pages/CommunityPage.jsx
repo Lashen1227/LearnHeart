@@ -54,7 +54,7 @@ const CommunityPage = () => {
   return (
     <div className="flex flex-col min-h-screen bg-custom-page">
       <Navbar />
-      <Container className="flex-grow py-20">
+      <Container className="flex-grow py-20"><br />
         <div className="flex justify-center w-full">
           <Grid 
             container 

@@ -29,6 +29,9 @@ const VolunteerRequestModal = ({ open, handleClose, selectedRequest, handleAccep
         borderRadius: 5,
         p: 4,
         boxShadow: 24,
+        overflowY: 'auto',
+        scrollbarWidth: 'none',
+        '&::-webkit-scrollbar': { display: 'none' },
       }}>
         <IconButton
           aria-label="close"
@@ -103,6 +106,18 @@ const VolunteerRequestModal = ({ open, handleClose, selectedRequest, handleAccep
               />
             </Box>
 
+            <Box sx={{ width: '100%', mb: 2 }}>
+              <InputLabel sx={{ color: 'black', fontSize: '1rem', fontWeight: 600, mb: 1, ml: 1 }}>System-Verified Skills</InputLabel>
+              <TextField
+                variant="outlined"
+                value={selectedRequest.volunteerDetails.skills.join(", ")}
+                disabled
+                fullWidth
+                multiline
+                sx={{ '& .MuiInputBase-input.Mui-disabled': { color: 'black', WebkitTextFillColor: 'black' } }}
+              />
+            </Box>
+
             <CardActions sx={{ justifyContent: "flex-end", gap: 1, mt: 2 }}>
               <Button size="small" variant="contained" color="primary" onClick={handleViewCV}>
                 View and Download CV
@@ -129,11 +144,13 @@ VolunteerRequestModal.propTypes = {
     language: PropTypes.string.isRequired,
     subjects: PropTypes.string.isRequired,
     availableDates: PropTypes.arrayOf(PropTypes.string).isRequired,
+    skills: PropTypes.arrayOf(PropTypes.string),
     cv: PropTypes.string.isRequired,
     volunteerDetails: PropTypes.shape({
       name: PropTypes.string.isRequired,
       phoneNumber: PropTypes.string.isRequired,
       address: PropTypes.string.isRequired,
+      skills: PropTypes.arrayOf(PropTypes.string).isRequired,
     }).isRequired,
   }),
   handleAccept: PropTypes.func.isRequired,
