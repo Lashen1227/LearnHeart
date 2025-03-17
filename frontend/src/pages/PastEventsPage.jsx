@@ -20,7 +20,8 @@ import {
     Divider,
     IconButton,
     InputAdornment,
-    Alert
+    Alert,
+    Snackbar // Added Snackbar
 } from '@mui/material';
 import { format } from 'date-fns';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -41,12 +42,15 @@ const PastEventsPage = () => {
     const [allReviewsDialog, setAllReviewsDialog] = useState(false);
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
     const [loading, setLoading] = useState(true);
-    const [noResults, setNoResults] = useState(false); // New state for no results message
+    const [noResults, setNoResults] = useState(false);
 
     // New states for image preview
     const [galleryOpen, setGalleryOpen] = useState(false);
     const [selectedEventImages, setSelectedEventImages] = useState([]);
     const [initialImageIndex, setInitialImageIndex] = useState(0);
+
+    // State for success message
+    const [successMessage, setSuccessMessage] = useState(false);
 
     const [searchParams, setSearchParams] = useState({
         date: '',
@@ -64,7 +68,7 @@ const PastEventsPage = () => {
         try {
             const response = await axios.get('http://localhost:3001/api/past-events');
             setEvents(response.data);
-            setFilteredEvents(response.data); // Initially set all events
+            setFilteredEvents(response.data);
         } catch (error) {
             console.error('Error fetching events:', error);
         } finally {
@@ -107,9 +111,9 @@ const PastEventsPage = () => {
 
         // Check if no events match the search criteria
         if (filtered.length === 0) {
-            setNoResults(true); // Show no results message
+            setNoResults(true);
         } else {
-            setNoResults(false); // Hide no results message
+            setNoResults(false);
         }
 
         setFilteredEvents(filtered);
@@ -122,8 +126,8 @@ const PastEventsPage = () => {
             host: '',
             grade: ''
         });
-        setFilteredEvents(events); // Reset to show all events
-        setNoResults(false); // Hide no results message
+        setFilteredEvents(events);
+        setNoResults(false);
     };
 
     const handleAddReview = (event) => {
@@ -133,7 +137,7 @@ const PastEventsPage = () => {
 
     const handleSubmitReview = async () => {
         try {
-            // Get user information from Clerk
+             // Get user information from Clerk
             const userFullName = user.fullName || `${user.firstName} ${user.lastName}`.trim();
             const reviewData = {
                 ...newReview,
@@ -146,7 +150,8 @@ const PastEventsPage = () => {
             await axios.post(`http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`, reviewData);
             setReviewDialog(false);
             setNewReview({ rating: 0, comment: '' });
-            fetchEvents(); // Refresh events to show the new review
+            setSuccessMessage(true); // Show success message
+            fetchEvents(); // Refresh events
         } catch (error) {
             console.error('Error submitting review:', error);
         }
@@ -174,34 +179,50 @@ const PastEventsPage = () => {
         <div>
             <Navbar />
             <Container
-                        maxWidth="xl"  // Increase to 'xl' for larger screens (extra-large)
+                maxWidth="xl"
                 sx={{
                     py: 12,
                     ...(loading && {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                            minHeight: 'calc(100vh - 64px - 96px)',
-                            }),
-                            width: '95%', // Set a custom width
-                            maxWidth: '1200px', // Or, use a specific maxWidth
+                        minHeight: 'calc(100vh - 64px - 96px)',
+                    }),
+                    width: '95%',
+                    maxWidth: '1200px',
                 }}
             >
+                {/* Success Message Snackbar */}
+                <Snackbar
+                    open={successMessage}
+                    autoHideDuration={3000} // Auto-close after 3 seconds
+                    onClose={() => setSuccessMessage(false)} // Close handler
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Position
+                >
+                    <Alert
+                        onClose={() => setSuccessMessage(false)}
+                        severity="success" // Success styling
+                        sx={{ width: '100%' }}
+                    >
+                        Review added successfully!
+                    </Alert>
+                </Snackbar>
+
                 {loading ? (
                     <Spinner />
                 ) : (
                     <>
-                       <Box
-                                sx={{
-                                    mb: 4,
-                                    backgroundColor: '#5EA9A9',
-                                    p: 2,
-                                    borderRadius: '8px',
-                                }}
-                                >
-                                <Grid container spacing={5} alignItems="center">
-                                    {/* Date Input */}
-                                    <Grid item xs={12} sm={2} md={2}>
+                        <Box
+                            sx={{
+                                mb: 4,
+                                backgroundColor: '#5EA9A9',
+                                p: 2,
+                                borderRadius: '8px',
+                            }}
+                        >
+                            <Grid container spacing={5} alignItems="center">
+                                {/* Date Input */}
+                                <Grid item xs={12} sm={2} md={2}>
                                     <TextField
                                         fullWidth
                                         name="date"
@@ -209,29 +230,29 @@ const PastEventsPage = () => {
                                         value={searchParams.date}
                                         onChange={handleSearchChange}
                                         InputLabelProps={{
-                                        shrink: true,
-                                        }}                                      
-                                          InputProps={{
-                                        endAdornment: <InputAdornment position="end">📅</InputAdornment>,
+                                            shrink: true,
+                                        }}
+                                        InputProps={{
+                                            endAdornment: <InputAdornment position="end">📅</InputAdornment>,
                                         }}
                                         sx={{
-                                            backgroundColor: 'white', // Set background color to white
-                                            borderRadius: '10px', // Round corners
+                                            backgroundColor: 'white',
+                                            borderRadius: '10px',
                                             '& .MuiOutlinedInput-root': {
-                                              border: 'none', // Remove the default border
-                                              '&:focus': {
-                                                border: 'none', // Remove border when focused
-                                              },
+                                                border: 'none',
+                                                '&:focus': {
+                                                    border: 'none',
+                                                },
                                             },
                                             '& .MuiInputBase-input': {
-                                              padding: '10px', // Adjust padding if needed
+                                                padding: '10px',
                                             },
                                         }}
                                     />
                                 </Grid>
 
-                                   {/* Location Input */}
-                                    <Grid item xs={12} sm={2} md={2}>
+                                {/* Location Input */}
+                                <Grid item xs={12} sm={2} md={2}>
                                     <TextField
                                         fullWidth
                                         label="Location"
@@ -239,26 +260,26 @@ const PastEventsPage = () => {
                                         value={searchParams.location}
                                         onChange={handleSearchChange}
                                         InputProps={{
-                                        endAdornment: <InputAdornment position="end">📍</InputAdornment>,
+                                            endAdornment: <InputAdornment position="end">📍</InputAdornment>,
                                         }}
                                         sx={{
-                                            backgroundColor: 'white', // Set background color to white
-                                            borderRadius: '10px', // Round corners
+                                            backgroundColor: 'white',
+                                            borderRadius: '10px',
                                             '& .MuiOutlinedInput-root': {
-                                              border: 'none', // Remove the default border
-                                              '&:focus': {
-                                                border: 'none', // Remove border when focused
-                                              },
+                                                border: 'none',
+                                                '&:focus': {
+                                                    border: 'none',
+                                                },
                                             },
                                             '& .MuiInputBase-input': {
-                                              padding: '10px', // Adjust padding if needed
+                                                padding: '10px',
                                             },
-                                          }}
+                                        }}
                                     />
                                 </Grid>
 
-                                    {/* Host Input */}
-                                    <Grid item xs={12} sm={2} md={2}>
+                                {/* Host Input */}
+                                <Grid item xs={12} sm={2} md={2}>
                                     <TextField
                                         fullWidth
                                         label="Host"
@@ -266,26 +287,26 @@ const PastEventsPage = () => {
                                         value={searchParams.host}
                                         onChange={handleSearchChange}
                                         InputProps={{
-                                        endAdornment: <InputAdornment position="end">🏢</InputAdornment>,
+                                            endAdornment: <InputAdornment position="end">🏢</InputAdornment>,
                                         }}
                                         sx={{
-                                            backgroundColor: 'white', // Set background color to white
-                                            borderRadius: '10px', // Round corners
+                                            backgroundColor: 'white',
+                                            borderRadius: '10px',
                                             '& .MuiOutlinedInput-root': {
-                                              border: 'none', // Remove the default border
-                                              '&:focus': {
-                                                border: 'none', // Remove border when focused
-                                              },
+                                                border: 'none',
+                                                '&:focus': {
+                                                    border: 'none',
+                                                },
                                             },
                                             '& .MuiInputBase-input': {
-                                              padding: '10px', // Adjust padding if needed
+                                                padding: '10px',
                                             },
                                         }}
                                     />
                                 </Grid>
 
-                                    {/* Grade Input */}
-                                    <Grid item xs={12} sm={2} md={2}>
+                                {/* Grade Input */}
+                                <Grid item xs={12} sm={2} md={2}>
                                     <TextField
                                         fullWidth
                                         label="Grade"
@@ -293,33 +314,33 @@ const PastEventsPage = () => {
                                         value={searchParams.grade}
                                         onChange={handleSearchChange}
                                         sx={{
-                                            backgroundColor: 'white', 
-                                            borderRadius: '10px', 
+                                            backgroundColor: 'white',
+                                            borderRadius: '10px',
                                             '& .MuiOutlinedInput-root': {
-                                              border: 'none', // Remove the default border
-                                              '&:focus': {
-                                                border: 'none', // Remove border when focused
-                                              },
+                                                border: 'none',
+                                                '&:focus': {
+                                                    border: 'none',
+                                                },
                                             },
                                             '& .MuiInputBase-input': {
-                                              padding: '10px', // Adjust padding if needed
+                                                padding: '10px',
                                             },
-                                          }}
+                                        }}
                                     />
                                 </Grid>
 
-                                    {/* Buttons in Same Row */}
-                                    <Grid item xs={12} sm={2} md={4} display="flex" justifyContent="space-between">
+                                {/* Buttons in Same Row */}
+                                <Grid item xs={12} sm={2} md={4} display="flex" justifyContent="space-between">
                                     <Button
                                         variant="contained"
                                         onClick={handleSearch}
                                         sx={{
-                                        width: '48%',
-                                        backgroundColor: '#F97316',
-                                        '&:hover': {
-                                            backgroundColor: '#ea580c',
-                                        },
-                                        borderRadius: '5px',
+                                            width: '48%',
+                                            backgroundColor: '#F97316',
+                                            '&:hover': {
+                                                backgroundColor: '#ea580c',
+                                            },
+                                            borderRadius: '5px',
                                         }}
                                         aria-label="Search events"
                                     >
@@ -329,14 +350,14 @@ const PastEventsPage = () => {
                                         variant="outlined"
                                         onClick={handleClearSearch}
                                         sx={{
-                                        width: '48%',
-                                        color: '#fff',
-                                        borderColor: '#fff',
-                                        '&:hover': {
-                                            backgroundColor: '#e0e0e0',
-                                            color: '#000',
-                                        },
-                                        borderRadius: '5px',
+                                            width: '48%',
+                                            color: '#fff',
+                                            borderColor: '#fff',
+                                            '&:hover': {
+                                                backgroundColor: '#e0e0e0',
+                                                color: '#000',
+                                            },
+                                            borderRadius: '5px',
                                         }}
                                         aria-label="Clear search"
                                     >
@@ -345,7 +366,6 @@ const PastEventsPage = () => {
                                 </Grid>
                             </Grid>
                         </Box>
-
 
                         {/* Display no results message if no events match */}
                         {noResults && (
@@ -357,20 +377,22 @@ const PastEventsPage = () => {
                         <Grid container spacing={4} sx={{ mt: 2 }}>
                             {filteredEvents.map((event) => (
                                 <Grid item xs={12} sm={6} md={4} key={event._id}>
-                                    <Card 
-                                        sx={{ 
-                                        height: '100%',
-                                        display: 'flex',
-                                        flexDirection: 'column',
+                                    <Card
+                                        sx={{
+                                            height: '100%',
+                                            display: 'flex',
+                                            flexDirection: 'column',
                                             transition: 'transform 0.2s, box-shadow 0.2s',
-                                        '&:hover': {
-                                            transform: 'translateY(-4px)',
+                                            '&:hover': {
+                                                transform: 'translateY(-4px)',
                                                 boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
                                             },
                                             borderRadius: '16px',
                                             overflow: 'hidden',
                                         }}
                                     >
+                                        {/* Card Content */}
+
                                         <Box 
                                             sx={{ 
                                                 position: 'relative',
@@ -485,12 +507,14 @@ const PastEventsPage = () => {
                                             </Box>
                                         </Box>
 
+                                        
                                         <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                                            <Typography 
-                                                variant="h5" 
-                                                component="h2" 
-                                                gutterBottom 
-                                                sx={{ 
+                                            {/* Event Details */}
+                                            <Typography
+                                                variant="h5"
+                                                component="h2"
+                                                gutterBottom
+                                                sx={{
                                                     fontWeight: 'bold',
                                                     mb: 1,
                                                     color: 'text.primary'
@@ -499,11 +523,11 @@ const PastEventsPage = () => {
                                                 {event.schoolName}
                                             </Typography>
 
-                                            <Typography 
-                                                variant="subtitle1" 
-                                                sx={{ 
+                                            <Typography
+                                                variant="subtitle1"
+                                                sx={{
                                                     mb: 2,
-                                                    color: '#0277bd', // Blue color for organization
+                                                    color: '#0277bd',
                                                     fontWeight: 500,
                                                     display: 'flex',
                                                     alignItems: 'center',
@@ -635,7 +659,7 @@ const PastEventsPage = () => {
                             </Typography>
                             <IconButton onClick={() => setAllReviewsDialog(false)}>
                                 <CloseIcon />
-                    </IconButton>
+                            </IconButton>
                         </Box>
                     </DialogTitle>
                     <DialogContent>
@@ -652,7 +676,7 @@ const PastEventsPage = () => {
                                 </Typography>
                             </Box>
                             <ReviewList reviews={selectedEvent?.reviews} />
-                    </Box>
+                        </Box>
                     </DialogContent>
                 </Dialog>
             </Container>
