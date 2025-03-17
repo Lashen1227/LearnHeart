@@ -81,6 +81,28 @@ const ImageGallery = ({ images, open, onClose, initialImageIndex = 0 }) => {
             </IconButton>
 
             <DialogContent sx={{ p: 0, position: 'relative', height: '90vh' }}>
+                {/* Zoom Controls - Moved to top left */}
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        right: 175,
+                        top: 16,
+                        display: 'flex',
+                        gap: 1,
+                        bgcolor: 'rgba(0, 0, 0, 0.5)',
+                        borderRadius: 1,
+                        p: 0.5,
+                        zIndex: 2,
+                    }}
+                >
+                    <IconButton onClick={handleZoomOut} sx={{ color: 'white' }}>
+                        <ZoomOutIcon />
+                    </IconButton>
+                    <IconButton onClick={handleZoomIn} sx={{ color: 'white' }}>
+                        <ZoomInIcon />
+                    </IconButton>
+                </Box>
+
                 {/* Main Image Display */}
                 <Box
                     sx={{
@@ -105,27 +127,6 @@ const ImageGallery = ({ images, open, onClose, initialImageIndex = 0 }) => {
                             transition: 'transform 0.3s ease',
                         }}
                     />
-
-                    {/* Zoom Controls */}
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            right: 16,
-                            bottom: 16,
-                            display: 'flex',
-                            gap: 1,
-                            bgcolor: 'rgba(0, 0, 0, 0.5)',
-                            borderRadius: 1,
-                            p: 0.5,
-                        }}
-                    >
-                        <IconButton onClick={handleZoomOut} sx={{ color: 'white' }}>
-                            <ZoomOutIcon />
-                        </IconButton>
-                        <IconButton onClick={handleZoomIn} sx={{ color: 'white' }}>
-                            <ZoomInIcon />
-                        </IconButton>
-                    </Box>
                 </Box>
 
                 {/* Thumbnails */}
