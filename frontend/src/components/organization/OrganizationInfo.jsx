@@ -8,10 +8,12 @@ import AddResource from "../../pages/resourceBankPages/AddResource";
 import CreatePost from "../../components/communityForm/CreatePost";
 import PastEventForm from "../pastEvents/PastEventForm";
 import PastEventList from "../pastEvents/PastEventList";
+import CheckCV from "./CheckCV";
 
 const OrganizationInfo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+    const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
     const [isEventModalOpen, setIsEventModalOpen] = useState(false);
     const [isReviewsOpen, setIsReviewsOpen] = useState(false);
     
@@ -57,7 +59,7 @@ const OrganizationInfo = () => {
                 <div className="flex flex-col items-center w-full pb-6 mt-4 space-y-3">
                     {/* Button Group - Placed in a Flex Row */}
                     <div className="grid justify-center grid-cols-2 gap-4 width-full">
-                        <button className="px-3 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue">
+                        <button className="px-3 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsSkillModalOpen(true)}>
                             Verify CV Skills
                         </button>
                         <button className="px-3 py-2 duration-300 bg-white border rounded-xl hover:scale-105 hover:bg-blue-50 text-custom-blue" onClick={() => setIsPostModalOpen(true)}>
@@ -125,7 +127,7 @@ const OrganizationInfo = () => {
                     sx={{
                         transform: "translate(-50%, -50%)",
                         bgcolor: "#EAEFFB",
-                        p: 3,
+                        p: 4,
                         borderRadius: 2,
                         width: { xs: "90%", sm: "70%", md: "50%" },
                         maxWidth: "800px",
@@ -162,6 +164,35 @@ const OrganizationInfo = () => {
                         <CloseIcon />
                     </IconButton>
                     <PastEventForm onClose={() => setIsEventModalOpen(false)} />
+                </Box>
+            </Modal>
+
+            <Modal open={isSkillModalOpen} onClose={() => setIsSkillModalOpen(false)}>
+                <Box 
+                position="absolute" 
+                top="50%" 
+                left="50%" 
+                sx={{
+                    transform: "translate(-50%, -50%)",
+                    bgcolor: "#EAEFFB", 
+                    p: 3, 
+                    borderRadius: 2,
+                    width: {
+                    xs: '100%',
+                    sm: '95%',
+                    md: '80%',
+                    lg: '70%',
+                    xl: '55%'
+                    },
+                    maxHeight: "90vh", 
+                    overflowY: "auto",
+                    scrollbarWidth: "none",
+                }}
+                >
+                <IconButton sx={{ position: "absolute", top: 8, right: 8 }} onClick={() => setIsSkillModalOpen(false)}>
+                    <CloseIcon />
+                </IconButton>
+                <CheckCV />
                 </Box>
             </Modal>
 

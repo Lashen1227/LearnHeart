@@ -8,7 +8,6 @@ import {
     Grid,
     Card,
     CardContent,
-    CardMedia,
     Button,
     Rating,
     TextField,
@@ -16,7 +15,6 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
-    Chip,
     Divider,
     IconButton,
     InputAdornment,
@@ -39,7 +37,6 @@ const PastEventsPage = () => {
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [reviewDialog, setReviewDialog] = useState(false);
-    const [allReviewsDialog, setAllReviewsDialog] = useState(false);
     const [newReview, setNewReview] = useState({ rating: 0, comment: '' });
     const [loading, setLoading] = useState(true);
     const [noResults, setNoResults] = useState(false);
@@ -177,7 +174,7 @@ const PastEventsPage = () => {
     };
 
     return (
-        <div>
+        <div className='bg-custom-page'>
             <Navbar />
             <Container
                 maxWidth="xl"
@@ -233,19 +230,16 @@ const PastEventsPage = () => {
                             sx={{
                                 mb: 4,
                                 backgroundColor: '#5EA9A9',
-                                p: 3,
+                                p: 2,
                                 borderRadius: '16px',
                                 boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
                                 border: '1px solid #e0e7ff',
                             }}
                         >
-                            <Typography variant="h6" sx={{ mb: 3, color: '#1a237e', fontWeight: 600 }}>
-                                Find Past Events
-                            </Typography>
                             <Grid container spacing={3} alignItems="center">
                                 {/* Date Input */}
                                 <Grid item xs={12} sm={6} md={3}>
-                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1a237e', fontWeight: 600 }}>
+                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1B2336', fontWeight: 600 }}>
                                         Date
                                     </Typography>
                                     <TextField
@@ -266,11 +260,9 @@ const PastEventsPage = () => {
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
+                                            borderRadius: '12px',
                                             '& .MuiOutlinedInput-root': {
                                                 borderRadius: '12px',
-                                                '&:hover fieldset': {
-                                                    borderColor: '#1a237e',
-                                                },
                                             },
                                         }}
                                     />
@@ -278,7 +270,7 @@ const PastEventsPage = () => {
 
                                 {/* Location Input */}
                                 <Grid item xs={12} sm={6} md={3}>
-                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1a237e', fontWeight: 600 }}>
+                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1B2336', fontWeight: 600 }}>
                                         Location
                                     </Typography>
                                     <TextField
@@ -295,11 +287,9 @@ const PastEventsPage = () => {
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
+                                            borderRadius: '12px',
                                             '& .MuiOutlinedInput-root': {
                                                 borderRadius: '12px',
-                                                '&:hover fieldset': {
-                                                    borderColor: '#1a237e',
-                                                },
                                             },
                                         }}
                                     />
@@ -307,7 +297,7 @@ const PastEventsPage = () => {
 
                                 {/* Host Input */}
                                 <Grid item xs={12} sm={6} md={3}>
-                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1a237e', fontWeight: 600 }}>
+                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1B2336', fontWeight: 600 }}>
                                         Host Organization
                                     </Typography>
                                     <TextField
@@ -324,11 +314,9 @@ const PastEventsPage = () => {
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
+                                            borderRadius: '12px',
                                             '& .MuiOutlinedInput-root': {
                                                 borderRadius: '12px',
-                                                '&:hover fieldset': {
-                                                    borderColor: '#1a237e',
-                                                },
                                             },
                                         }}
                                     />
@@ -336,7 +324,7 @@ const PastEventsPage = () => {
 
                                 {/* Grade Input */}
                                 <Grid item xs={12} sm={6} md={3}>
-                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1a237e', fontWeight: 600 }}>
+                                    <Typography variant="subtitle2" sx={{ mb: 1, color: '#1B2336', fontWeight: 600 }}>
                                         Grade
                                     </Typography>
                                     <TextField
@@ -353,11 +341,9 @@ const PastEventsPage = () => {
                                         }}
                                         sx={{
                                             backgroundColor: 'white',
+                                            borderRadius: '12px',
                                             '& .MuiOutlinedInput-root': {
                                                 borderRadius: '12px',
-                                                '&:hover fieldset': {
-                                                    borderColor: '#1a237e',
-                                                },
                                             },
                                         }}
                                     />
@@ -408,7 +394,7 @@ const PastEventsPage = () => {
                             )}
                         </Box>
 
-                        <Grid container spacing={4} sx={{ mt: 2 }}>
+                        <Grid container spacing={3} sx={{ mt: 2 }}>
                             {filteredEvents.map((event) => (
                                 <Grid item xs={12} sm={6} md={4} key={event._id}>
                                     <Card
@@ -574,7 +560,7 @@ const PastEventsPage = () => {
 
                                             <Divider sx={{ my: 2 }} />
 
-                                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                                            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1.5 }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                                     <Event sx={{ color: 'primary.main' }} />
                                                     <Typography variant="body2">
@@ -700,21 +686,23 @@ const PastEventsPage = () => {
                                         {calculateAverageRating(selectedEvent?.reviews).toFixed(1)} ({selectedEvent?.reviews?.length || 0} reviews)
                                     </Typography>
                                 </Box>
-                                <Button
-                                    variant="outlined"
-                                    startIcon={<CommentIcon />}
-                                    onClick={() => handleAddReview(selectedEvent)}
-                                    sx={{
-                                        borderColor: '#1a237e',
-                                        color: '#1a237e',
-                                        '&:hover': {
-                                            borderColor: '#0d47a1',
-                                            backgroundColor: 'rgba(26, 35, 126, 0.04)'
-                                        }
-                                    }}
-                                >
-                                    Add Review
-                                </Button>
+                                {user && (
+                                    <Button
+                                        variant="outlined"
+                                        startIcon={<CommentIcon />}
+                                        onClick={() => handleAddReview(selectedEvent)}
+                                        sx={{
+                                            borderColor: '#1a237e',
+                                            color: '#1a237e',
+                                            '&:hover': {
+                                                borderColor: '#0d47a1',
+                                                backgroundColor: 'rgba(26, 35, 126, 0.04)'
+                                            }
+                                        }}
+                                    >
+                                        Add Review
+                                    </Button>
+                                )}
                             </Box>
                             {selectedEvent?.reviews && selectedEvent.reviews.length > 0 ? (
                                 <ReviewList reviews={selectedEvent.reviews} />

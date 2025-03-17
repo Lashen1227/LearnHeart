@@ -54,11 +54,6 @@ const PastEventList = ({ organizationId, onClose }) => {
         }
     };
 
-    const handleAddReview = (event) => {
-        setSelectedEvent(event);
-        setIsReviewDialogOpen(true);
-    };
-
     const handleReviewSubmit = async () => {
         try {
             await axios.post(`http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`, newReview);
@@ -73,7 +68,7 @@ const PastEventList = ({ organizationId, onClose }) => {
     return (
         <Box sx={{ p: 3, height: '100%', overflowY: 'auto', backgroundColor: '#EAEFFB' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Typography variant="h5">Past Events</Typography>
+                <Typography variant="h6">Past Events</Typography>
                 <IconButton onClick={onClose}>×</IconButton>
             </Box>
 
@@ -82,20 +77,24 @@ const PastEventList = ({ organizationId, onClose }) => {
                     <Grid item xs={12} key={event._id}>
                         <Card>
                             <CardContent>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                    <Box>
-                                        <Typography variant="h6">{event.schoolName}</Typography>
-                                        <Typography color="textSecondary">{event.location}</Typography>
-                                        <Typography>Grade: {event.grade}</Typography>
-                                        <Typography>Subject: {event.subject}</Typography>
-                                        <Typography>
-                                            Date: {new Date(event.seminarDate).toLocaleDateString()}
-                                        </Typography>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                <Box>
+                                    <Typography variant="h7">{event.schoolName} | </Typography>
+                                    <Typography variant="h7" color="textSecondary"> {event.location}</Typography>
+
+                                    {/* Row for Grade, Subject, Date */}
+                                    <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+                                        <Typography variant="body2">Grade: {event.grade} |</Typography>
+                                        <Typography variant="body2">Subject: {event.subject} |</Typography>
+                                        <Typography variant="body2">Date: {new Date(event.seminarDate).toLocaleDateString()}</Typography>
                                     </Box>
-                                    <IconButton onClick={() => handleDeleteClick(event)} color="error">
-                                        <DeleteIcon />
-                                    </IconButton>
                                 </Box>
+
+                                <IconButton onClick={() => handleDeleteClick(event)} color="error">
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Box>
+
 
                                 <Box sx={{ mt: 2 }}>
                                     <Typography variant="subtitle1">Images:</Typography>
@@ -123,14 +122,6 @@ const PastEventList = ({ organizationId, onClose }) => {
                                     ) : (
                                         <Typography variant="body2" color="textSecondary">No reviews yet</Typography>
                                     )}
-                                    <Button
-                                        variant="outlined"
-                                        size="small"
-                                        onClick={() => handleAddReview(event)}
-                                        sx={{ mt: 1 }}
-                                    >
-                                        Add Review
-                                    </Button>
                                 </Box>
                             </CardContent>
                         </Card>

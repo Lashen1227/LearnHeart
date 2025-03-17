@@ -38,7 +38,7 @@ export default function Footer() {
                 <a className="text-white hover:text-gray-300"><Link to={'/contact-us'}>Contact Us</Link></a>
               </p>
               <p className="mb-4">
-                <a className="text-white hover:text-gray-300"><Link to={'/announcements'}>Announcements</Link></a>
+                <a className="text-white hover:text-gray-300"><Link to={'/posts'}>Announcements</Link></a>
               </p>
               <p>
                 <a className="text-white hover:text-gray-300"><Link to={'/sign-up'}>Join With Us</Link></a>
