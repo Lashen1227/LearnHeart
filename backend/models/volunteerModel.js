@@ -31,7 +31,8 @@ const volunteerSchema = new Schema({
         required: true
     },
     skills: {
-        type: String,
+        type: [String],
+        default: [],
         required: false
     },
     email: {
