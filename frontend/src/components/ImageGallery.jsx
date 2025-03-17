@@ -53,15 +53,19 @@ const ImageGallery = ({ images, open, onClose, initialImageIndex = 0 }) => {
         <Dialog
             open={open}
             onClose={onClose}
-            maxWidth="xl"
-            fullWidth
-            onKeyDown={handleKeyDown}
+            maxWidth={false}
             PaperProps={{
                 sx: {
                     bgcolor: 'background.paper',
                     position: 'relative',
+                    maxHeight: '80vh',
+                    maxWidth: '90vw !important',
+                    width: 'auto',
+                    minWidth: '600px',
+                    margin: 2,
                 }
             }}
+            onKeyDown={handleKeyDown}
         >
             <IconButton
                 onClick={onClose}
@@ -80,12 +84,19 @@ const ImageGallery = ({ images, open, onClose, initialImageIndex = 0 }) => {
                 <CloseIcon />
             </IconButton>
 
-            <DialogContent sx={{ p: 0, position: 'relative', height: '90vh' }}>
-                {/* Zoom Controls - Moved to top left */}
+            <DialogContent sx={{ 
+                p: 0, 
+                position: 'relative', 
+                height: '75vh',
+                display: 'flex', 
+                flexDirection: 'column',
+                overflow: 'hidden'
+            }}>
+                {/* Zoom Controls */}
                 <Box
                     sx={{
                         position: 'absolute',
-                        right: 175,
+                        left: 16,
                         top: 16,
                         display: 'flex',
                         gap: 1,
@@ -106,14 +117,14 @@ const ImageGallery = ({ images, open, onClose, initialImageIndex = 0 }) => {
                 {/* Main Image Display */}
                 <Box
                     sx={{
-                        height: 'calc(100% - 96px)', // Account for thumbnail height
+                        flex: 1,
                         display: 'flex',
-                        flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
                         bgcolor: 'black',
                         overflow: 'hidden',
                         position: 'relative',
+                        height: 'calc(100% - 80px)',
                     }}
                 >
                     <img
@@ -132,7 +143,7 @@ const ImageGallery = ({ images, open, onClose, initialImageIndex = 0 }) => {
                 {/* Thumbnails */}
                 <Box
                     sx={{
-                        height: '96px',
+                        height: '80px',
                         bgcolor: 'black',
                         display: 'flex',
                         alignItems: 'center',
@@ -149,8 +160,8 @@ const ImageGallery = ({ images, open, onClose, initialImageIndex = 0 }) => {
                                 setZoom(1);
                             }}
                             sx={{
-                                width: '80px',
-                                height: '80px',
+                                width: '70px',
+                                height: '70px',
                                 flexShrink: 0,
                                 cursor: 'pointer',
                                 border: index === activeStep ? '2px solid white' : '2px solid transparent',
