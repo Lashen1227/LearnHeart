@@ -24,7 +24,7 @@ cd ml/chatbot
 Next, install the necessary Python packages by running the following command:
 
 ```bash
-pip install flask flask-cors
+pip install flask flask-cors gunicorn
 ```
 
 Alternatively, you can install all dependencies at once using the `requirements.txt` file:
@@ -53,13 +53,3 @@ python app.py
 
 This will start the server, and you can access the chatbot backend through the API endpoints.
 
-## Folder Structure
-
-```
-ml/
-└── chatbot/
-    ├── app.py
-    ├── data_source.json
-    ├── README.md
-    └── requirements.txt
-```
