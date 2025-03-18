@@ -17,7 +17,7 @@ function SclDashboard() {
     const fetchCompletedSessions = async () => {
       try {
         const response1 = await axios.get(
-          "http://localhost:3001/api/seminars/past"
+          "https://learnheart-server.onrender.com/api/seminars/past"
         );
         setCompletedSessions(response1.data);
       } catch (error) {
@@ -28,7 +28,7 @@ function SclDashboard() {
     const fetchScheduledSessions = async () => {
       try {
         const response2 = await axios.get(
-          "http://localhost:3001/api/seminars/upcoming"
+          "https://learnheart-server.onrender.com/api/seminars/upcoming"
         );
         setScheduledSessions(response2.data);
       } catch (error) {

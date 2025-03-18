@@ -120,9 +120,9 @@ const UpcomingOrganization = () => {
     setIsLoading(true);
     try {
       const [orgResponse, seminarResponse, schoolResponse] = await Promise.all([
-        axios.get('http://localhost:3001/api/organizations'),
-        axios.get('http://localhost:3001/api/seminars'),
-        axios.get('http://localhost:3001/api/schools')
+        axios.get('https://learnheart-server.onrender.com/api/organizations'),
+        axios.get('https://learnheart-server.onrender.com/api/seminars'),
+        axios.get('https://learnheart-server.onrender.com/api/schools')
       ]);
       
       setOrganizations(orgResponse.data);
@@ -171,7 +171,7 @@ const UpcomingOrganization = () => {
 
   const handleComplete = async (completedSession) => {
     try {
-      await axios.put(`http://localhost:3001/api/seminars/${completedSession.id}`, { status: 'completed' });
+      await axios.put(`https://learnheart-server.onrender.com/api/seminars/${completedSession.id}`, { status: 'completed' });
       setSpecificSeminar(prev => prev.filter(session => session.id !== completedSession.id));
     } catch (error) {
       console.error('Error updating seminar status:', error);
