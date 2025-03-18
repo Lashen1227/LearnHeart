@@ -35,7 +35,7 @@ const CheckCV = () => {
 
     // Local API = http://127.0.0.1:5000/upload
     try {
-      const response = await fetch("https://cv-skill-extractor.onrender.com/upload", {
+      const response = await fetch("https://learnheart-skill-server.onrender.com/upload", {
         method: "POST",
         body: formData,
       });

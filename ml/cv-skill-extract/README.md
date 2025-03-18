@@ -29,7 +29,7 @@ cd ml/cv-skill-extract
 Next, install the necessary Python packages by running the following command:
 
 ```bash
-pip install flask flask-cors python-dotenv PyPDF2 python-docx requests langchain openai
+pip install flask flask-cors python-dotenv PyPDF2 python-docx requests langchain openai gunicorn
 ```
 
 Alternatively, you can install all dependencies at once using the `requirements.txt` file:
