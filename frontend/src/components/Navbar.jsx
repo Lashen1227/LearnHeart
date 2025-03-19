@@ -190,9 +190,9 @@ export default function Navbar() {
               Contact Us
             </Link>
             <Link
-              to="/announcements"
+              to="/posts"
               className={`text-base ${
-                isActive("/announcements") ? "text-custom-orange" : "text-white"
+                isActive("/posts") ? "text-custom-orange" : "text-white"
               } hover:text-custom-orange transition duration-300`}
               onClick={() => setIsOpen(false)}
             >
