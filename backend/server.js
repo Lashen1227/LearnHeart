@@ -8,7 +8,6 @@ const app = express();
 const PORT = 3001;
 //app.use(withSession0);
 
-const { v2: cloudinary } = require('cloudinary');
 const bodyParser = require("body-parser");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -22,13 +21,6 @@ const schoolRoutes = require('./routes/schoolRoutes');
 const postRoutes = require('./routes/postRoute');
 const resourceRoutes = require('./routes/resourceRoutes');
 const pastEventRoutes = require('./routes/pastEventRoutes');
-
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
 
 // Middleware
 app.use(cors(
