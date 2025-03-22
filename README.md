@@ -14,7 +14,7 @@ LearnHeart aligns with **United Nations Sustainable Development Goal 4** (Qualit
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React (Vite) + Tailwind CSS
+- **Frontend:** React (Vite) + Tailwind CSS + Material UI
 - **Backend:** Node.js + Express.js
 - **Database:** MongoDB (Mongoose)
 - **Authentication:** Clerk
@@ -51,7 +51,7 @@ npm run dev
 ```
 
 ## 🎥 Demo
-[Watch Demo](https://youtu.be/ZPzg_8ERfw8)
+[Watch Demo](https://youtu.be/Gxb9RMJ9Ars?si=mJrlfc2uPnCPl5Vr)
 
 
 ## 📜 License
