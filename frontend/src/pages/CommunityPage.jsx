@@ -6,27 +6,10 @@ import Footer from "../components/Footer";
 import axios from "axios";
 import moment from "moment";
 import Loader from "../components/Spinner";
-import { io } from "socket.io-client";
-
-const socket = io(
-  [ 
-    "https://learnheart-server.onrender.com", 
-    "https://learnheart.vercel.app/socket.io",
-    "https://learnheart.vercel.app/socket.io/?EIO=4&transport=polling&t=mrmuace6"
-  ],  {
-  path: "/socket.io",
-  transports: ["websocket", "polling"],
-  reconnection: true,
-  reconnectionAttempts: 5,
-  reconnectionDelay: 2000,
-});
-
 
 const CommunityPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [postAddLike, setPostAddLike] = useState([]);
-  const [postRemoveLike, setPostRemoveLike] = useState([]);
 
   // Display posts
   const showPosts = async () => {
@@ -45,24 +28,6 @@ const CommunityPage = () => {
     showPosts();
   }, []);
 
-  useEffect(() => {
-    socket.on("add-like", (newPosts) => {
-      setPostAddLike(newPosts ?? []);
-      setPostRemoveLike([]);
-    });
-    socket.on("remove-like", (newPosts) => {
-      setPostRemoveLike(newPosts ?? []);
-      setPostAddLike([]);
-    });
-
-    return () => {
-      socket.off("add-like");
-      socket.off("remove-like");
-    };
-  }, []);
-
-  const uiPosts = postAddLike.length > 0 ? postAddLike : postRemoveLike.length > 0 ? postRemoveLike : posts;
-
   return (
     <div className="flex flex-col min-h-screen bg-custom-page">
       <Navbar />
@@ -77,7 +42,7 @@ const CommunityPage = () => {
             {loading ? (
               <Loader />
             ) : (
-              (uiPosts ?? []).map((post, index) => (
+              (posts ?? []).map((post, index) => (
                 <Grid item xs={4} sm={4} md={4} key={post._id || index}>
                   <PostCard
                     id={post._id}
