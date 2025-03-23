@@ -9,11 +9,13 @@ import Loader from "../components/Spinner";
 import { io } from "socket.io-client";
 
 const socket = io("https://learnheart-server.onrender.com", {
-  reconnection: true,
-  reconnectionAttempts: 20,
-  reconnectionDelay: 2000,
+  path: "/socket.io",
   transports: ["websocket", "polling"],
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 2000,
 });
+
 
 const CommunityPage = () => {
   const [posts, setPosts] = useState([]);
