@@ -230,7 +230,7 @@ const ResourceBank = () => {
               Finding experienced speakers for students was a challenge, 
               but now it is simple.
               </p>
-              <p className="mt-2 font-semibold text-right">— Principal, </p>
+              <p className="mt-2 font-semibold text-right">- Principal -</p>
             </div>
 
             {/* Testimonial 2 */}
@@ -239,7 +239,7 @@ const ResourceBank = () => {
               As a volunteer, I wanted to give back to rural schools, but finding the right opportunities was difficult. 
               It&apos;s an incredible platform that truly bridges the gap in education!
               </p>
-              <p className="mt-2 font-semibold text-right">— Volunteer, </p>
+              <p className="mt-2 font-semibold text-right">- Volunteer -</p>
             </div>
 
             {/* Testimonial 3 */}
@@ -248,7 +248,7 @@ const ResourceBank = () => {
               Thanks to LearnHeart, I attended a seminar on software development that changed my perspective. 
               The resource bank also helped me access valuable study materials.
               </p>
-              <p className="mt-2 font-semibold text-right">— Student, </p>
+              <p className="mt-2 font-semibold text-right">- Student -</p>
             </div>
           </div>
         </div>
