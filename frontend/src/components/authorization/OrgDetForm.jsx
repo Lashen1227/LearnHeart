@@ -66,7 +66,7 @@ function OrgDetForm() {
     });
 
     try {
-      await axios.post("https://learnheart-server.onrender.com/api/organizations/", {
+      await axios.post("http://localhost:3001/api/organizations/", {
         orgID: OrgID,
         name: Name,
         description: Description,

@@ -18,13 +18,13 @@ export default function OrgSearchList() {
       try {
         const response = await axios.get(apiUrl);
         switch (apiUrl) {
-          case "https://learnheart-server.onrender.com/api/organizations":
+          case "http://localhost:3001/api/organizations":
             setOrganizations(response.data);
             break;
-          case "https://learnheart-server.onrender.com/api/volunteers":
+          case "http://localhost:3001/api/volunteers":
             setAllVolunteers(response.data);
             break;
-          case "https://learnheart-server.onrender.com/api/seminars":
+          case "http://localhost:3001/api/seminars":
             setAllSeminars(response.data);
             break;
           default:
@@ -38,10 +38,10 @@ export default function OrgSearchList() {
     };
 
     fetchData(
-      "https://learnheart-server.onrender.com/api/organizations"
+      "http://localhost:3001/api/organizations"
     );
-    fetchData("https://learnheart-server.onrender.com/api/volunteers");
-    fetchData("https://learnheart-server.onrender.com/api/seminars");
+    fetchData("http://localhost:3001/api/volunteers");
+    fetchData("http://localhost:3001/api/seminars");
   }, []);
 
   const handleSearchChange = (event) => {

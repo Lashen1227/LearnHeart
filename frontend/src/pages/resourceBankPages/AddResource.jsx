@@ -68,7 +68,7 @@ const AddResource = () => {
     }
 
     try {
-      const response = await fetch("https://learnheart-server.onrender.com/api/resources", {
+      const response = await fetch("http://localhost:3001/api/resources", {
         method: "POST",
         body: formData,
       });

@@ -1,11 +1,9 @@
-import HomePage from './pages/HomePage';
-import { SpeedInsights } from "@vercel/speed-insights/react";
+import HomePage from './pages/HomePage'
 
 function App() {
   return (
     <>
       <HomePage />
-      <SpeedInsights />
     </>
   )
 }

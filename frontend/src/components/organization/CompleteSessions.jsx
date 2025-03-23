@@ -113,9 +113,9 @@ const CompletedOrganization = () => {
     setIsLoading(true);
     try {
       const [orgResponse, seminarResponse, schoolResponse] = await Promise.all([
-        axios.get('https://learnheart-server.onrender.com/api/organizations'),
-        axios.get('https://learnheart-server.onrender.com/api/seminars'),
-        axios.get('https://learnheart-server.onrender.com/api/schools')
+        axios.get('http://localhost:3001/api/organizations'),
+        axios.get('http://localhost:3001/api/seminars'),
+        axios.get('http://localhost:3001/api/schools')
       ]);
       setOrganizations(orgResponse.data);
       setSeminars(seminarResponse.data);

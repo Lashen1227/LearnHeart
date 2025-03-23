@@ -33,9 +33,9 @@ const SeminarRequests = () => {
     setLoading(true);
     try {
       const [orgResponse, schoolResponse, seminarResponse] = await Promise.all([
-        axios.get("https://learnheart-server.onrender.com/api/organizations"),
-        axios.get("https://learnheart-server.onrender.com/api/schools"),
-        axios.get("https://learnheart-server.onrender.com/api/seminars")
+        axios.get("http://localhost:3001/api/organizations"),
+        axios.get("http://localhost:3001/api/schools"),
+        axios.get("http://localhost:3001/api/seminars")
       ]);
 
       setOrganizations(orgResponse.data);
@@ -77,7 +77,7 @@ const SeminarRequests = () => {
 
   const handleAccept = async (seminarId) => {
     try {
-      await axios.put(`https://learnheart-server.onrender.com/api/seminars/${seminarId}`, { status: "accepted" });
+      await axios.put(`http://localhost:3001/api/seminars/${seminarId}`, { status: "accepted" });
       setFilteredSessions(prev => prev.filter(seminar => seminar._id !== seminarId));
     } catch (error) {
       console.error("Error accepting seminar:", error);
@@ -86,7 +86,7 @@ const SeminarRequests = () => {
 
   const handleReject = async (seminarId) => {
     try {
-      await axios.put(`https://learnheart-server.onrender.com/api/seminars/${seminarId}`, { status: "rejected" });
+      await axios.put(`http://localhost:3001/api/seminars/${seminarId}`, { status: "rejected" });
       setFilteredSessions(prev => prev.filter(seminar => seminar._id !== seminarId));
     } catch (error) {
       console.error("Error rejecting seminar:", error);
