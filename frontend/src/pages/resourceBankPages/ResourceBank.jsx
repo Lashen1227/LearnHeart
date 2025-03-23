@@ -93,38 +93,38 @@ const ResourceBank = () => {
         <div className="min-h-screen p-6 bg-custom-page">
           {/* Subject Search Bar */}
           <div className="flex flex-col items-center justify-center p-3 mt-20 mb-6 rounded-lg md:flex-row bg-custom-light-green">
-          <div className="flex flex-col items-center mr-4 md:flex-row">
-            <label htmlFor="subject" className="mr-2 font-semibold text-custom-black">Subject:</label>
-            <input
-              id="subject"
-              type="text"
-              placeholder="Search subject here"
-              className="px-4 py-2 border border-gray-300 rounded-md w-80 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-          </div>
+            <div className="flex flex-col items-center mb-4 md:items-start md:flex-row md:mb-0">
+              <label htmlFor="subject" className="mr-2 font-semibold text-custom-black">Subject:</label>
+              <input
+                id="subject"
+                type="text"
+                placeholder="Search subject here"
+                className="px-4 py-2 border border-gray-300 rounded-md w-full max-w-[400px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
+            </div>
 
-          {/* Grade Dropdown */}
-          <div className="flex flex-col items-center mr-4 md:flex-row">
-            <label htmlFor="grade" className="mr-2 font-semibold text-custom-black">Grade:</label>
-            <select
-              id="grade"
-              className={`px-4 py-2 w-80 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${isGradeSelected ? 'text-custom-black' : 'text-gray-400'}`}
-              value={grade}
-              onChange={handleGradeChange}
-            >
-              <option className="text-custom-black" value="" disabled hidden>
-                Select Grade
-              </option>
-              <option className="text-gray-700" value="">All</option>
-              {Array.from({ length: 13 }, (_, i) => (
-                <option key={i + 1} value={i + 1} className="text-gray-700">
-                  Grade {i + 1}
+            {/* Grade Dropdown */}
+            <div className="flex flex-col items-center mb-4 md:items-start md:flex-row md:mb-0">
+              <label htmlFor="grade" className="mr-2 font-semibold text-custom-black">&nbsp;&nbsp;&nbsp;Grade:</label>
+              <select
+                id="grade"
+                className={`px-4 py-2 w-full max-w-[400px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${isGradeSelected ? 'text-custom-black' : 'text-gray-400'}`}
+                value={grade}
+                onChange={handleGradeChange}
+              >
+                <option className="text-custom-black" value="" disabled hidden>
+                  Select Grade
                 </option>
-              ))}
-            </select>
-          </div>
+                <option className="text-gray-700" value="">All</option>
+                {Array.from({ length: 13 }, (_, i) => (
+                  <option key={i + 1} value={i + 1} className="text-gray-700">
+                    Grade {i + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <button
               className="flex items-center px-4 py-2 ml-2 transition duration-200 rounded-md bg-custom-orange text-custom-white hover:bg-orange-600 active:bg-orange-700"
@@ -230,7 +230,7 @@ const ResourceBank = () => {
               Finding experienced speakers for students was a challenge, 
               but now it is simple.
               </p>
-              <p className="mt-2 font-semibold text-right">— Principal, </p>
+              <p className="mt-2 font-semibold text-right">- Principal -</p>
             </div>
 
             {/* Testimonial 2 */}
@@ -239,7 +239,7 @@ const ResourceBank = () => {
               As a volunteer, I wanted to give back to rural schools, but finding the right opportunities was difficult. 
               It&apos;s an incredible platform that truly bridges the gap in education!
               </p>
-              <p className="mt-2 font-semibold text-right">— Volunteer, </p>
+              <p className="mt-2 font-semibold text-right">- Volunteer -</p>
             </div>
 
             {/* Testimonial 3 */}
@@ -248,7 +248,7 @@ const ResourceBank = () => {
               Thanks to LearnHeart, I attended a seminar on software development that changed my perspective. 
               The resource bank also helped me access valuable study materials.
               </p>
-              <p className="mt-2 font-semibold text-right">— Student, </p>
+              <p className="mt-2 font-semibold text-right">- Student -</p>
             </div>
           </div>
         </div>
