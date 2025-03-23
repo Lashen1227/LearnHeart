@@ -19,7 +19,7 @@ LearnHeart aligns with **United Nations Sustainable Development Goal 4** (Qualit
 - **Database:** MongoDB (Mongoose)
 - **Authentication:** Clerk
 - **Machine Learning:** Python + Flask (LangChain Integration)
-- **Deployment:** Vercel (Frontend) & Render (Backend)
+- **Deployment:** Render
 
 ## 🎯 Key Features
 
@@ -33,8 +33,7 @@ LearnHeart aligns with **United Nations Sustainable Development Goal 4** (Qualit
 
 ### Prerequisites
 - Node.js (v18+)
-- MongoDB (Cloud or Local)
-- Python (for ML component)
+- Python (For ML component)
 
 ### Backend Setup
 ```bash
