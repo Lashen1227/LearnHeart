@@ -13,4 +13,19 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    outDir: 'dist',
+  },
+  esbuild: {
+    jsxInject: `import React from 'react'`,
+  },
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
+  base: '/',
+  define: {
+    'process.env': {},
+  },
 })
