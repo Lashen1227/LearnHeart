@@ -11,13 +11,8 @@ const PORT = process.env.PORT || 3001;
 
 // CORS Middleware
 const allowedOrigins = [
-  "http://localhost:5173", 
-  "https://learnheart.vercel.app",
-  "https://learnheart-git-deployment-lashens-projects.vercel.app",
-  "https://learnheart-1l82xvys9-lashens-projects.vercel.app",
-  "https://learnheart-r66nw2b17-lashens-projects.vercel.app",
-  "https://learnheart-m9j2z9v1n-lashens-projects.vercel.app",
-  "https://learnheart-eu8c3wz5y-lashens-projects.vercel.app"
+  "http://localhost:5173",
+  "https://learnheart.onrender.com"
 ];
 
 app.use(cors({
