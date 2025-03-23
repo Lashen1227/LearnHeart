@@ -8,7 +8,12 @@ import moment from "moment";
 import Loader from "../components/Spinner";
 import { io } from "socket.io-client";
 
-const socket = io("https://learnheart-server.onrender.com", {
+const socket = io(
+  [ 
+    "https://learnheart-server.onrender.com", 
+    "https://learnheart.vercel.app/socket.io",
+    "https://learnheart.vercel.app/socket.io/?EIO=4&transport=polling&t=mrmuace6"
+  ],  {
   path: "/socket.io",
   transports: ["websocket", "polling"],
   reconnection: true,
