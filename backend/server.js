@@ -74,8 +74,8 @@ mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log('Database connected'))
   .catch(err => console.log('Database not connected', err));
 
-app.listen(PORT, () => {
-  console.log(`App is running on port ${PORT}`);
+server.listen(PORT, () => {
+  console.log(`WebSocket server is running on port ${PORT}`);
 });
 
 // Routes

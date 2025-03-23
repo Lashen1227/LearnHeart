@@ -8,7 +8,12 @@ import moment from "moment";
 import Loader from "../components/Spinner";
 import { io } from "socket.io-client";
 
-const socket = io("/", { reconnection: true });
+const socket = io("https://learnheart-server.onrender.com", {
+  reconnection: true,
+  reconnectionAttempts: 20,
+  reconnectionDelay: 2000,
+  transports: ["websocket", "polling"],
+});
 
 const CommunityPage = () => {
   const [posts, setPosts] = useState([]);
