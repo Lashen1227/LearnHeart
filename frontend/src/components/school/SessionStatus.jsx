@@ -22,7 +22,7 @@ const SeminarStatus = () => {
 
   const handleCloseCard = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/seminars/${id}`);
+      await axios.delete(`https://learnheart-server.onrender.com/api/seminars/${id}`);
       setFilteredSessions((prevSessions) =>
         prevSessions.filter((session) => session._id !== id)
       );
@@ -48,8 +48,8 @@ const SeminarStatus = () => {
     setIsLoading(true);
     try {
       const [seminarResponse, schoolResponse] = await Promise.all([
-        axios.get("http://localhost:3001/api/seminars"),
-        axios.get("http://localhost:3001/api/schools"),
+        axios.get("https://learnheart-server.onrender.com/api/seminars"),
+        axios.get("https://learnheart-server.onrender.com/api/schools"),
       ]);
       setSeminars(seminarResponse.data);
       setSchools(schoolResponse.data);

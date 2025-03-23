@@ -61,7 +61,7 @@ const PastEventsPage = () => {
     const fetchEvents = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:3001/api/past-events');
+            const response = await axios.get('https://learnheart-server.onrender.com/api/past-events');
             setEvents(response.data);
             setFilteredEvents(response.data);
         } catch (error) {
@@ -144,7 +144,7 @@ const PastEventsPage = () => {
             };
 
             await axios.post(
-                `http://localhost:3001/api/past-events/${selectedEvent._id}/reviews`,
+                `https://learnheart-server.onrender.com/api/past-events/${selectedEvent._id}/reviews`,
                 reviewData
             );
             setReviewDialog(false);

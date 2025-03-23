@@ -6,7 +6,7 @@ const VolunteerRequestModal = ({ open, handleClose, selectedRequest, handleAccep
 
   const handleViewCV = () => {
     if (selectedRequest && selectedRequest.cv) {
-      const cvUrl = `http://localhost:3001/${selectedRequest.cv.replace(/\\/g, '/')}`;
+      const cvUrl = `https://learnheart-server.onrender.com/${selectedRequest.cv.replace(/\\/g, '/')}`;
       window.open(cvUrl, '_blank');
     }
   };

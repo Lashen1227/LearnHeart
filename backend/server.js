@@ -11,8 +11,15 @@ const PORT = 3001;
 const bodyParser = require("body-parser");
 const http = require("http");
 const { Server } = require("socket.io");
+// Create HTTP Server and WebSocket
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:5173", "https://learnheart.vercel.app"], // Allow local dev and production frontend
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true
+  }
+});
 
 const organizationRoutes = require('./routes/organizationRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
@@ -22,15 +29,21 @@ const postRoutes = require('./routes/postRoute');
 const resourceRoutes = require('./routes/resourceRoutes');
 const pastEventRoutes = require('./routes/pastEventRoutes');
 
+// CORS Middleware
+app.use(cors({
+  origin: (origin, callback) => {
+    const allowedOrigins = ["http://localhost:5173", "https://learnheart.vercel.app"];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 // Middleware
-app.use(cors(
-  {
-    origin: "https://learnheart.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"]
-  }
-));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.json());
