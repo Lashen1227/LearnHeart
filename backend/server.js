@@ -21,7 +21,8 @@ const io = new Server(server, {
       "https://learnheart-git-deployment-lashens-projects.vercel.app", 
       "https://learnheart-1l82xvys9-lashens-projects.vercel.app", 
       "https://learnheart-r66nw2b17-lashens-projects.vercel.app",
-      "https://learnheart-m9j2z9v1n-lashens-projects.vercel.app"
+      "https://learnheart-m9j2z9v1n-lashens-projects.vercel.app",
+      "https://learnheart-eu8c3wz5y-lashens-projects.vercel.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true
@@ -49,7 +50,8 @@ const allowedOrigins = [
   "https://learnheart-git-deployment-lashens-projects.vercel.app",
   "https://learnheart-1l82xvys9-lashens-projects.vercel.app",
   "https://learnheart-r66nw2b17-lashens-projects.vercel.app",
-  "https://learnheart-m9j2z9v1n-lashens-projects.vercel.app"
+  "https://learnheart-m9j2z9v1n-lashens-projects.vercel.app",
+  "https://learnheart-eu8c3wz5y-lashens-projects.vercel.app"
 ];
 
 app.use(cors({
