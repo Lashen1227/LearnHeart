@@ -93,38 +93,38 @@ const ResourceBank = () => {
         <div className="min-h-screen p-6 bg-custom-page">
           {/* Subject Search Bar */}
           <div className="flex flex-col items-center justify-center p-3 mt-20 mb-6 rounded-lg md:flex-row bg-custom-light-green">
-          <div className="flex flex-col items-center mr-4 md:flex-row">
-            <label htmlFor="subject" className="mr-2 font-semibold text-custom-black">Subject:</label>
-            <input
-              id="subject"
-              type="text"
-              placeholder="Search subject here"
-              className="px-4 py-2 border border-gray-300 rounded-md w-80 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-          </div>
+            <div className="flex flex-col items-center mb-4 md:items-start md:flex-row md:mb-0">
+              <label htmlFor="subject" className="mr-2 font-semibold text-custom-black">Subject:</label>
+              <input
+                id="subject"
+                type="text"
+                placeholder="Search subject here"
+                className="px-4 py-2 border border-gray-300 rounded-md w-full max-w-[400px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
+            </div>
 
-          {/* Grade Dropdown */}
-          <div className="flex flex-col items-center mr-4 md:flex-row">
-            <label htmlFor="grade" className="mr-2 font-semibold text-custom-black">Grade:</label>
-            <select
-              id="grade"
-              className={`px-4 py-2 w-80 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${isGradeSelected ? 'text-custom-black' : 'text-gray-400'}`}
-              value={grade}
-              onChange={handleGradeChange}
-            >
-              <option className="text-custom-black" value="" disabled hidden>
-                Select Grade
-              </option>
-              <option className="text-gray-700" value="">All</option>
-              {Array.from({ length: 13 }, (_, i) => (
-                <option key={i + 1} value={i + 1} className="text-gray-700">
-                  Grade {i + 1}
+            {/* Grade Dropdown */}
+            <div className="flex flex-col items-center mb-4 md:items-start md:flex-row md:mb-0">
+              <label htmlFor="grade" className="mr-2 font-semibold text-custom-black">&nbsp;&nbsp;&nbsp;Grade:</label>
+              <select
+                id="grade"
+                className={`px-4 py-2 w-full max-w-[400px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${isGradeSelected ? 'text-custom-black' : 'text-gray-400'}`}
+                value={grade}
+                onChange={handleGradeChange}
+              >
+                <option className="text-custom-black" value="" disabled hidden>
+                  Select Grade
                 </option>
-              ))}
-            </select>
-          </div>
+                <option className="text-gray-700" value="">All</option>
+                {Array.from({ length: 13 }, (_, i) => (
+                  <option key={i + 1} value={i + 1} className="text-gray-700">
+                    Grade {i + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <button
               className="flex items-center px-4 py-2 ml-2 transition duration-200 rounded-md bg-custom-orange text-custom-white hover:bg-orange-600 active:bg-orange-700"
@@ -143,7 +143,7 @@ const ResourceBank = () => {
                 onClick={() => handleNotesPagination("prev")}
                 disabled={notesPage === 1}
               />
-              <div className="grid w-[1280px] h-auto gap-6 md:grid-cols-3 mx-auto">
+              <div className="grid w-full gap-6 mx-auto md:grid-cols-3">
                 {notes.length > 0 ? (
                   notes.map((note) => (
                     <div
@@ -152,7 +152,7 @@ const ResourceBank = () => {
                       onClick={() => setSelectedPdf(note)}
                       style={{ background: 'white' }}
                     >
-                      <img src={PDFIMAGE} alt="Book" className="w-[1280px] h-auto object-contain mb-3 rounded-xl" />
+                      <img src={PDFIMAGE} alt="Book" className="object-contain w-full h-auto mb-3 rounded-xl" />
                       <div className="text-center">
                         <h3 className="font-semibold text-gray-800">{note.title}</h3>
                         <p className="text-sm text-gray-700">{note.grade} - {note.subject}</p>
@@ -182,16 +182,16 @@ const ResourceBank = () => {
                 onClick={() => handleVideosPagination("prev")}
                 disabled={videosPage === 1}
               />
-              <div className="grid w-[1280px] h-auto gap-6 md:grid-cols-3 mx-auto">
+              <div className="grid w-full gap-6 mx-auto md:grid-cols-3">
                 {videos.length > 0 ? (
                   videos.map((video) => (
                     <div
                       key={video._id}
-                      className="relative flex flex-col items-center justify-between h-auto p-4 overflow-hidden border shadow-xl cursor-pointer w-1280px rounded-xl"
+                      className="relative flex flex-col items-center justify-between h-auto p-4 overflow-hidden border shadow-xl cursor-pointer rounded-xl"
                       onClick={() => setSelectedVideo(video)}
                       style={{ background: 'white' }}
                     >
-                      <img src={VIDEOIMAGE} alt="Video" className="w-[1280px] h-auto object-contain mb-3 rounded-xl" />
+                      <img src={VIDEOIMAGE} alt="Video" className="object-contain w-full h-auto mb-3 rounded-xl" />
                       <div className="text-center">
                         <h3 className="text-lg font-semibold text-gray-800">{video.title}</h3>
                         <p className="text-sm text-gray-700">{video.grade} - {video.subject}</p>
