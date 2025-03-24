@@ -12,7 +12,9 @@ const PORT = process.env.PORT || 3001;
 // CORS Middleware
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://learnheart.onrender.com"
+  "https://learnheart.onrender.com",
+  "https://www.learnheart.software",
+  "https://learnheart.software"
 ];
 
 app.use(cors({
